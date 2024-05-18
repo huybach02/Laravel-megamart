@@ -31,3 +31,12 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get("/admin", function () {
+  if (!request()->user()) {
+    return redirect()->route("admin.login");
+  }
+  return redirect()->route("admin.dashboard");
+});
+
+Route::get("/admin/login", [AdminController::class, "login"])->name("admin.login");

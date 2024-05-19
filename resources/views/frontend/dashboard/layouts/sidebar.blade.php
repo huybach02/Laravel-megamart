@@ -3,7 +3,7 @@
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
     </span>
-    <a href="{{ route('user.dashboard') }}" class="dash_logo px-3 py-4 bg-white">
+    <a href="{{ route('user.dashboard') }}" class="dash_logo p-3 bg-white">
         <img src="{{ asset('logo_transparent.png') }}" width="140px" alt="logo" class="img-fluid">
         <p class="mt-2 ">Khách hàng</p>
     </a>
@@ -14,7 +14,7 @@
         <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
         <li><a href="dsahboard_review.html"><i class="far fa-star"></i> Reviews</a></li>
         <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>
-        <li><a href="dsahboard_profile.html"><i class="far fa-user"></i> My Profile</a></li>
+        <li><a href="{{ route('user.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
         <li><a href="dsahboard_address.html"><i class="fal fa-gift-card"></i> Addresses</a></li>
         <li>
             <form method="POST" action="{{ route('logout') }}">

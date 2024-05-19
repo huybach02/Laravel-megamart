@@ -88,7 +88,7 @@
 
                         <div class="card card-primary">
                             <div class="login-brand">
-                                <img src="{{ asset('logo.jpeg') }}" alt="logo" width="100">
+                                <img src="{{ asset('logo.png') }}" alt="logo" width="100">
                             </div>
                             <div class="">
                                 <h4 class="text-center text-primary">ĐĂNG NHẬP</h4>
@@ -126,7 +126,7 @@
                                     @if ($errors->any())
                                         @foreach ($errors->all() as $error)
                                             <div class="mb-3">
-                                                <div class="bg-danger p-3 text-white">
+                                                <div class="bg-danger p-3 text-white rounded">
                                                     Email hoặc mật khẩu không chính xác. <br> Vui lòng thử lại!
                                                 </div>
                                             </div>

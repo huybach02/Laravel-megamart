@@ -29,13 +29,20 @@ class AuthenticatedSessionController extends Controller
 
     $request->session()->regenerate();
 
-    if ($request->user()->role === "admin") {
-      return redirect()->intended("admin/dashboard");
-    } else if ($request->user()->role === "vendor") {
+    // if ($request->user()->role === "admin") {
+    //   return redirect()->intended("admin/dashboard");
+    // } else if ($request->user()->role === "vendor") {
+    //   return redirect()->intended("vendor/dashboard");
+    // }
+
+    if ($request->user()->role === "user") {
+      return redirect()->intended("/");
+    } elseif ($request->user()->role === "vendor") {
       return redirect()->intended("vendor/dashboard");
     }
 
-    return redirect()->intended(RouteServiceProvider::HOME);
+    // return redirect()->intended(RouteServiceProvider::HOME);
+    return redirect()->intended("admin/dashboard");
   }
 
   /**
@@ -43,7 +50,7 @@ class AuthenticatedSessionController extends Controller
    */
   public function destroy(Request $request): RedirectResponse
   {
-    $isAdmin=$request->user()->role==="admin";
+    $isAdmin = $request->user()->role === "admin";
 
     Auth::guard('web')->logout();
 

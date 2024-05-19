@@ -33,6 +33,7 @@ export default defineConfig({
                 "resources/views/**",
                 "routes/**",
                 "public/backend/assets/css/**", // Thêm đường dẫn thư mục chứa file CSS để theo dõi
+                "public/frontend/css/**", // Thêm đường dẫn thư mục chứa file CSS để theo dõi
             ],
         }),
     ],

@@ -1,39 +1,91 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('frontend.layouts.master')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@section('content')
+    <!--============================
+                            BREADCRUMB START
+                        ==============================-->
+    <section id="wsus__breadcrumb">
+        <div class="wsus_breadcrumb_overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Đặt lại mật khẩu</h4>
+                        <ul>
+                            <li><a href="#">Đăng ký / Đăng Nhập</a></li>
+                            <li><a href="#">Đặt lại mật khẩu</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <!--============================
+                          BREADCRUMB END
+                        ==============================-->
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+
+    <!--============================
+                          CHANGE PASSWORD START
+                        ==============================-->
+    <section id="wsus__login_register">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-md-10 col-lg-7 m-auto">
+                    <form method="POST" action="{{ route('password.store') }}">
+                        @csrf
+
+                        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                        <div class="wsus__change_password">
+                            <h4>Đặt lại mật khẩu</h4>
+                            <div class="wsus__single_pass">
+                                <label>Email</label>
+                                <input id="email" type="email" name="email"
+                                    value="{{ old('email', $request->email) }}" placeholder="Nhập email">
+                                @if ($errors->has('email'))
+                                    <p class="text-danger d-flex justify-content-end mt-1">
+                                        {{ $errors->first('email') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <div class="wsus__single_pass">
+                                <label>Mật khẩu mới</label>
+                                <input id="password" type="password" name="password" placeholder="Nhập mật khẩu mới">
+                                @if ($errors->has('password'))
+                                    <p class="text-danger d-flex justify-content-end mt-1">
+                                        {{ $errors->first('password') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            <div class="wsus__single_pass">
+                                <label>Xác nhận mật khẩu</label>
+                                <input id="password_confirmation" type="password" name="password_confirmation"
+                                    placeholder="Nhập lại mật khẩu">
+                                @if ($errors->has('password_confirmation'))
+                                    <p class="text-danger d-flex justify-content-end mt-1">
+                                        {{ $errors->first('password_confirmation') }}
+                                    </p>
+                                @endif
+                            </div>
+
+                            {{-- @if ($errors->any())
+                                <div class="mb-3">
+                                    <div class="bg-danger p-3 text-white rounded">
+                                        Email hoặc mật khẩu không chính xác. <br> Vui lòng thử lại!
+                                    </div>
+                                </div>
+                            @endif --}}
+
+                            <button class="common_btn" type="submit">Xác nhận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </section>
+    <!--============================
+                          CHANGE PASSWORD END
+                        ==============================-->
+@endsection

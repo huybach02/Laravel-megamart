@@ -2779,9 +2779,13 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 
 
 .toast-success {
-  background-color: #4e9168 !important;
+  background-color: #51a351 !important;
 }
 
 .toast-error {
   background-color: #bd362f !important;
+}
+
+#toast-container>div{
+  opacity: 1 !important;
 }

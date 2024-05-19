@@ -22,7 +22,7 @@
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <div class="flex items-center justify-center mb-3">
-                <img width="100px" src="{{ asset('logo.jpeg') }}" alt="">
+                <img width="100px" src="{{ asset('logo.png') }}" alt="">
             </div>
             {{ $slot }}
         </div>

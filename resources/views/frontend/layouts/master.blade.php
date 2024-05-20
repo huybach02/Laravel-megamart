@@ -34,11 +34,27 @@
 
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
+    {{-- <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-94034622-3');
+    </script> --}}
+
     @vite('resources/js/app.js')
 
 </head>
 
 <body>
+
+    {{-- <div id="loading">
+        <div class="spinner"></div>
+        Đang tải...
+    </div> --}}
 
     @include('frontend.layouts.header')
 
@@ -130,6 +146,18 @@
 
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiển thị hiệu ứng loading khi trang bắt đầu load
+            document.getElementById('loading').style.display = 'flex';
+        });
+
+        window.onload = function() {
+            // Ẩn hiệu ứng loading khi trang đã load xong
+            document.getElementById('loading').style.display = 'none';
+        };
+    </script> --}}
 </body>
 
 </html>

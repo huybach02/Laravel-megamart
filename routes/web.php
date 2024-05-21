@@ -44,3 +44,7 @@ Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "us
   Route::put("profile", [UserProfileController::class, "updateProfile"])->name("profile.update");
   Route::post("profile", [UserProfileController::class, "updatePassword"])->name("profile.update.password");
 });
+
+Route::get('/csrf-token', function () {
+  return response()->json(['csrfToken' => csrf_token()]);
+});

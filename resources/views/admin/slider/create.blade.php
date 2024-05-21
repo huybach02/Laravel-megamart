@@ -28,14 +28,14 @@
                                         @csrf
 
                                         <div class="form-group">
-                                            <label for="type">Hình ảnh slider</label>
+                                            <label>Hình ảnh slider</label>
                                             <input type="file" class="form-control" name="banner">
                                             @if ($errors->has('banner'))
                                                 <p class="text-danger">{{ $errors->first('banner') }}</p>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="type">Thể loại slider</label>
+                                            <label>Thể loại slider</label>
                                             <input type="text" class="form-control" name="type"
                                                 placeholder="Ví dụ: New Collections" value="{{ old('type') }}">
                                             @if ($errors->has('type'))
@@ -43,7 +43,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="title">Tiêu đề slider</label>
+                                            <label>Tiêu đề slider</label>
                                             <input type="text" class="form-control" name="title"
                                                 placeholder="Ví dụ: Bộ sưu tập hè..." value="{{ old('title') }}">
                                             @if ($errors->has('title'))
@@ -51,7 +51,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="title">Giá khởi điểm</label>
+                                            <label>Giá khởi điểm</label>
                                             <input type="text" class="form-control" name="starting_price"
                                                 placeholder="Ví dụ: 500.000đ" value="{{ old('starting_price') }}">
                                             @if ($errors->has('starting_price'))
@@ -59,7 +59,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="title">Đường link dẫn đến khi nhấn nút</label>
+                                            <label>Đường link dẫn đến khi nhấn nút</label>
                                             <input type="text" class="form-control" name="btn_url"
                                                 placeholder="Ví dụ: http://megamart.com/new-collections..."
                                                 value="{{ old('btn_url') }}">
@@ -68,7 +68,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="title">Thứ tự hiển thị</label>
+                                            <label>Thứ tự hiển thị</label>
                                             <input type="text" class="form-control" name="serial"
                                                 placeholder="Ví dụ: 1 hoặc 2 hoặc 3..." value="{{ old('serial') }}">
                                             @if ($errors->has('serial'))
@@ -76,7 +76,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="title">Trạng thái</label>
+                                            <label>Trạng thái</label>
                                             <select name="status" id="" class="form-control">
                                                 <option value="1">Hiển thị</option>
                                                 <option value="0">Không hiển thị</option>

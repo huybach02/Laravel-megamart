@@ -125,4 +125,17 @@ class SliderController extends Controller
       "status" => "success"
     ]);
   }
+
+  public function changeStatus(Request $request)
+  {
+    $slider = Slider::findOrFail($request->id);
+
+    $slider->status = $request->status == "true" ? 1 : 0;
+    $slider->save();
+
+    return response([
+      "message" => "Cập nhật trạng thái slider thành công",
+      "status" => "success"
+    ]);
+  }
 }

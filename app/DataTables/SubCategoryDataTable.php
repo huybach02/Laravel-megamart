@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Slider;
+use App\Models\SubCategory;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SliderDataTable extends DataTable
+class SubCategoryDataTable extends DataTable
 {
   /**
    * Build the DataTable class.
@@ -23,20 +23,17 @@ class SliderDataTable extends DataTable
   {
     return (new EloquentDataTable($query))
       ->addColumn('action', function ($query) {
-        $editBtn = "<a href='" . route('admin.slider.edit', $query->id) . "' class='btn btn-primary mr-2'>
-        <i class='fas fa-pen'></i>
+        $editBtn = "<a href='" . route('admin.sub-category.edit', $query->id) . "' class='btn btn-primary mr-2'>
+          <i class='fas fa-pen'></i>
         </a>";
-        $deleteBtn = "<a href='" . route('admin.slider.destroy', $query->id) . "' class='btn btn-danger delete-item'>
-        <i class='fas fa-trash'></i>
+        $deleteBtn = "<a href='" . route('admin.sub-category.destroy', $query->id) . "' class='btn btn-danger delete-item'>
+          <i class='fas fa-trash'></i>
         </a>";
 
         return $editBtn . $deleteBtn;
       })
-      ->addColumn("banner", function ($query) {
-        return '<img src="' . asset($query->banner) . '" width="150px">';
-      })
-      ->addColumn("starting_price", function ($query) {
-        return number_format($query->starting_price) . "đ";
+      ->addColumn("category_id", function ($query) {
+        return $query->category->name;
       })
       ->addColumn('status', function ($query) {
         if ($query->status == 1) {
@@ -56,14 +53,14 @@ class SliderDataTable extends DataTable
         }
         return $button;
       })
-      ->rawColumns(["banner", "action", "status"])
+      ->rawColumns(["action", "status", "category_id"])
       ->setRowId('id');
   }
 
   /**
    * Get the query source of dataTable.
    */
-  public function query(Slider $model): QueryBuilder
+  public function query(SubCategory $model): QueryBuilder
   {
     return $model->newQuery()->latest();
   }
@@ -74,7 +71,7 @@ class SliderDataTable extends DataTable
   public function html(): HtmlBuilder
   {
     return $this->builder()
-      ->setTableId('slider-table')
+      ->setTableId('subcategory-table')
       ->columns($this->getColumns())
       ->minifiedAjax()
       //->dom('Bfrtip')
@@ -96,14 +93,11 @@ class SliderDataTable extends DataTable
   public function getColumns(): array
   {
     return [
-      Column::make('id')->width(20),
-      Column::make('banner')->width(200)->title("Hình ảnh"),
-      Column::make('type')->width(300)->title("Thể loại"),
-      Column::make('title')->width(300)->title("Tiêu đề"),
-      Column::make('starting_price')->width(150)->title("Giá khởi điểm"),
-      Column::make('btn_url')->width(300)->title("Đường link khi nhấn nút"),
-      Column::make('serial')->width(20)->title("Thứ tự"),
-      Column::make('status')->width(30)->title("Trạng thái"),
+      Column::make('id')->width(50),
+      Column::make('name')->title("Tên danh mục"),
+      Column::make('slug'),
+      Column::make('category_id')->width(250)->title("Thuộc danh mục cấp 1"),
+      Column::make('status')->width(200)->title("Trạng thái")->addClass('text-center'),
       Column::computed('action')
         ->exportable(false)
         ->printable(false)
@@ -117,6 +111,6 @@ class SliderDataTable extends DataTable
    */
   protected function filename(): string
   {
-    return 'Slider_' . date('YmdHis');
+    return 'SubCategory_' . date('YmdHis');
   }
 }

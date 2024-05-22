@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Dashboard
@@ -15,11 +16,16 @@ Route::post("profile/update", [ProfileController::class, "updateProfile"])->name
 Route::post("profile/update/password", [ProfileController::class, "updatePassword"])->name("password.update");
 
 // Slider
+Route::put("slider/change-status", [SliderController::class, "changeStatus"])->name("slider.change-status");
 Route::resource('slider', SliderController::class);
 
-//Category
-Route::put("change-status", [CategoryController::class, "changeStatus"])->name("category.change-status");
+// Category
+Route::put("category/change-status", [CategoryController::class, "changeStatus"])->name("category.change-status");
 Route::resource('category', CategoryController::class);
+
+// SubCategory
+Route::put("sub-category/change-status", [SubCategoryController::class, "changeStatus"])->name("sub-category.change-status");
+Route::resource('sub-category', SubCategoryController::class);
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

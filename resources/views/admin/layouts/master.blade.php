@@ -187,7 +187,7 @@
                                     });
                                 } else if (data.status == 'error') {
                                     Swal.fire(
-                                        'Có lỗi xảy ra',
+                                        'Không thành công',
                                         data.message,
                                         'error'
                                     )

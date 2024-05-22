@@ -61,4 +61,12 @@
             })
         })
     </script>
+
+    {{-- <script>
+        @if (session('reload'))
+            setTimeout(function() {
+                location.href = location.href;
+            }, 1000);
+        @endif
+    </script> --}}
 @endpush

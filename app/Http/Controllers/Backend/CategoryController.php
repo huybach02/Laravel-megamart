@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -97,6 +98,15 @@ class CategoryController extends Controller
   public function destroy(string $id)
   {
     $category = Category::findOrFail($id);
+
+    $subCategoryCount = SubCategory::where("category_id", $category->id)->count();
+
+    if ($subCategoryCount > 0) {
+      return response([
+        "message" => "Danh mục cấp 1 này đang có ít nhất 1 danh mục cấp 2, vui lòng xoá các danh mục cấp 2 trước",
+        "status" => "error"
+      ]);
+    }
 
     $category->delete();
 

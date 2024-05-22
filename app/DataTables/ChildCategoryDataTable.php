@@ -56,6 +56,22 @@ class ChildCategoryDataTable extends DataTable
         }
         return $button;
       })
+      ->filterColumn('name', function ($query, $keyword) {
+        $query->where('name', 'like', "%{$keyword}%");
+      })
+      ->filterColumn('slug', function ($query, $keyword) {
+        $query->where('slug', 'like', "%{$keyword}%");
+      })
+      ->filterColumn('category_id', function ($query, $keyword) {
+        $query->whereHas('category', function ($query) use ($keyword) {
+          $query->where('name', 'like', "%{$keyword}%");
+        });
+      })
+      ->filterColumn('sub_category_id', function ($query, $keyword) {
+        $query->whereHas('subCategory', function ($query) use ($keyword) {
+          $query->where('name', 'like', "%{$keyword}%");
+        });
+      })
       ->rawColumns(["action", "status", "category_id"])
       ->setRowId('id');
   }

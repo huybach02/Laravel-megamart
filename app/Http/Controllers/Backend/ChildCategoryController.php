@@ -95,6 +95,7 @@ class ChildCategoryController extends Controller
 
     Toastr::success("Cập nhật danh mục thành công", "Thành công");
 
+    // return redirect()->route("admin.child-category.index")->with('reload', true);
     return redirect()->route("admin.child-category.index");
   }
 

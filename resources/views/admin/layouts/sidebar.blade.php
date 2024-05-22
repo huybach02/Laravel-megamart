@@ -31,7 +31,7 @@
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('admin.category.index') }}">Danh mục cấp 1</a></li>
                     <li><a class="nav-link" href="{{ route('admin.sub-category.index') }}">Danh mục cấp 2</a></li>
-                    <li><a class="nav-link" href="layout-top-navigation.html">Danh mục cấp 3</a></li>
+                    <li><a class="nav-link" href="{{ route('admin.child-category.index') }}">Danh mục cấp 3</a></li>
                 </ul>
             </li>
 

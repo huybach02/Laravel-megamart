@@ -11,7 +11,7 @@
         </div>
 
         <div class="section-body">
-            <a href="{{ route('admin.slider.index') }}">
+            <a href="{{ route('admin.category.index') }}">
                 < Quay lại</a>
                     <h2 class="section-title">Danh mục cấp 1</h2>
                     <p class="section-lead">Tuỳ chỉnh danh mục cấp 1 hiển thị trên trang chủ.</p>

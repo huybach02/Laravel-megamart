@@ -185,4 +185,17 @@ class ProductController extends Controller
 
     return $childCategories;
   }
+
+  public function changeStatus(Request $request)
+  {
+    $product = Product::findOrFail($request->id);
+
+    $product->status = $request->status == "true" ? 1 : 0;
+    $product->save();
+
+    return response([
+      "message" => "Cập nhật trạng thái sản phẩm thành công",
+      "status" => "success"
+    ]);
+  }
 }

@@ -113,10 +113,10 @@
                                                                 <a class="dropdown-item has-icon"
                                                                     href="{{ route('admin.product-image-gallery.index', ['product' => $product->id]) }}"><i
                                                                         class="far fa-image"></i> Thư viện ảnh</a>
-                                                                <a class="dropdown-item has-icon" href="#"><i
-                                                                        class="far fa-file"></i> Another action</a>
-                                                                <a class="dropdown-item has-icon" href="#"><i
-                                                                        class="far fa-clock"></i> Something else here</a>
+                                                                <a class="dropdown-item has-icon"
+                                                                    href="{{ route('admin.product-variant.index', ['product' => $product->id]) }}"><i
+                                                                        class="fas fa-list"></i> Biến thể của sản
+                                                                    phẩm</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -144,7 +144,7 @@
                 let id = $(this).data('id')
 
                 $.ajax({
-                    url: "{{ route('admin.slider.change-status') }}",
+                    url: "{{ route('admin.products.change-status') }}",
                     method: "PUT",
                     data: {
                         id: id,

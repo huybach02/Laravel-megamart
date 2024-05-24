@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
+use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -45,10 +46,13 @@ Route::resource('brand', BrandController::class);
 Route::resource('vendor-profile', AdminVendorProfileController::class);
 
 // Product
+Route::put("product/change-status", [ProductController::class, "changeStatus"])->name("products.change-status");
+Route::put("product-variant/change-status", [ProductVariantController::class, "changeStatus"])->name("product-variant.change-status");
 Route::get("product/get-subcategories", [ProductController::class, "getSubCategories"])->name("products.get-subcategories");
 Route::get("product/get-childcategories", [ProductController::class, "getChildCategories"])->name("products.get-childcategories");
 Route::resource('products', ProductController::class);
 Route::resource('product-image-gallery', ProductImageGalleryController::class);
+Route::resource('product-variant', ProductVariantController::class);
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

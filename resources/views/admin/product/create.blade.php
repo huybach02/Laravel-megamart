@@ -129,7 +129,8 @@
                                                 <div class="form-group">
                                                     <label>Ngày bắt đầu giảm giá</label>
                                                     <input type="text" name="offer_start_date"
-                                                        class="form-control datepicker">
+                                                        class="form-control datepicker"
+                                                        value="{{ old('offer_start_date') }}">
                                                     @if ($errors->has('offer_start_date'))
                                                         <p class="text-danger">{{ $errors->first('offer_start_date') }}</p>
                                                     @endif
@@ -139,7 +140,8 @@
                                                 <div class="form-group">
                                                     <label>Ngày kết thúc giảm giá</label>
                                                     <input type="text" name="offer_end_date"
-                                                        class="form-control datepicker">
+                                                        class="form-control datepicker"
+                                                        value="{{ old('offer_end_date') }}">
                                                     @if ($errors->has('offer_end_date'))
                                                         <p class="text-danger">{{ $errors->first('offer_end_date') }}</p>
                                                     @endif

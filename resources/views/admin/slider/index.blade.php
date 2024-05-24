@@ -23,8 +23,71 @@
                                 <a href="{{ route('admin.slider.create') }}" class="btn btn-primary mb-3">+ Thêm mới</a>
                             </div>
                         </div>
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             {{ $dataTable->table(['class' => 'table nowrap table-responsive', 'style' => 'width: 100%;']) }}
+                        </div> --}}
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left">Id</th>
+                                            <th style="text-align: left">Hình ảnh</th>
+                                            <th>Thể loại</th>
+                                            <th>Tiêu đề</th>
+                                            <th>Giá khởi điểm</th>
+                                            <th>Đường link khi nhấn nút</th>
+                                            <th style="text-align: left">Thứ tự</th>
+                                            <th>Trạng thái</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($sliders as $slider)
+                                            <tr>
+                                                <td style="text-align: left">{{ $slider->id }}</td>
+                                                <td style="text-align: left">
+                                                    <img src=" {{ asset($slider->banner) }}" width="150px">
+                                                </td>
+                                                <td>{{ $slider->type }}</td>
+                                                <td>{{ $slider->title }}</td>
+                                                <td>{{ number_format($slider->starting_price) . 'đ' }}</td>
+                                                <td>{{ $slider->btn_url }}</td>
+                                                <td style="text-align: left">{{ $slider->serial }}</td>
+                                                <td>
+                                                    @if ($slider->status == 1)
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' checked name='custom-switch-checkbox'
+                                                                data-id='{{ $slider->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @else
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' name='custom-switch-checkbox'
+                                                                data-id='{{ $slider->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-start">
+                                                        <a href="{{ route('admin.slider.edit', $slider->id) }}"
+                                                            class='btn btn-primary mr-2'>
+                                                            <i class='fas fa-pen'></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.slider.destroy', $slider->id) }}"
+                                                            class='btn btn-danger mr-2 delete-item'>
+                                                            <i class='fas fa-trash'></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,7 +97,7 @@
 @endsection
 
 @push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
 
     <script>
         $(document).ready(function() {
@@ -58,5 +121,13 @@
                 })
             })
         })
+    </script>
+
+    <script>
+        new DataTable('#example', {
+            "order": [
+                [0, "desc"]
+            ]
+        });
     </script>
 @endpush

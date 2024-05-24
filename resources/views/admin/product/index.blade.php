@@ -23,9 +23,107 @@
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">+ Thêm mới</a>
                             </div>
                         </div>
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <div class="table-responsive">
                                 {{ $dataTable->table(['class' => 'table nowrap', 'style' => 'width: 100%;']) }}
+                            </div>
+                        </div> --}}
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left">Id</th>
+                                            <th style="text-align: left">Hình ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá sản phẩm</th>
+                                            <th>Giá sản phẩm khi giảm</th>
+                                            <th style="text-align: left">Ngày bắt đầu</th>
+                                            <th style="text-align: left">Ngày kết thúc</th>
+                                            <th>Loại sản phẩm</th>
+                                            <th>Trạng thái</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($products as $product)
+                                            <tr>
+                                                <td style="text-align: left">{{ $product->id }}</td>
+                                                <td style="text-align: left">
+                                                    <img src=" {{ asset($product->thumb_image) }}" width="70px">
+                                                </td>
+                                                <td>{{ $product->name }}</td>
+                                                <td>{{ number_format($product->price) . 'đ' }}</td>
+                                                <td>{{ number_format($product->offer_price) . 'đ' }}</td>
+                                                <td style="text-align: left">{{ $product->offer_start_date }}</td>
+                                                <td style="text-align: left">{{ $product->offer_end_date }}</td>
+                                                <td>
+                                                    @switch($product->product_type)
+                                                        @case('new_product')
+                                                            Sản phẩm mới
+                                                        @break
+
+                                                        @case('featured_product')
+                                                            Sản phẩm nổi bật
+                                                        @break
+
+                                                        @case('top_product')
+                                                            Sản phẩm phổ biến
+                                                        @break
+
+                                                        @default
+                                                            Sản phẩm tốt nhất
+                                                    @endswitch
+                                                </td>
+                                                <td>
+                                                    @if ($product->status == 1)
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' checked name='custom-switch-checkbox'
+                                                                data-id='{{ $product->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @else
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' name='custom-switch-checkbox'
+                                                                data-id='{{ $product->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-start">
+                                                        <a href="{{ route('admin.products.edit', $product->id) }}"
+                                                            class='btn btn-primary mr-2'>
+                                                            <i class='fas fa-pen'></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.products.destroy', $product->id) }}"
+                                                            class='btn btn-danger mr-2 delete-item'>
+                                                            <i class='fas fa-trash'></i>
+                                                        </a>
+                                                        <div class="dropdown dropleft d-inline">
+                                                            <button class="btn btn-primary dropdown-toggle" type="button"
+                                                                id="dropdownMenuButton2" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fas fa-cog"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="bottom-start"
+                                                                style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item has-icon" href="#"><i
+                                                                        class="far fa-heart"></i> Action</a>
+                                                                <a class="dropdown-item has-icon" href="#"><i
+                                                                        class="far fa-file"></i> Another action</a>
+                                                                <a class="dropdown-item has-icon" href="#"><i
+                                                                        class="far fa-clock"></i> Something else here</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -36,7 +134,7 @@
 @endsection
 
 @push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
 
     <script>
         $(document).ready(function() {
@@ -60,5 +158,13 @@
                 })
             })
         })
+    </script>
+
+    <script>
+        new DataTable('#example', {
+            "order": [
+                [0, "desc"]
+            ]
+        });
     </script>
 @endpush

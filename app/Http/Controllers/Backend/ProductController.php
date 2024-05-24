@@ -22,9 +22,11 @@ class ProductController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(ProductDataTable $dataTable)
+  public function index()
   {
-    return $dataTable->render('admin.product.index');
+    // return $dataTable->render('admin.product.index');
+    $products = Product::latest()->get();
+    return view('admin.product.index', compact('products'));
   }
 
   /**

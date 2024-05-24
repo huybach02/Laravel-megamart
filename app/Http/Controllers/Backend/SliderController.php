@@ -16,9 +16,11 @@ class SliderController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(SliderDataTable $dataTable)
+  public function index()
   {
-    return $dataTable->render('admin.slider.index');
+    // return $dataTable->render('admin.slider.index');
+    $sliders = Slider::latest()->get();
+    return view('admin.slider.index', compact('sliders'));
   }
 
   /**

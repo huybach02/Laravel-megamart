@@ -24,9 +24,64 @@
                                     mới</a>
                             </div>
                         </div>
-                        <div class="card-body">
+                        {{-- <div class="card-body">
                             <div class="table-responsive">
                                 {{ $dataTable->table(['class' => 'table nowrap', 'style' => 'width: 100%;']) }}</div>
+                        </div> --}}
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example" class="display" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: left">Id</th>
+                                            <th>Tên danh mục</th>
+                                            <th>Slug</th>
+                                            <th>Thuộc danh mục cấp 1</th>
+                                            <th>Trạng thái</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($subCategories as $subCategory)
+                                            <tr>
+                                                <td style="text-align: left">{{ $subCategory->id }}</td>
+                                                <td>{{ $subCategory->name }}</td>
+                                                <td>{{ $subCategory->slug }}</td>
+                                                <td>{{ $subCategory->category->name }}</td>
+                                                <td>
+                                                    @if ($subCategory->status == 1)
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' checked name='custom-switch-checkbox'
+                                                                data-id='{{ $subCategory->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @else
+                                                        <label class='custom-switch mt-2'>
+                                                            <input type='checkbox' name='custom-switch-checkbox'
+                                                                data-id='{{ $subCategory->id }}'
+                                                                class='custom-switch-input change-status'>
+                                                            <span class='custom-switch-indicator'></span>
+                                                        </label>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-start">
+                                                        <a href="{{ route('admin.sub-category.edit', $subCategory->id) }}"
+                                                            class='btn btn-primary mr-2'>
+                                                            <i class='fas fa-pen'></i>
+                                                        </a>
+                                                        <a href="{{ route('admin.sub-category.destroy', $subCategory->id) }}"
+                                                            class='btn btn-danger mr-2 delete-item'>
+                                                            <i class='fas fa-trash'></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -36,7 +91,7 @@
 @endsection
 
 @push('scripts')
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
 
     <script>
         $(document).ready(function() {
@@ -60,5 +115,13 @@
                 })
             })
         })
+    </script>
+
+    <script>
+        new DataTable('#example', {
+            "order": [
+                [0, "desc"]
+            ]
+        });
     </script>
 @endpush

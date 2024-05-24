@@ -15,9 +15,11 @@ class CategoryController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(CategoryDataTable $dataTables)
+  public function index()
   {
-    return $dataTables->render("admin.category.index");
+    // return $dataTables->render("admin.category.index");
+    $categories = Category::latest()->get();
+    return view("admin.category.index", compact('categories'));
   }
 
   /**

@@ -17,9 +17,11 @@ class BrandController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(BrandDataTable $dataTable)
+  public function index()
   {
-    return $dataTable->render("admin.brand.index");
+    // return $dataTable->render("admin.brand.index");
+    $brands = Brand::latest()->get();
+    return view("admin.brand.index", compact("brands"));
   }
 
   /**

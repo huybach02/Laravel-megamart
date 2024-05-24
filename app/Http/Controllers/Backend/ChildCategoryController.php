@@ -16,9 +16,11 @@ class ChildCategoryController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(ChildCategoryDataTable $dataTable)
+  public function index()
   {
-    return $dataTable->render("admin.child-category.index");
+    // return $dataTable->render("admin.child-category.index");
+    $childCategories = ChildCategory::latest()->get();
+    return view("admin.child-category.index", compact("childCategories"));
   }
 
   /**

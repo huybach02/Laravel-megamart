@@ -16,9 +16,11 @@ class SubCategoryController extends Controller
   /**
    * Display a listing of the resource.
    */
-  public function index(SubCategoryDataTable $dataTable)
+  public function index()
   {
-    return $dataTable->render("admin.sub-category.index");
+    // return $dataTable->render("admin.sub-category.index");
+    $subCategories = SubCategory::latest()->get();
+    return view("admin.sub-category.index", compact('subCategories'));
   }
 
   /**

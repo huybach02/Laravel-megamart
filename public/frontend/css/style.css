@@ -6706,7 +6706,7 @@ WISHLIST PAGE START
   align-items: center;
   justify-content: end;
   padding: 5px 20px;
-  /* background: #1b758b; */
+  background: #fff !important;
 }
 
 .wsusd__dashboard_user {

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/ranger_style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
@@ -28,7 +29,7 @@
 
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-    <script>
+    {{-- <script>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
@@ -37,7 +38,7 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-94034622-3');
-    </script>
+    </script> --}}
 
     @vite('resources/js/app.js')
 
@@ -45,10 +46,10 @@
 
 <body>
 
-    <div id="loading">
+    {{-- <div id="loading">
         <div class="spinner"></div>
         Đang tải...
-    </div>
+    </div> --}}
 
     <!--=============================
     DASHBOARD MENU START
@@ -70,7 +71,7 @@
     <section id="wsus__dashboard">
         <div class="container-fluid">
 
-            @include('vendor/dashboard/layouts/sidebar')
+            @include('vendor/layouts/sidebar')
 
             @yield('content')
         </div>
@@ -126,10 +127,18 @@
     <!--classycountdown js-->
     <script src="{{ asset('frontend/js/jquery.classycountdown.js') }}"></script>
 
+    <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
+
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
     <script>
+        $(".summernote").summernote({
+            height: 200
+        })
+    </script>
+
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Hiển thị hiệu ứng loading khi trang bắt đầu load
             document.getElementById('loading').style.display = 'flex';
@@ -139,7 +148,7 @@
             // Ẩn hiệu ứng loading khi trang đã load xong
             document.getElementById('loading').style.display = 'none';
         };
-    </script>
+    </script> --}}
 </body>
 
 </html>

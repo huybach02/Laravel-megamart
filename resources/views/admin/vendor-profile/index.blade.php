@@ -28,7 +28,7 @@
                                         @csrf
 
                                         <div class="form-group">
-                                            <label>Hình ảnh slider</label>
+                                            <label>Hình ảnh nền của gian hàng</label>
                                             <br>
                                             <img src="{{ asset($profile->banner) }}" width="200px" alt="">
                                             <input type="file" class="form-control mt-3" name="banner">

@@ -1,4 +1,4 @@
-<div class="dashboard_sidebar">
+<div class="dashboard_sidebar z-index">
     <span class="close_icon">
         <i class="far fa-bars dash_bar"></i>
         <i class="far fa-times dash_close"></i>
@@ -13,6 +13,8 @@
                 chủ</a>
         </li>
         <li><a class="active" href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
+        <li><a href="{{ route('vendor.products.index') }}"><i class="far fa-layer-group"></i> Quản lý sản phẩm</a>
+        </li>
         <li><a href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-hotel"></i> Thông tin gian hàng</a></li>
         <li><a href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
         <li>

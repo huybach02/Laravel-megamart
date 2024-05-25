@@ -28,7 +28,7 @@ class ProductController extends Controller
   public function index()
   {
     // return $dataTable->render('admin.product.index');
-    $products = Product::latest()->get();
+    $products = Product::where("vendor_id", Auth::user()->id)->latest()->get();
     return view('admin.product.index', compact('products'));
   }
 

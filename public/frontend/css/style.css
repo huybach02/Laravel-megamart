@@ -6706,7 +6706,7 @@ WISHLIST PAGE START
   align-items: center;
   justify-content: end;
   padding: 5px 20px;
-  background: #fff !important;
+  /* background: #1b758b; */
 }
 
 .wsusd__dashboard_user {
@@ -6739,7 +6739,7 @@ WISHLIST PAGE START
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 9999;
 }
 
 .dash_logo {
@@ -9581,3 +9581,6 @@ a:not([href]):not([class]):hover {
   margin-bottom: 22px;
 }
 
+.delete-item{
+  margin: 0 5px !important;
+}

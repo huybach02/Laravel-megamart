@@ -8,24 +8,26 @@
                 <div class="breadcrumb-item active"><a href="#">Quản Lý Sản Phẩm</a></div>
                 <div class="breadcrumb-item"><a href="#">Sản Phẩm</a></div>
                 <div class="breadcrumb-item"><a href="#">Thư Viện Biến Thể</a></div>
+                <div class="breadcrumb-item"><a href="#">Thành Phần Của Biến Thể</a></div>
             </div>
         </div>
 
         <div class="section-body">
-            <a href="{{ route('admin.products.index') }}">
-                < Quay lại trang sản phẩm</a>
-                    <h2 class="section-title">Thư Viện Biến Thể Của Sản Phẩm <span
+            <a href="{{ route('admin.product-variant.index', ['product' => $product->id]) }}">
+                < Quay lại</a>
+                    <h2 class="section-title">Thành Phần Của Biến Thể <span
+                            class="text-primary h5">{{ $variant->name }}</span> Của Sản Phẩm <span
                             class="text-primary h5">{{ $product->name }}</span>
                     </h2>
-                    <p class="section-lead">Tuỳ chỉnh các biến thể của sản phẩm có trong trang web.</p>
+                    <p class="section-lead">Tuỳ chỉnh các thành phần của biến thể của sản phẩm có trong trang web.</p>
 
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4>Danh sách biến thể</h4>
+                                    <h4>Danh sách thành phần</h4>
                                     <div class="card-header-action">
-                                        <a href="{{ route('admin.product-variant.create', ['product' => $product->id]) }}"
+                                        <a href="{{ route('admin.product-variant-item.create', ['product' => $product->id, 'variant' => $variant->id]) }}"
                                             class="btn btn-primary mb-3">+
                                             Thêm mới</a>
                                     </div>
@@ -41,31 +43,43 @@
                                             <thead>
                                                 <tr>
                                                     <th style="text-align: left">Id</th>
-                                                    <th style="text-align: left">Tên biến thể</th>
+                                                    <th style="text-align: left">Tên thành phần</th>
+                                                    <th style="text-align: left">Thuộc biến thể</th>
+                                                    <th style="text-align: left">Giá cộng thêm</th>
+                                                    <th>Hiển thị mặc định</th>
                                                     <th>Trạng thái</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($variants as $variant)
+                                                @foreach ($variantItems as $item)
                                                     <tr>
-                                                        <td style="text-align: left">{{ $variant->id }}</td>
+                                                        <td style="text-align: left">{{ $item->id }}</td>
                                                         <td style="text-align: left">
-                                                            {{ $variant->name }}
+                                                            {{ $item->name }}
+                                                        </td>
+                                                        <td style="text-align: left">
+                                                            {{ $item->productVariant->name }}
+                                                        </td>
+                                                        <td style="text-align: left">
+                                                            {{ number_format($item->price) . 'đ' }}
+                                                        </td>
+                                                        <td style="text-align: left">
+                                                            {{ $item->is_default == 1 ? 'Có' : 'Không' }}
                                                         </td>
                                                         <td>
-                                                            @if ($variant->status == 1)
+                                                            @if ($item->status == 1)
                                                                 <label class='custom-switch mt-2'>
                                                                     <input type='checkbox' checked
                                                                         name='custom-switch-checkbox'
-                                                                        data-id='{{ $variant->id }}'
+                                                                        data-id='{{ $item->id }}'
                                                                         class='custom-switch-input change-status'>
                                                                     <span class='custom-switch-indicator'></span>
                                                                 </label>
                                                             @else
                                                                 <label class='custom-switch mt-2'>
                                                                     <input type='checkbox' name='custom-switch-checkbox'
-                                                                        data-id='{{ $variant->id }}'
+                                                                        data-id='{{ $item->id }}'
                                                                         class='custom-switch-input change-status'>
                                                                     <span class='custom-switch-indicator'></span>
                                                                 </label>
@@ -73,16 +87,11 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex justify-content-start">
-                                                                <a href="{{ route('admin.product-variant-item.index', ['product' => $product->id, 'variant' => $variant->id]) }}"
-                                                                    class='btn btn-info mr-2'>
-                                                                    <i class='fas fa-cog'></i>
-                                                                    Thành phần biến thể
-                                                                </a>
-                                                                <a href="{{ route('admin.product-variant.edit', $variant->id) }}"
+                                                                <a href="{{ route('admin.product-variant-item.edit', ['variantItemId' => $item->id, 'product' => $product->id, 'variant' => $variant->id]) }}"
                                                                     class='btn btn-primary mr-2'>
                                                                     <i class='fas fa-pen'></i>
                                                                 </a>
-                                                                <a href="{{ route('admin.product-variant.destroy', $variant->id) }}"
+                                                                <a href="{{ route('admin.product-variant-item.destroy', $item->id) }}"
                                                                     class='btn btn-danger mr-2 delete-item'>
                                                                     <i class='fas fa-trash'></i>
                                                                 </a>
@@ -113,7 +122,7 @@
                 let id = $(this).data('id')
 
                 $.ajax({
-                    url: "{{ route('admin.product-variant.change-status') }}",
+                    url: "{{ route('admin.product-variant-item.change-status') }}",
                     method: "PUT",
                     data: {
                         id: id,

@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
+use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
@@ -48,11 +49,20 @@ Route::resource('vendor-profile', AdminVendorProfileController::class);
 // Product
 Route::put("product/change-status", [ProductController::class, "changeStatus"])->name("products.change-status");
 Route::put("product-variant/change-status", [ProductVariantController::class, "changeStatus"])->name("product-variant.change-status");
+Route::put("product-variant-item/change-status", [ProductVariantItemController::class, "changeStatus"])->name("product-variant-item.change-status");
+
 Route::get("product/get-subcategories", [ProductController::class, "getSubCategories"])->name("products.get-subcategories");
 Route::get("product/get-childcategories", [ProductController::class, "getChildCategories"])->name("products.get-childcategories");
 Route::resource('products', ProductController::class);
 Route::resource('product-image-gallery', ProductImageGalleryController::class);
 Route::resource('product-variant', ProductVariantController::class);
+
+Route::get("product-variant-item", [ProductVariantItemController::class, "index"])->name("product-variant-item.index");
+Route::get("product-variant-item/create", [ProductVariantItemController::class, "create"])->name("product-variant-item.create");
+Route::post("product-variant-item", [ProductVariantItemController::class, "store"])->name("product-variant-item.store");
+Route::get("product-variant-item/{variantItemId}/edit", [ProductVariantItemController::class, "edit"])->name("product-variant-item.edit");
+Route::put("product-variant-item/{variantItemId}/update", [ProductVariantItemController::class, "update"])->name("product-variant-item.update");
+Route::delete("product-variant-item/{variantItemId}", [ProductVariantItemController::class, "destroy"])->name("product-variant-item.destroy");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

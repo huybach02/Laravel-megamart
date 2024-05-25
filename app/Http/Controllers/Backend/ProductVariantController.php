@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\ProductVariantItem;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -96,6 +97,8 @@ class ProductVariantController extends Controller
   public function destroy(string $id)
   {
     $variant = ProductVariant::findOrFail($id);
+
+    ProductVariantItem::where("product_variant_id", $variant->id)->delete();
 
     $variant->delete();
 

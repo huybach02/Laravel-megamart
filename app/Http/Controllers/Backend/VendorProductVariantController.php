@@ -8,6 +8,7 @@ use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorProductVariantController extends Controller
 {
@@ -17,6 +18,9 @@ class VendorProductVariantController extends Controller
   public function index(Request $request)
   {
     $product = Product::findOrFail($request->product);
+    if ($product->vendor_id != Auth::user()->vendor->id) {
+      abort(404);
+    }
     $variants = ProductVariant::where("product_id", $request->product)->latest()->get();
     return view("vendor.product.product-variant.index", compact("product", "variants"));
   }
@@ -67,6 +71,10 @@ class VendorProductVariantController extends Controller
   {
     $product = Product::findOrFail($productVariant->product_id);
 
+    if ($product->vendor_id != Auth::user()->vendor->id) {
+      abort(404);
+    }
+
     return view("vendor.product.product-variant.edit", compact("productVariant", "product"));
   }
 
@@ -75,6 +83,10 @@ class VendorProductVariantController extends Controller
    */
   public function update(Request $request, ProductVariant $productVariant)
   {
+    if ($productVariant->product->vendor_id != Auth::user()->vendor->id) {
+      abort(404);
+    }
+
     $request->validate([
       "name" => ["required", "max:100"],
       "status" => ["required"]
@@ -95,6 +107,10 @@ class VendorProductVariantController extends Controller
   public function destroy(string $id)
   {
     $variant = ProductVariant::findOrFail($id);
+
+    if ($variant->product->vendor_id != Auth::user()->vendor->id) {
+      abort(404);
+    }
 
     ProductVariantItem::where("product_variant_id", $variant->id)->delete();
 

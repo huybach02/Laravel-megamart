@@ -24,7 +24,7 @@
                                         <th>Giá khi giảm</th>
                                         <th style="text-align: left">Ngày bắt đầu</th>
                                         <th style="text-align: left">Ngày kết thúc</th>
-                                        <th>Loại sản phẩm</th>
+                                        <th>Trạng thái duyệt</th>
                                         <th style="text-align: center">Trạng thái</th>
                                         <th>Action</th>
                                     </tr>
@@ -42,22 +42,7 @@
                                             <td style="text-align: left">{{ $product->offer_start_date }}</td>
                                             <td style="text-align: left">{{ $product->offer_end_date }}</td>
                                             <td>
-                                                @switch($product->product_type)
-                                                    @case('new_product')
-                                                        Sản phẩm mới
-                                                    @break
-
-                                                    @case('featured_product')
-                                                        Sản phẩm nổi bật
-                                                    @break
-
-                                                    @case('top_product')
-                                                        Sản phẩm phổ biến
-                                                    @break
-
-                                                    @default
-                                                        Sản phẩm tốt nhất
-                                                @endswitch
+                                                {{ $product->is_approved == 1 ? 'Đã được duyệt' : 'Đang chờ duyệt' }}
                                             </td>
                                             <td>
                                                 @if ($product->status == 1)

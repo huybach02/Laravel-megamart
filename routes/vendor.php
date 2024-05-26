@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
+use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
 use App\Http\Controllers\Backend\VendorShopProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,8 +19,16 @@ Route::get("product/get-childcategories", [VendorProductController::class, "getC
 
 Route::put("product/change-status", [VendorProductController::class, "changeStatus"])->name("products.change-status");
 Route::put("product-variant/change-status", [VendorProductVariantController::class, "changeStatus"])->name("product-variant.change-status");
+Route::put("product-variant-item/change-status", [VendorProductVariantItemController::class, "changeStatus"])->name("product-variant-item.change-status");
 
 Route::resource("shop-profile", VendorShopProfileController::class);
 Route::resource("products", VendorProductController::class);
 Route::resource('product-image-gallery', VendorProductImageGalleryController::class);
 Route::resource('product-variant', VendorProductVariantController::class);
+
+Route::get("product-variant-item", [VendorProductVariantItemController::class, "index"])->name("product-variant-item.index");
+Route::get("product-variant-item/create", [VendorProductVariantItemController::class, "create"])->name("product-variant-item.create");
+Route::post("product-variant-item", [VendorProductVariantItemController::class, "store"])->name("product-variant-item.store");
+Route::get("product-variant-item/{variantItemId}/edit", [VendorProductVariantItemController::class, "edit"])->name("product-variant-item.edit");
+Route::put("product-variant-item/{variantItemId}/update", [VendorProductVariantItemController::class, "update"])->name("product-variant-item.update");
+Route::delete("product-variant-item/{variantItemId}", [VendorProductVariantItemController::class, "destroy"])->name("product-variant-item.destroy");

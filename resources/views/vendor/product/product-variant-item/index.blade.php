@@ -4,16 +4,19 @@
     <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
             <div class="dashboard_content mt-2 mt-md-0">
-                <a href="{{ route('vendor.products.index') }}" class="btn btn-primary mb-3">
+                <a href="{{ route('vendor.product-variant.index', ['product' => $product->id]) }}"
+                    class="btn btn-primary mb-3">
                     <i class="fas fa-caret-left"></i> Quay lại</a>
-                <h3><i class="far fa-list"></i> Thư viện biến thể của sản phẩm <u
-                        style="margin: 0 10px; color: green">{{ $product->name }}</u></h3>
+                <h3><i class="far fa-list"></i> Thư viện thành phần của biến thể <u
+                        style="margin: 0 10px; color: blue">{{ $variant->name }}</u> của sản phẩm
+                    <u style="margin: 0 10px; color: green">{{ $product->name }}</u>
+                </h3>
                 <div class="wsus__dashboard_profile">
                     <div class="wsus__dash_pro_area">
 
                         <div class="mb-4 d-flex justify-content-between align-items-center">
-                            <p class="h5 fw-bold text-primary">Danh Sách Biến Thể</p>
-                            <a href="{{ route('vendor.product-variant.create', ['product' => $product->id]) }}"
+                            <p class="h5 fw-bold text-primary">Danh Sách Thành Phần Của Biến Thể</p>
+                            <a href="{{ route('vendor.product-variant-item.create', ['product' => $product->id, 'variant' => $variant->id]) }}"
                                 class="btn btn-primary">+ Thêm Mới</a>
                         </div>
 
@@ -22,47 +25,54 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: left">Id</th>
-                                        <th style="text-align: left">Tên biến thể</th>
+                                        <th style="text-align: left">Tên thành phần</th>
+                                        <th style="text-align: left">Thuộc biến thể</th>
+                                        <th style="text-align: left">Giá cộng thêm</th>
+                                        <th>Hiển thị mặc định</th>
                                         <th>Trạng thái</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($variants as $variant)
+                                    @foreach ($variantItems as $item)
                                         <tr>
-                                            <td style="text-align: left">{{ $variant->id }}</td>
+                                            <td style="text-align: left">{{ $item->id }}</td>
                                             <td style="text-align: left">
-                                                {{ $variant->name }}
+                                                {{ $item->name }}
+                                            </td>
+                                            <td style="text-align: left">
+                                                {{ $item->productVariant->name }}
+                                            </td>
+                                            <td style="text-align: left">
+                                                {{ number_format($item->price) . 'đ' }}
+                                            </td>
+                                            <td style="text-align: left">
+                                                {{ $item->is_default == 1 ? 'Có' : 'Không' }}
                                             </td>
                                             <td>
-                                                @if ($variant->status == 1)
+                                                @if ($item->status == 1)
                                                     <label class='form-check form-switch mt-4'>
                                                         <input type='checkbox' checked name='custom-switch-checkbox'
-                                                            data-id='{{ $variant->id }}'
+                                                            data-id='{{ $item->id }}'
                                                             class='form-check-input mx-auto change-status'>
                                                     </label>
                                                 @else
                                                     <label class='form-check form-switch mt-4'>
                                                         <input type='checkbox' name='custom-switch-checkbox'
-                                                            data-id='{{ $variant->id }}'
+                                                            data-id='{{ $item->id }}'
                                                             class='form-check-input mx-auto change-status'>
                                                     </label>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-start">
-                                                    <a href="{{ route('vendor.product-variant.edit', $variant->id) }}"
+                                                    <a href="{{ route('vendor.product-variant-item.edit', ['variantItemId' => $item->id, 'product' => $product->id, 'variant' => $variant->id]) }}"
                                                         class='btn btn-primary mr-2'>
                                                         <i class='fas fa-pen'></i>
                                                     </a>
-                                                    <a href="{{ route('vendor.product-variant.destroy', $variant->id) }}"
+                                                    <a href="{{ route('vendor.product-variant-item.destroy', $item->id) }}"
                                                         class='btn btn-danger mr-2 delete-item'>
                                                         <i class='fas fa-trash'></i>
-                                                    </a>
-                                                    <a href="{{ route('vendor.product-variant-item.index', ['product' => $product->id, 'variant' => $variant->id]) }}"
-                                                        class='btn btn-secondary mr-2'>
-                                                        <i class='fas fa-cog'></i>
-                                                        Thành phần biến thể
                                                     </a>
 
                                                 </div>
@@ -89,7 +99,7 @@
                 let id = $(this).data('id')
 
                 $.ajax({
-                    url: "{{ route('vendor.product-variant.change-status') }}",
+                    url: "{{ route('vendor.product-variant-item.change-status') }}",
                     method: "PUT",
                     data: {
                         id: id,

@@ -7,7 +7,8 @@
                 <a href="{{ route('vendor.product-variant.index', ['product' => $product->id]) }}"
                     class="btn btn-primary mb-3">
                     <i class="fas fa-caret-left"></i> Quay lại</a>
-                <h3><i class="far fa-plus"></i> Thêm mới biến thể cho sản phẩm {{ $product->name }}</h3>
+                <h3><i class="far fa-plus"></i> Thêm mới biến thể cho sản phẩm <u
+                        style="margin: 0 10px; color: green">{{ $product->name }}</u></h3>
                 <div class="wsus__dashboard_profile">
                     <div class="wsus__dash_pro_area">
 

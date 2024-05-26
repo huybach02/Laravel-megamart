@@ -8,6 +8,7 @@ use App\Models\ProductImageGallery;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VendorProductImageGalleryController extends Controller
 {
@@ -19,6 +20,9 @@ class VendorProductImageGalleryController extends Controller
   public function index(Request $request)
   {
     $product = Product::findOrFail($request->product);
+    if ($product->vendor_id != Auth::user()->vendor->id) {
+      abort(404);
+    }
     $images = ProductImageGallery::where("product_id", $request->product)->latest()->get();
     return view("vendor.product.image-gallery.index", compact("product", "images"));
   }
@@ -87,6 +91,11 @@ class VendorProductImageGalleryController extends Controller
   public function destroy(string $id)
   {
     $image = ProductImageGallery::findOrFail($id);
+
+    if ($image->product->vendor_id !== Auth::user()->vendor->id) {
+      abort(404);
+    }
+
     $this->deleteImage($image->image);
     $image->delete();
 

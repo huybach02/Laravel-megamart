@@ -76,31 +76,30 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-start">
-                                                    <a href="{{ route('admin.products.edit', $product->id) }}"
+                                                    <a href="{{ route('vendor.products.edit', $product->id) }}"
                                                         class='btn btn-primary mr-1'>
                                                         <i class='fas fa-pen'></i>
                                                     </a>
-                                                    <a href="{{ route('admin.products.destroy', $product->id) }}"
+                                                    <a href="{{ route('vendor.products.destroy', $product->id) }}"
                                                         class='btn btn-danger mr-2 delete-item'>
                                                         <i class='fas fa-trash'></i>
                                                     </a>
-                                                    <div class="dropdown dropleft d-inline">
-                                                        <button class="btn btn-primary dropdown-toggle" type="button"
-                                                            id="dropdownMenuButton2" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
+                                                    <div class="btn-group dropdown">
+                                                        <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="fas fa-cog"></i>
                                                         </button>
-                                                        <div class="dropdown-menu" x-placement="bottom-start"
-                                                            style="position: absolute; transform: translate3d(0px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <ul class="dropdown-menu">
                                                             <a class="dropdown-item has-icon"
-                                                                href="{{ route('admin.product-image-gallery.index', ['product' => $product->id]) }}"><i
+                                                                href="{{ route('vendor.product-image-gallery.index', ['product' => $product->id]) }}"><i
                                                                     class="far fa-image"></i> Thư viện ảnh</a>
                                                             <a class="dropdown-item has-icon"
-                                                                href="{{ route('admin.product-variant.index', ['product' => $product->id]) }}"><i
+                                                                href="{{ route('vendor.product-variant.index', ['product' => $product->id]) }}"><i
                                                                     class="fas fa-list"></i> Biến thể của sản
                                                                 phẩm</a>
-                                                        </div>
+                                                        </ul>
                                                     </div>
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -125,7 +124,7 @@
                 let id = $(this).data('id')
 
                 $.ajax({
-                    url: "{{ route('admin.brand.change-status') }}",
+                    url: "{{ route('vendor.products.change-status') }}",
                     method: "PUT",
                     data: {
                         id: id,

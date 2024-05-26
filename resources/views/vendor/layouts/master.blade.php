@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
     <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
@@ -58,8 +59,10 @@
   ==============================-->
     <div class="wsus__dashboard_menu">
         <div class="wsusd__dashboard_user">
-            <img src="images/dashboard_user.jpg" alt="img" class="img-fluid">
-            <p>anik roy</p>
+            <img src="{{ asset(Auth::user()->image) }}" alt="img" class="img-fluid">
+            <p>Xin chào,
+            <p class="text-primary">{{ Auth::user()->name }}</p>
+            </p>
         </div>
     </div>
     <!--=============================
@@ -133,6 +136,8 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="{{ asset('backend/assets/modules/moment.min.js') }}"></script>
     <script src="{{ asset('backend/assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
@@ -147,6 +152,68 @@
                 format: "YYYY-MM-DD"
             },
             singleDatePicker: true
+        })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $('body').on('click', '.delete-item', function(event) {
+                event.preventDefault();
+
+                let deleteUrl = $(this).attr('href');
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn xoá?',
+                    text: "Dữ liệu không thể khôi phục sau khi xoá",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Đồng ý',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'DELETE',
+                            url: deleteUrl,
+
+                            success: function(data) {
+
+                                if (data.status == 'success') {
+                                    Swal.fire({
+                                        title: 'Thành công!',
+                                        text: data.message,
+                                        icon: 'success',
+                                        willClose: () => {
+                                            location
+                                                .reload(); // Load lại trang sau khi đóng thông báo
+                                        }
+                                    });
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Không thành công',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            }
+                        })
+                    }
+                })
+            })
+
         })
     </script>
 

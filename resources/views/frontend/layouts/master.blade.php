@@ -158,6 +158,8 @@
             document.getElementById('loading').style.display = 'none';
         };
     </script> --}}
+
+    @stack('scripts')
 </body>
 
 </html>

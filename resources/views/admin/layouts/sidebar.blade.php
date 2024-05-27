@@ -72,6 +72,16 @@
                 </ul>
             </li>
 
+            <li class="dropdown {{ setActive(['admin.flash-sale.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-calendar-check"></i>
+                    <span>Quản Lý Khuyến Mãi</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.flash-sale.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.flash-sale.index') }}">Flash Sale</a></li>
+                </ul>
+            </li>
+
         </ul>
 
     </aside>

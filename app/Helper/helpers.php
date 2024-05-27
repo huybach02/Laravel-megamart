@@ -12,3 +12,39 @@ function setActive(array $route)
     }
   }
 }
+
+function checkDisCount($product)
+{
+  $currentDate = date("Y-m-d");
+
+  if ($product->offer_end_date > $product->offer_start_date && $product->offer_start_date <= $currentDate && $currentDate <= $product->offer_end_date && $product->offer_price < $product->price) {
+    return true;
+  }
+
+  return false;
+}
+
+function calculateDiscountPercent($product)
+{
+  if ($product->offer_price < $product->price) {
+    return round((($product->price - $product->offer_price) / $product->price) * 100, 0);
+  }
+}
+
+function productType($product)
+{
+  switch ($product->product_type) {
+    case 'new_product':
+      return "Mới";
+      break;
+    case 'featured_product':
+      return "Nổi bật";
+      break;
+    case 'top_product':
+      return "Phổ biến";
+      break;
+    default:
+      return "Tốt nhất";
+      break;
+  }
+}

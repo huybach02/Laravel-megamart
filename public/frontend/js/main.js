@@ -300,12 +300,12 @@ $(function () {
     d.setDate(d.getDate() + 90);
 
     // default example
-    simplyCountdown(".simply-countdown-one", {
-        year: d.getFullYear(),
-        month: d.getMonth() + 1,
-        day: d.getDate(),
-        enableUtc: true,
-    });
+    // simplyCountdown(".simply-countdown-one", {
+    //     year: d.getFullYear(),
+    //     month: d.getMonth() + 1,
+    //     day: d.getDate(),
+    //     enableUtc: true,
+    // });
 
     //*==========SCROLL BUTTON==========
     $(".wsus__scroll_btn").on("click", function () {

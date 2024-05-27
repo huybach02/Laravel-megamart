@@ -40,15 +40,21 @@
                 </ul>
             </li>
 
-            <li class="dropdown {{ setActive(['admin.brand.*', 'admin.products.*']) }}">
+            <li
+                class="dropdown {{ setActive(['admin.brand.*', 'admin.products.index', 'admin.seller-products.*', 'admin.seller-pending-products.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                         class="fas fa-layer-group"></i>
                     <span>Quản Lý Sản Phẩm</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.brand.*']) }}"><a class="nav-link"
                             href="{{ route('admin.brand.index') }}">Thương Hiệu</a></li>
-                    <li class="{{ setActive(['admin.products.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.products.index') }}">Sản Phẩm</a></li>
+                    <li class="{{ setActive(['admin.products.index']) }}">
+                        <a class="nav-link" href="{{ route('admin.products.index') }}">Sản Phẩm Của MegaMart</a>
+                    </li>
+                    <li class="{{ setActive(['admin.seller-products.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.seller-products.index') }}">Sản Phẩm Của Người Bán</a></li>
+                    <li class="{{ setActive(['admin.seller-pending-products.index']) }}"><a class="nav-link"
+                            href="{{ route('admin.seller-pending-products.index') }}">Sản Phẩm Đang Chờ Duyệt</a></li>
 
                 </ul>
             </li>

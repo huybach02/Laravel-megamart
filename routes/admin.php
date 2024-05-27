@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +64,10 @@ Route::post("product-variant-item", [ProductVariantItemController::class, "store
 Route::get("product-variant-item/{variantItemId}/edit", [ProductVariantItemController::class, "edit"])->name("product-variant-item.edit");
 Route::put("product-variant-item/{variantItemId}/update", [ProductVariantItemController::class, "update"])->name("product-variant-item.update");
 Route::delete("product-variant-item/{variantItemId}", [ProductVariantItemController::class, "destroy"])->name("product-variant-item.destroy");
+
+Route::get("seller-products", [SellerProductController::class, "index"])->name("seller-products.index");
+Route::get("seller-pending-products", [SellerProductController::class, "pendingProducts"])->name("seller-pending-products.index");
+Route::put("change-approve-status", [SellerProductController::class, "changeApproveStatus"])->name("change-approve-status");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

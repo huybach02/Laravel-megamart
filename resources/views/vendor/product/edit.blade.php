@@ -127,7 +127,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="mb-2 fw-bold">Giá sản phẩm (VNĐ)</label>
+                                        <label class="mb-2 fw-bold">Giá gốc của sản phẩm (VNĐ)</label>
                                         <input type="text" class="form-control" name="price"
                                             placeholder="Ví dụ: 15000000" value="{{ old('price', $product->price) }}">
                                         @if ($errors->has('price'))
@@ -135,7 +135,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label class="mb-2 fw-bold">Giá sau khi giảm (Nếu có) (VNĐ)</label>
+                                        <label class="mb-2 fw-bold">Giá bán thực tế của sản phẩm (VNĐ)</label>
                                         <input type="text" class="form-control" name="offer_price"
                                             placeholder="Ví dụ: 15000000"
                                             value="{{ old('offer_price', $product->offer_price) }}">

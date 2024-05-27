@@ -6,12 +6,12 @@
             <h1>Quản Lý Sản Phẩm</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Quản Lý Sản Phẩm</a></div>
-                <div class="breadcrumb-item"><a href="#">Sản Phẩm Của MegaMart</a></div>
+                <div class="breadcrumb-item"><a href="#">Sản Phẩm Của Người Bán</a></div>
             </div>
         </div>
 
         <div class="section-body">
-            <h2 class="section-title">Sản Phẩm Của MegaMart</h2>
+            <h2 class="section-title">Sản Phẩm Của Người Bán</h2>
             <p class="section-lead">Tuỳ chỉnh các sản phẩm có trong trang web.</p>
 
             <div class="row">
@@ -19,9 +19,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h4>Danh sách sản phẩm</h4>
-                            <div class="card-header-action">
+                            {{-- <div class="card-header-action">
                                 <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">+ Thêm mới</a>
-                            </div>
+                            </div> --}}
                         </div>
                         {{-- <div class="card-body">
                             <div class="table-responsive">
@@ -40,7 +40,7 @@
                                             <th>Giá bán thực tế của sản phẩm</th>
                                             <th style="text-align: left">Ngày bắt đầu giảm</th>
                                             <th style="text-align: left">Ngày kết thúc giảm</th>
-                                            <th>Loại sản phẩm</th>
+                                            <th>Gian hàng</th>
                                             <th>Trạng thái</th>
                                             <th>Action</th>
                                         </tr>
@@ -62,39 +62,19 @@
                                                     {{ $product->offer_start_date !== $product->offer_end_date ? $product->offer_end_date : '' }}
                                                 </td>
                                                 <td>
-                                                    @switch($product->product_type)
-                                                        @case('new_product')
-                                                            Sản phẩm mới
-                                                        @break
-
-                                                        @case('featured_product')
-                                                            Sản phẩm nổi bật
-                                                        @break
-
-                                                        @case('top_product')
-                                                            Sản phẩm phổ biến
-                                                        @break
-
-                                                        @default
-                                                            Sản phẩm tốt nhất
-                                                    @endswitch
+                                                    {{ $product->vendor->name }}
                                                 </td>
                                                 <td>
-                                                    @if ($product->status == 1)
-                                                        <label class='custom-switch mt-2'>
-                                                            <input type='checkbox' checked name='custom-switch-checkbox'
-                                                                data-id='{{ $product->id }}'
-                                                                class='custom-switch-input change-status'>
-                                                            <span class='custom-switch-indicator'></span>
-                                                        </label>
-                                                    @else
-                                                        <label class='custom-switch mt-2'>
-                                                            <input type='checkbox' name='custom-switch-checkbox'
-                                                                data-id='{{ $product->id }}'
-                                                                class='custom-switch-input change-status'>
-                                                            <span class='custom-switch-indicator'></span>
-                                                        </label>
-                                                    @endif
+                                                    <select class="form-control is_approved" name="is_approved"
+                                                        id="" data-id="{{ $product->id }}">
+                                                        <option {{ $product->is_approved == 0 ? 'selected' : '' }}
+                                                            value="0">
+                                                            Đang chờ duyệt</option>
+                                                        <option {{ $product->is_approved == 1 ? 'selected' : '' }}
+                                                            value="1">Xác nhận duyệt</option>
+                                                        <option {{ $product->is_approved == 2 ? 'selected' : '' }}
+                                                            value="2">Khoá sản phẩm</option>
+                                                    </select>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex justify-content-start">
@@ -156,6 +136,27 @@
                     },
                     success: function(data) {
                         toastr.success(data.message)
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    }
+                })
+            })
+
+            $("body").on("change", ".is_approved", function() {
+                let value = $(this).val()
+                let id = $(this).data('id')
+
+                $.ajax({
+                    url: "{{ route('admin.change-approve-status') }}",
+                    method: "PUT",
+                    data: {
+                        id: id,
+                        value: value
+                    },
+                    success: function(data) {
+                        toastr.success(data.message)
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.log(error);

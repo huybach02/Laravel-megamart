@@ -57,6 +57,7 @@ class ProductController extends Controller
       "short_description" => ["required", "max:200"],
       "long_description" => ["required"],
       "price" => ["required", "numeric"],
+      "offer_price" => ["required", "numeric"],
       "quantity" => ["required", "numeric"],
       "status" => ["required"],
       "seo_title" => ["nullable", "max:200"],
@@ -130,6 +131,7 @@ class ProductController extends Controller
       "short_description" => ["required", "max:200"],
       "long_description" => ["required"],
       "price" => ["required", "numeric"],
+      "offer_price" => ["required", "numeric"],
       "quantity" => ["required", "numeric"],
       "status" => ["required"],
       "seo_title" => ["nullable", "max:200"],
@@ -141,7 +143,7 @@ class ProductController extends Controller
     $product->thumb_image = $imagePath ?? $product->thumb_image;
     $product->name = $request->name;
     $product->slug = Str::slug($request->name);
-    $product->vendor_id = Auth::user()->vendor->id;
+    $product->vendor_id = $product->vendor_id;
     $product->category_id = $request->category;
     $product->sub_category_id = $request->sub_category;
     $product->child_category_id = $request->child_category;
@@ -157,14 +159,14 @@ class ProductController extends Controller
     $product->video_link = $request->video_link;
     $product->status = $request->status;
     $product->product_type = $request->product_type;
-    $product->is_approved = 1;
+    $product->is_approved = $product->is_approved;
     $product->seo_title = $request->seo_title;
     $product->seo_description = $request->seo_description;
     $product->save();
 
     Toastr::success("Cập nhật sản phẩm thành công", "Thành công");
 
-    return redirect()->route("admin.products.index");
+    return $product->is_approved == 0 ? redirect()->route("admin.seller-pending-products.index") : ($product->vendor_id == Auth::user()->id ? redirect()->route("admin.products.index") : redirect()->route("admin.seller-products.index"));
   }
 
   /**

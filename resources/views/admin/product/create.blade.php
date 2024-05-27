@@ -109,7 +109,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Giá sản phẩm (VNĐ)</label>
+                                            <label>Giá gốc của sản phẩm (VNĐ)</label>
                                             <input type="text" class="form-control" name="price"
                                                 placeholder="Ví dụ: 15000000" value="{{ old('price') }}">
                                             @if ($errors->has('price'))
@@ -117,7 +117,7 @@
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label>Giá sau khi giảm (Nếu có) (VNĐ)</label>
+                                            <label>Giá bán thực tế của sản phẩm (VNĐ)</label>
                                             <input type="text" class="form-control" name="offer_price"
                                                 placeholder="Ví dụ: 15000000" value="{{ old('offer_price') }}">
                                             @if ($errors->has('offer_price'))
@@ -127,7 +127,7 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>Ngày bắt đầu giảm giá</label>
+                                                    <label>Ngày bắt đầu giảm giá (Nếu có)</label>
                                                     <input type="text" name="offer_start_date"
                                                         class="form-control datepicker"
                                                         value="{{ old('offer_start_date') }}">
@@ -138,7 +138,7 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>Ngày kết thúc giảm giá</label>
+                                                    <label>Ngày kết thúc giảm giá (Nếu có)</label>
                                                     <input type="text" name="offer_end_date"
                                                         class="form-control datepicker"
                                                         value="{{ old('offer_end_date') }}">

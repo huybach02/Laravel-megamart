@@ -20,8 +20,8 @@
                                         <th style="text-align: left">Id</th>
                                         <th style="text-align: left">Hình ảnh</th>
                                         <th>Tên sản phẩm</th>
-                                        <th>Giá sản phẩm</th>
-                                        <th>Giá khi giảm</th>
+                                        <th>Giá gốc</th>
+                                        <th>Giá bán thực tế</th>
                                         <th style="text-align: left">Ngày bắt đầu</th>
                                         <th style="text-align: left">Ngày kết thúc</th>
                                         <th>Trạng thái duyệt</th>
@@ -39,10 +39,25 @@
                                             <td>{{ $product->name }}</td>
                                             <td>{{ number_format($product->price) . 'đ' }}</td>
                                             <td>{{ number_format($product->offer_price) . 'đ' }}</td>
-                                            <td style="text-align: left">{{ $product->offer_start_date }}</td>
-                                            <td style="text-align: left">{{ $product->offer_end_date }}</td>
+                                            <td style="text-align: left">
+                                                {{ $product->offer_start_date !== $product->offer_end_date ? $product->offer_start_date : '' }}
+                                            </td>
+                                            <td style="text-align: left">
+                                                {{ $product->offer_start_date !== $product->offer_end_date ? $product->offer_end_date : '' }}
+                                            </td>
                                             <td>
-                                                {{ $product->is_approved == 1 ? 'Đã được duyệt' : 'Đang chờ duyệt' }}
+                                                @switch($product->is_approved)
+                                                    @case(0)
+                                                        <span class="badge bg-warning">Đang chờ duyệt</span>
+                                                    @break
+
+                                                    @case(1)
+                                                        <span class="badge bg-success">Đã được duyệt</span>
+                                                    @break
+
+                                                    @default
+                                                        <span class="badge bg-danger">Đã bị khoá</span>
+                                                @endswitch
                                             </td>
                                             <td>
                                                 @if ($product->status == 1)

@@ -12,8 +12,9 @@
         </div>
 
         <div class="section-body">
-            <a href="{{ route('admin.products.index') }}">
-                < Quay lại trang sản phẩm</a>
+            <a
+                href="{{ $product->vendor_id == Auth::user()->id ? route('admin.products.index') : ($product->id_approved == 1 ? route('admin.seller-products.index') : route('admin.seller-pending-products.index')) }}">
+                < Quay lại</a>
                     <h2 class="section-title">Thư Viện Biến Thể Của Sản Phẩm <span
                             class="text-primary h5">{{ $product->name }}</span>
                     </h2>

@@ -3632,7 +3632,7 @@ PRODUCT DETAILS START
 .wsus__selectbox h5 {
   text-transform: capitalize;
   font-weight: 400;
-  width: 90px;
+  /* width: 100%; */
   font-size: 16px;
 }
 
@@ -9583,4 +9583,8 @@ a:not([href]):not([class]):hover {
 
 .delete-item{
   margin: 0 5px !important;
+}
+
+#sticky_pro_zoom{
+  z-index: 9999 !important;
 }

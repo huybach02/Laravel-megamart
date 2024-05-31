@@ -2,8 +2,8 @@
 
 @section('content')
     <!--==========================
-                                                                                                                                                                                                                                                  PRODUCT MODAL VIEW START
-                                                                                                                                                                                                                                                ===========================-->
+                                                                                                                                                                                                                                                                      PRODUCT MODAL VIEW START
+                                                                                                                                                                                                                                                                    ===========================-->
     <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -141,13 +141,13 @@
         </div>
     </section>
     <!--==========================
-                                                                                                                                                                                                                                                PRODUCT MODAL VIEW END
-                                                                                                                                                                                                                                                ===========================-->
+                                                                                                                                                                                                                                                                    PRODUCT MODAL VIEW END
+                                                                                                                                                                                                                                                                    ===========================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                  BREADCRUMB START
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      BREADCRUMB START
+                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -165,13 +165,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                  BREADCRUMB END
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      BREADCRUMB END
+                                                                                                                                                                                                                                                                    ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                  PRODUCT DETAILS START
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      PRODUCT DETAILS START
+                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -701,13 +701,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                  PRODUCT DETAILS END
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      PRODUCT DETAILS END
+                                                                                                                                                                                                                                                                    ==============================-->
 
 
     <!--============================
-                                                                                                                                                                                                                                                  RELATED PRODUCT START
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      RELATED PRODUCT START
+                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -871,15 +871,20 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                                                                                                  RELATED PRODUCT END
-                                                                                                                                                                                                                                                ==============================-->
+                                                                                                                                                                                                                                                                      RELATED PRODUCT END
+                                                                                                                                                                                                                                                                    ==============================-->
 @endsection
 
 
 @push('scripts')
     <script>
         $(document).ready(function() {
+            setTimeout(function() {
+                $("#exzoom").removeClass('hidden'); // Hiển thị slider sau khi exzoom được khởi tạo
+            }, 100); // Delay 1 giây (1000 milliseconds)
+        });
 
+        $(document).ready(function() {
             simplyCountdown(".simply-countdown-example", {
                 year: {{ date('Y', strtotime($product->offer_end_date)) }},
                 month: {{ date('m', strtotime($product->offer_end_date)) }},

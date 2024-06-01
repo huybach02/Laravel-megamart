@@ -7322,7 +7322,7 @@ WISHLIST PAGE START
   align-items: center;
   margin-top: 15px;
   font-size: 16px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   flex-wrap: wrap;
 }
 

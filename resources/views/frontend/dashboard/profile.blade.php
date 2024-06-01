@@ -9,7 +9,7 @@
                     <div class="wsus__dash_pro_area">
 
                         <div class="row">
-                            <form method="POST" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('vendor.profile.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -19,9 +19,10 @@
                                     <div class="row">
                                         <div class="col-xl-6 col-md-6">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="fas fa-user-tie"></i>
-                                                    <input name="name" type="text" placeholder="Họ và tên"
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Tên người dùng</label>
+                                                    <input name="name" class="form-control" type="text"
+                                                        placeholder="Họ và tên"
                                                         value="{{ old('name', Auth::user()->name) }}">
                                                 </div>
                                                 @if ($errors->has('name'))
@@ -33,9 +34,10 @@
                                         </div>
                                         <div class="col-xl-6 col-md-6">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="far fa-phone-alt"></i>
-                                                    <input name="phone" type="text" placeholder="Số điện thoại"
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Điện thoại</label>
+                                                    <input name="phone" class="form-control" type="text"
+                                                        placeholder="Số điện thoại"
                                                         value="{{ old('phone', Auth::user()->phone) }}">
                                                 </div>
                                                 @if ($errors->has('phone'))
@@ -47,10 +49,10 @@
                                         </div>
                                         <div class="col-xl-6 col-md-6">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="fal fa-envelope-open"></i>
-                                                    <input name="email" type="email" placeholder="Email"
-                                                        value="{{ old('email', Auth::user()->email) }}">
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Email</label>
+                                                    <input name="email" class="form-control" type="email"
+                                                        placeholder="Email" value="{{ old('email', Auth::user()->email) }}">
                                                 </div>
                                                 @if ($errors->has('email'))
                                                     <p class="text-danger d-flex justify-content-end mt-1">
@@ -80,7 +82,7 @@
                                 </div>
                             </form>
 
-                            <form method="POST" action="{{ route('user.profile.update.password') }}">
+                            <form method="POST" action="{{ route('vendor.profile.update.password') }}">
                                 @csrf
 
                                 <h5 class="text-primary fw-bold my-3">Thay đổi mật khẩu</h5>
@@ -89,10 +91,10 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-md-6">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="fas fa-unlock-alt"></i>
-                                                    <input name="current_password" type="password"
-                                                        placeholder="Mật khẩu hiện tại">
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Mật khẩu hiện tại</label>
+                                                    <input name="current_password" class="form-control" type="password"
+                                                        placeholder="********">
                                                 </div>
                                                 @if ($errors->has('current_password'))
                                                     <p class="text-danger d-flex justify-content-end mt-1">
@@ -103,9 +105,10 @@
                                         </div>
                                         <div class="col-xl-4 col-md-6">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="fas fa-lock-alt"></i>
-                                                    <input name="password" type="password" placeholder="Mật khẩu mới">
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Mật khẩu mới</label>
+                                                    <input name="password" class="form-control" type="password"
+                                                        placeholder="********">
                                                 </div>
                                                 @if ($errors->has('password'))
                                                     <p class="text-danger d-flex justify-content-end mt-1">
@@ -116,10 +119,10 @@
                                         </div>
                                         <div class="col-xl-4">
                                             <div class="mb-3">
-                                                <div class="wsus__dash_pro_single">
-                                                    <i class="fas fa-lock-alt"></i>
-                                                    <input name="password_confirmation" type="password"
-                                                        placeholder="Xác nhận mật khẩu mới">
+                                                <div class="form-group mb-3">
+                                                    <label class="mb-2 fw-bold h6">Xác nhận mật khẩu mới</label>
+                                                    <input name="password_confirmation" class="form-control" type="password"
+                                                        placeholder="********">
                                                 </div>
                                                 @if ($errors->has('password_confirmation'))
                                                     <p class="text-danger d-flex justify-content-end mt-1">

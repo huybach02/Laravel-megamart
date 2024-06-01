@@ -59,16 +59,15 @@
                 </ul>
             </li>
 
-            <li class="dropdown {{ setActive(['admin.vendor-profile.*']) }}">
+            <li class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.shipping-rule.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-briefcase"></i>
                     <span>Quản Lý Bán Hàng</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-profile.index') }}">Thông Tin Gian Hàng</a></li>
-                    {{-- <li class="{{ setActive(['admin.sub-category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.sub-category.index') }}">Danh mục cấp 2</a></li>
-                    <li class="{{ setActive(['admin.child-category.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.child-category.index') }}">Danh mục cấp 3</a></li> --}}
+                    <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.shipping-rule.index') }}">Thông Tin Vận Chuyển</a></li>
+
                 </ul>
             </li>
 

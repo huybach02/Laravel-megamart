@@ -1,9 +1,13 @@
 @extends('frontend.layouts.master')
 
+@section('title')
+    {{ $settings->site_name }} | Đăng ký
+@endsection
+
 @section('content')
     <!--============================
-                                                                                                                                                                             BREADCRUMB START
-                                                                                                                                                                        ==============================-->
+                                                                                                                                                                                 BREADCRUMB START
+                                                                                                                                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="breadcrumb_overlay"></div>
         <div class="wsus_breadcrumb_overlay">
@@ -21,13 +25,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                          BREADCRUMB END
-                                                                                                                                                                        ==============================-->
+                                                                                                                                                                              BREADCRUMB END
+                                                                                                                                                                            ==============================-->
 
 
     <!--============================
-                                                                                                                                                                         LOGIN/REGISTER PAGE START
-                                                                                                                                                                        ==============================-->
+                                                                                                                                                                             LOGIN/REGISTER PAGE START
+                                                                                                                                                                            ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">

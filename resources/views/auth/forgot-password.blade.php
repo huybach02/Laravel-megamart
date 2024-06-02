@@ -1,9 +1,13 @@
 @extends('frontend.layouts.master')
 
+@section('title')
+    {{ $settings->site_name }} | Quên mật khẩu
+@endsection
+
 @section('content')
     <!--============================
-                                                            BREADCRUMB START
-                                                        ==============================-->
+                                                                BREADCRUMB START
+                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -20,13 +24,13 @@
         </div>
     </section>
     <!--============================
-                                                          BREADCRUMB END
-                                                        ==============================-->
+                                                              BREADCRUMB END
+                                                            ==============================-->
 
 
     <!--============================
-                                                          FORGET PASSWORD START
-                                                        ==============================-->
+                                                              FORGET PASSWORD START
+                                                            ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -72,6 +76,6 @@
         </div>
     </section>
     <!--============================
-                                                          FORGET PASSWORD END
-                                                        ==============================-->
+                                                              FORGET PASSWORD END
+                                                            ==============================-->
 @endsection

@@ -1,5 +1,9 @@
 @extends('vendor.layouts.master')
 
+@section('title')
+    {{ $settings->site_name }} | Gian hàng | Sản phẩm
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">

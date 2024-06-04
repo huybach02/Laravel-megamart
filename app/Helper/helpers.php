@@ -2,6 +2,8 @@
 
 // Set sidebar item active
 
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 function setActive(array $route)
 {
   if (is_array($route)) {
@@ -47,4 +49,15 @@ function productType($product)
       return "Tốt nhất";
       break;
   }
+}
+
+function getCartTotal()
+{
+  $total = 0;
+
+  foreach (Cart::content() as $item) {
+    $total += ($item->price + $item->options->variants_total) * $item->qty;
+  }
+
+  return number_format($total);
 }

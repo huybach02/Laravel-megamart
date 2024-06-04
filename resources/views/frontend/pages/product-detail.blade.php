@@ -5,9 +5,6 @@
 @endsection
 
 @section('content')
-    <!--==========================
-                                                                                                                                                                                                                                                                              PRODUCT MODAL VIEW START
-                                                                                                                                                                                                                                                                            ===========================-->
     {{-- <section class="product_popup_modal">
         <div class="modal fade" id="exampleModal2" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
@@ -144,14 +141,7 @@
             </div>
         </div>
     </section> --}}
-    <!--==========================
-                                                                                                                                                                                                                                                                            PRODUCT MODAL VIEW END
-                                                                                                                                                                                                                                                                            ===========================-->
 
-
-    <!--============================
-                                                                                                                                                                                                                                                                              BREADCRUMB START
-                                                                                                                                                                                                                                                                            ==============================-->
     <section id="wsus__breadcrumb">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -168,14 +158,7 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                                                                                                                                                                                                              BREADCRUMB END
-                                                                                                                                                                                                                                                                            ==============================-->
 
-
-    <!--============================
-                                                                                                                                                                                                                                                                              PRODUCT DETAILS START
-                                                                                                                                                                                                                                                                            ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="wsus__details_bg">
@@ -212,7 +195,7 @@
                     </div>
                     <div class="col-xl-5 col-md-7 col-lg-7">
                         <div class="wsus__pro_details_text">
-                            <a class="title" href="#">{{ $product->name }}</a>
+                            <p class="title" href="#">{{ $product->name }}</p>
                             <p class="wsus__stock_area">
 
                                 @if ($product->quantity > 0)
@@ -240,6 +223,8 @@
                                 <span>20 review</span>
                             </p>
 
+                            <p class="description"><strong>Mô tả ngắn:</strong> {{ $product->short_description }}</p>
+
                             @if (checkDiscount($product))
                                 <div class="wsus_pro_hot_deals">
                                     <h5>Giảm giá kết thúc sau : </h5>
@@ -247,42 +232,60 @@
                                 </div>
                             @endif
 
-                            <div class="wsus__quentity">
-                                <h5><strong>Số lượng mua :</strong></h5>
-                                <form class="select_number">
-                                    <input class="number_area" type="text" min="1" max="100"
-                                        value="1" />
-                                </form>
-                            </div>
-                            <div class="wsus__selectbox">
-                                <div class="row">
+                            <form class="shopping-cart-form" action="">
 
-                                    @foreach ($product->variants as $variant)
-                                        <div class="col-xl-6 col-sm-6">
-                                            <h5 class="mb-2"><strong>{{ $variant->name }}</strong>:</h5>
-                                            <select class="select_2" name="state">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                                                @foreach ($variant->productVariantItems as $item)
-                                                    <option {{ $item->is_default == 1 ? 'selected' : '' }}>
-                                                        {{ $item->name }}
-                                                        {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endforeach
-
+                                <div class="d-flex gap-3 mt-3 align-items-center">
+                                    {{-- <div class="wsus__quentity"> --}}
+                                    <h5><strong>Số lượng mua :</strong></h5>
+                                    {{-- <form class="select_number"> --}}
+                                    <input class="form-control w-25" name="quantity" type="number" min="1"
+                                        max="{{ $product->quantity == 0 ? 1 : $product->quantity }}" value="1" />
+                                    {{-- </form> --}}
+                                    {{-- </div> --}}
                                 </div>
-                            </div>
-                            <ul class="wsus__button_area">
-                                <li><a class="add_cart" href="#">Thêm vào giỏ hàng</a></li>
-                                <li><a class="buy_now" href="#">Mua ngay</a></li>
-                                <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                <li><a href="#"><i class="far fa-random"></i></a></li>
-                            </ul>
-                            <p class="brand_model"><span>Mã Sản Phẩm :</span> {{ $product->sku }}</p>
-                            <p class="brand_model"><span>Thương Hiệu :</span> {{ $product->brand->name }}</p>
-                            <p class="description"><strong>Mô tả ngắn:</strong> {{ $product->short_description }}</p>
+                                <div class="wsus__selectbox">
+                                    <div class="row">
+
+                                        @foreach ($product->variants as $variant)
+                                            @if ($variant->status !== 0)
+                                                <div class="col-xl-6 col-sm-6">
+                                                    <h5 class="mb-2"><strong>{{ $variant->name }}</strong>:</h5>
+                                                    <select class="form-select" name="variants_items[]">
+
+                                                        @foreach ($variant->productVariantItems as $item)
+                                                            @if ($item->status !== 0)
+                                                                <option value="{{ $item->id }}"
+                                                                    {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                                    {{ $item->name }}
+                                                                    {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @endif
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                                <ul class="wsus__button_area">
+                                    <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button>
+                                    </li>
+                                    <li><a class="buy_now" href="#">Mua ngay</a></li>
+                                    <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="far fa-random"></i></a></li>
+                                </ul>
+
+                            </form>
+
+                            <p class="brand_model"><small><strong>Mã Sản Phẩm :</strong></small>
+                                <small>{{ $product->sku }}</small>
+                            </p>
+                            <p class="brand_model"><small><strong>Thương Hiệu :</strong></small>
+                                <small>{{ $product->brand->name }}</small>
+                            </p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -704,14 +707,8 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                                                                                                                                                                                                              PRODUCT DETAILS END
-                                                                                                                                                                                                                                                                            ==============================-->
 
 
-    <!--============================
-                                                                                                                                                                                                                                                                              RELATED PRODUCT START
-                                                                                                                                                                                                                                                                            ==============================-->
     <section id="wsus__flash_sell">
         <div class="container">
             <div class="row">
@@ -874,9 +871,6 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                                                                                                                                                                                                              RELATED PRODUCT END
-                                                                                                                                                                                                                                                                            ==============================-->
 @endsection
 
 

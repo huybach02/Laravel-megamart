@@ -38,72 +38,54 @@
                     <ul class="wsus__icon_area">
                         <li><a href="wishlist.html"><i class="fal fa-heart"></i><span>05</span></a></li>
                         <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
-                        <li><a class="wsus__cart_icon" href="#"><i
-                                    class="fal fa-shopping-bag"></i><span>04</span></a></li>
+                        <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span
+                                    id="cart-count">{{ Cart::content()->count() }}</span></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <div class="wsus__mini_cart">
-        <h4>shopping cart <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
-        <ul>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/tab_2.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/pro4.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's fashion casual watch</a>
-                    <p>$130</p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/pro2.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's casual shoes</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/pro9.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">men's fashion casual sholder bag</a>
-                    <p>$140</p>
-                </div>
-            </li>
-            <li>
-                <div class="wsus__cart_img">
-                    <a href="#"><img src="images/tab_2.jpg" alt="product" class="img-fluid w-100"></a>
-                    <a class="wsis__del_icon" href="#"><i class="fas fa-minus-circle"></i></a>
-                </div>
-                <div class="wsus__cart_text">
-                    <a class="wsus__cart_title" href="#">apple 9.5" 7 serise tab with full view display</a>
-                    <p>$140 <del>$150</del></p>
-                </div>
-            </li>
+        <h4>Giỏ hàng <span class="wsus_close_mini_cart"><i class="far fa-times"></i></span></h4>
+        <ul class="mini-cart-wrapper">
+
+            @foreach (Cart::content() as $product)
+                <li id="mini-cart-{{ $product->rowId }}" style="display: flex; align-items: center">
+                    <div class="wsus__cart_img">
+                        <a href="#"><img src="{{ asset($product->options->image) }}" alt="product"
+                                class="img-fluid w-100"></a>
+                        <a class="wsis__del_icon remove-sidebar-product" data-id="{{ $product->rowId }}"
+                            href="#"><i class="fas fa-minus-circle"></i></a>
+                    </div>
+                    <div class="wsus__cart_text">
+                        <a class="wsus__cart_title"
+                            href="{{ route('product-detail', $product->options->slug) }}">{{ $product->name }}</a>
+                        <br>
+                        @foreach ($product->options->variants as $key => $variant)
+                            <small>{{ $key }}: {{ $variant['name'] }}</small><br>
+                        @endforeach
+                        <small>Số lượng: {{ $product->qty }}</small>
+                        <p>{{ number_format($product->price + $product->options->variants_total) }}đ</p>
+                    </div>
+                </li>
+            @endforeach
+
+            @if (Cart::content()->count() == 0)
+                <li style="text-align: center">
+                    Giỏ hàng đang trống
+                </li>
+            @endif
+
         </ul>
-        <h5>sub total <span>$3540</span></h5>
-        <div class="wsus__minicart_btn_area">
-            <a class="common_btn" href="cart_view.html">view cart</a>
-            <a class="common_btn" href="check_out.html">checkout</a>
+
+        <div class="mini-cart-action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
+            <h5>Tổng tiền <span id="mini-cart-subtotal">{{ getCartTotal() }}đ</span></h5>
+            <div class="wsus__minicart_btn_area">
+                <a class="common_btn" href="{{ route('cart-details') }}">Xem giỏ hàng</a>
+                <a class="common_btn" href="check_out.html">checkout</a>
+            </div>
         </div>
+
     </div>
 
 </header>

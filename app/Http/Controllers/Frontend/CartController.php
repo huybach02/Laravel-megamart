@@ -7,11 +7,19 @@ use App\Models\Product;
 use App\Models\ProductVariantItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
   public function addToCart(Request $request)
   {
+    if (!Auth::user()) {
+      return response([
+        "message" => "Vui lòng đăng nhập để mua hàng",
+        "status" => "error"
+      ]);
+    }
+
     $product = Product::findOrFail($request->product_id);
 
     if ($product->quantity == 0) {
@@ -54,7 +62,12 @@ class CartController extends Controller
     $cartData["options"]["slug"] = $product->slug;
     $cartData["options"]["stock"] = $product->quantity;
 
-    Cart::add($cartData);
+    $userId = Auth::user()->id;
+    Cart::restore($userId); // Khôi phục giỏ hàng hiện tại từ database
+
+    Cart::add($cartData); // Thêm sản phẩm mới vào giỏ hàng
+
+    Cart::store($userId); // Lưu lại giỏ hàng đã cập nhật vào database
 
     return response([
       "message" => "Thêm sản phẩm vào giỏ hàng thành công",
@@ -64,6 +77,10 @@ class CartController extends Controller
 
   public function cartDetails()
   {
+    if (!Auth::user()) {
+      return redirect()->route("login");
+    }
+
     $cartItems = Cart::content();
 
     return view("frontend.pages.cart-detail", compact("cartItems"));
@@ -87,7 +104,13 @@ class CartController extends Controller
       ]);
     }
 
+    $userId = Auth::user()->id;
+    Cart::restore($userId); // Khôi phục giỏ hàng hiện tại từ database
+
     Cart::update($request->rowId, $request->quantity);
+
+    Cart::store($userId); // Lưu lại giỏ hàng đã cập nhật vào database
+
 
     $productTotal = $this->getProductTotal($request->rowId);
 
@@ -107,7 +130,12 @@ class CartController extends Controller
 
   public function clearCart()
   {
+    $userId = Auth::user()->id;
+    Cart::restore($userId); // Khôi phục giỏ hàng hiện tại từ database
+
     Cart::destroy();
+
+    Cart::erase($userId);
 
     return response([
       "message" => "Xóa giỏ hàng thành công",
@@ -117,7 +145,12 @@ class CartController extends Controller
 
   public function removeProduct($rowId)
   {
+    $userId = Auth::user()->id;
+    Cart::restore($userId); // Khôi phục giỏ hàng hiện tại từ database
+
     Cart::remove($rowId);
+
+    Cart::store($userId); // Lưu lại giỏ hàng đã cập nhật vào database
 
     return redirect()->back();
   }
@@ -134,7 +167,12 @@ class CartController extends Controller
 
   public function removeSidebarProduct(Request $request)
   {
+    $userId = Auth::user()->id;
+    Cart::restore($userId); // Khôi phục giỏ hàng hiện tại từ database
+
     Cart::remove($request->rowId);
+
+    Cart::store($userId); // Lưu lại giỏ hàng đã cập nhật vào database
 
     return response([
       "message" => "Xóa sản phẩm khỏi giỏ hàng thành công",

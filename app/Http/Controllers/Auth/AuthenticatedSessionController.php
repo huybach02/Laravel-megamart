@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,9 @@ class AuthenticatedSessionController extends Controller
     $request->authenticate();
 
     $request->session()->regenerate();
+
+    Cart::restore($request->user()->id);
+    Cart::store(Auth::user()->id);
 
     // if ($request->user()->role === "admin") {
     //   return redirect()->intended("admin/dashboard");

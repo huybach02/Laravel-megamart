@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -82,6 +84,10 @@ class CartController extends Controller
     }
 
     $cartItems = Cart::content();
+
+    if (count($cartItems) === 0) {
+      Session::forget("coupon");
+    }
 
     return view("frontend.pages.cart-detail", compact("cartItems"));
   }
@@ -189,5 +195,95 @@ class CartController extends Controller
     }
 
     return $total;
+  }
+
+  public function applyCoupon(Request $request)
+  {
+    if ($request->code === null) {
+      return response([
+        "message" => "Vui lòng nhập mã giảm giá",
+        "status" => "error"
+      ]);
+    }
+
+    $coupon = Coupon::where(["code" => $request->code, "status" => 1])->first();
+
+    if (!$coupon) {
+      return response([
+        "message" => "Mã giảm giá không tồn tại hoặc hết hạn",
+        "status" => "error"
+      ]);
+    } elseif ($coupon->start_date > date("Y-m-d H:i:s") || date("Y-m-d H:i:s") > $coupon->end_date) {
+      return response([
+        "message" => "Mã giảm giá không tồn tại hoặc hết hạn",
+        "status" => "error"
+      ]);
+    } elseif ($coupon->total_used >= $coupon->quantity) {
+      return response([
+        "message" => "Mã giảm giá đã hết lượt sử dụng",
+        "status" => "error"
+      ]);
+    }
+
+    if ($coupon->discount_type == "amount") {
+      Session::put("coupon", [
+        "coupon_name" => $coupon->name,
+        "coupon_code" => $coupon->code,
+        "discount_type" => "amount",
+        "discount" => $coupon->discount,
+      ]);
+    } elseif ($coupon->discount_type == "percent") {
+      Session::put("coupon", [
+        "coupon_name" => $coupon->name,
+        "coupon_code" => $coupon->code,
+        "discount_type" => "percent",
+        "discount" => $coupon->discount,
+      ]);
+    }
+
+    return response([
+      "message" => "Áp dụng mã giảm giá thành công",
+      "status" => "success"
+    ]);
+  }
+
+  public function couponCalculation()
+  {
+    if (Session::has("coupon")) {
+      $coupon = Session::get("coupon");
+
+      $total = 0;
+
+      foreach (Cart::content() as $item) {
+        $total += ($item->price + $item->options->variants_total) * $item->qty;
+      }
+
+      if ($coupon["discount_type"] == "amount") {
+        $total = $total - $coupon["discount"];
+        $total = $total < 0 ? 0 : $total;
+        return response([
+          "cart_total" => $total,
+          "discount" => $coupon["discount"],
+          "status" => "success"
+        ]);
+      } elseif ($coupon["discount_type"] == "percent") {
+        $discount = $total * $coupon["discount"] / 100;
+        $total = $total - ($total * $coupon["discount"] / 100);
+        $total = $total < 0 ? 0 : $total;
+        return response([
+          "cart_total" => $total,
+          "discount" => $discount,
+          "status" => "success"
+        ]);
+      }
+    } else {
+      $total = getCartTotal();
+
+      return response([
+        "cart_total" => $total,
+        "discount" => 0,
+        "status" => "success"
+      ]);
+    }
   }
 }

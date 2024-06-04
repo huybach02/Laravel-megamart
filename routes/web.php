@@ -63,6 +63,8 @@ Route::get("cart-count", [CartController::class, "getCartCount"])->name("cart-co
 Route::get("cart-products", [CartController::class, "getCartProducts"])->name("cart-products");
 Route::post("cart/remove-sidebar-product", [CartController::class, "removeSidebarProduct"])->name("cart.remove-sidebar-product");
 Route::get("cart/sidebar-product-total", [CartController::class, "cartTotal"])->name("cart.cart-total");
+Route::post("apply-coupon", [CartController::class, "applyCoupon"])->name("apply-coupon");
+Route::get("coupon-calculation", [CartController::class, "couponCalculation"])->name("coupon-calculation");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

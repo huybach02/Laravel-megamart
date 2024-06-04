@@ -119,24 +119,27 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Thông tin thanh toán</h6>
-                        <p>Tiền đơn hàng: <span id="sub-total">{{ getCartTotal() }}đ</span></p>
-                        <p>Phí vận chuyển: <span>$00.00</span></p>
-                        <p>Giảm giá: <span>$10.00</span></p>
-                        <p class="total"><span>Tổng tiền thanh toán:</span> <span>$134.00</span></p>
+                        <p>Tiền đơn hàng: <span id="sub-total">{{ number_format(getCartTotal()) }}đ</span></p>
+                        {{-- <p>Phí vận chuyển: <span>$00.00</span></p> --}}
+                        <p>Giảm giá: <span id="discount">- {{ number_format(getCartDiscount()) }}đ</span></p>
+                        <p class="total"><span>Tổng tiền:</span> <span
+                                id="cart-total">{{ number_format(getMainCartTotal()) }}đ</span>
+                        </p>
 
-                        <form>
-                            <input type="text" placeholder="Coupon Code">
-                            <button type="submit" class="common_btn">apply</button>
+                        <form id="coupon-form">
+                            <input type="text" placeholder="Mã giảm giá" name="code"
+                                value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
+                            <button type="submit" class="common_btn">Nhập</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">checkout</a>
-                        <a class="common_btn mt-1 w-100 text-center" href="product_grid_view.html"><i
-                                class="fab fa-shopify"></i> go shop</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="check_out.html">Thanh toán</a>
+                        <a class="common_btn mt-1 w-100 text-center" href="{{ route('home') }}"><i
+                                class="fab fa-shopify"></i> Tiếp tục mua sắm</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="wsus__single_banner">
+    {{-- <section id="wsus__single_banner">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
@@ -165,7 +168,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection
 
 @push('scripts')
@@ -199,6 +202,7 @@
                             let formattedTotal = customFormatNumber(data.product_total);
                             $(productId).text(formattedTotal + "đ");
                             renderCartSubTotal()
+                            calculateCouponDiscount()
                             toastr.success(data.message)
                         }
                         if (data.status == "error") {
@@ -235,6 +239,7 @@
                             let formattedTotal = customFormatNumber(data.product_total);
                             $(productId).text(formattedTotal + "đ");
                             renderCartSubTotal()
+                            calculateCouponDiscount()
                             toastr.success(data.message)
                         }
                         if (data.status == "error") {
@@ -283,6 +288,47 @@
                     url: "{{ route('cart.cart-total') }}",
                     success: function(data) {
                         $("#sub-total").html(customFormatNumber(data) + "đ")
+                    },
+                    error: function(data) {
+
+                    }
+                })
+            }
+
+            $("#coupon-form").on('submit', function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('apply-coupon') }}",
+                    data: formData,
+                    success: function(data) {
+                        if (data.status == "success") {
+                            toastr.success(data.message)
+                            calculateCouponDiscount()
+                        }
+                        if (data.status == "error") {
+                            toastr.error(data.message)
+                        }
+                    },
+                    error: function(data) {
+
+                    }
+                })
+            })
+
+            function calculateCouponDiscount() {
+                $.ajax({
+                    method: "GET",
+                    url: "{{ route('coupon-calculation') }}",
+                    success: function(data) {
+                        if (data.status == "success") {
+                            $("#discount").text("- " + customFormatNumber(data.discount) + "đ")
+                            $("#cart-total").text(customFormatNumber(data.cart_total) + "đ")
+                        }
+                        if (data.status == "error") {
+                            toastr.error(data.message)
+                        }
                     },
                     error: function(data) {
 

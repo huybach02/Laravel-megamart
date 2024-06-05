@@ -79,7 +79,7 @@
         </ul>
 
         <div class="mini-cart-action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
-            <h5>Tổng tiền <span id="mini-cart-subtotal">{{ getCartTotal() }}đ</span></h5>
+            <h5>Tổng tiền <span id="mini-cart-subtotal">{{ number_format(getCartTotal()) }}đ</span></h5>
             <div class="wsus__minicart_btn_area">
                 <a class="common_btn" href="{{ route('cart-details') }}">Xem giỏ hàng</a>
                 <a class="common_btn" href="check_out.html">checkout</a>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\CheckoutController;
+use App\Http\Controllers\Backend\PaymentController;
 use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
@@ -52,6 +54,10 @@ Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "us
   Route::put("profile", [UserProfileController::class, "updateProfile"])->name("profile.update");
   Route::post("profile", [UserProfileController::class, "updatePassword"])->name("profile.update.password");
   Route::resource("address", UserAddressController::class);
+  Route::get("checkout", [CheckoutController::class, "index"])->name("checkout");
+  Route::post("checkout/address-create", [CheckoutController::class, "createAddress"])->name("checkout.address.create");
+  Route::post("checkout/form-submit", [CheckoutController::class, "checkoutFormSubmit"])->name("checkout.form-submit");
+  Route::get("payment", [PaymentController::class, "index"])->name("payment");
 });
 
 Route::post("add-to-cart", [CartController::class, "addToCart"])->name("add-to-cart");

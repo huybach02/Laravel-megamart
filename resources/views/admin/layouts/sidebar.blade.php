@@ -59,7 +59,8 @@
                 </ul>
             </li>
 
-            <li class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.shipping-rule.*']) }}">
+            <li
+                class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.shipping-rule.*', 'admin.payment-settings.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-briefcase"></i>
                     <span>Quản Lý Bán Hàng</span></a>
                 <ul class="dropdown-menu">
@@ -67,6 +68,8 @@
                             href="{{ route('admin.vendor-profile.index') }}">Thông Tin Gian Hàng</a></li>
                     <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
                             href="{{ route('admin.shipping-rule.index') }}">Thông Tin Vận Chuyển</a></li>
+                    <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.payment-settings.index') }}">Thông Tin Thanh Toán</a></li>
 
                 </ul>
             </li>

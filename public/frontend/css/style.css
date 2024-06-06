@@ -9568,3 +9568,7 @@ a:not([href]):not([class]):hover {
 .product-quantity-wrapper > .product-quantity::-webkit-inner-spin-button {
     display: none; /* Chrome, Safari, Edge, Opera */
 }
+
+#card-element {
+    padding: 20px;
+}

@@ -63,6 +63,8 @@ Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "us
   Route::get("paypal/payment", [PaymentController::class, "payWithPaypal"])->name("paypal.payment");
   Route::get("paypal/success", [PaymentController::class, "paypalSuccess"])->name("paypal.success");
   Route::get("paypal/cancel", [PaymentController::class, "paypalCancel"])->name("paypal.cancel");
+
+  Route::post("stripe/payment", [PaymentController::class, "payWithStripe"])->name("stripe.payment");
 });
 
 Route::post("add-to-cart", [CartController::class, "addToCart"])->name("add-to-cart");

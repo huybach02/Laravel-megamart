@@ -51,7 +51,7 @@ class PaymentController extends Controller
     $order->order_address = json_encode(Session::get("shipping_address"));
     $order->shipping_method = json_encode(Session::get("shipping_method"));
     $order->coupon = json_encode(Session::get("coupon")) ?? "";
-    $order->order_status = 0;
+    $order->order_status = "pending";
     $order->save();
 
 
@@ -68,6 +68,7 @@ class PaymentController extends Controller
       $orderProduct->variant_total = $item->options->variants_total;
       $orderProduct->unit_price = $item->price;
       $orderProduct->quantity = $item->qty;
+      $orderProduct->status = $product->vendor_id == 1 ? "processed_and_ready_to_ship" : "pending";
       $orderProduct->save();
     }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
 use App\Http\Controllers\Backend\ProductController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\TransactionController;
 use App\Models\ShippingRule;
 use Illuminate\Support\Facades\Route;
 
@@ -101,6 +103,15 @@ Route::resource("shipping-rule", ShippingRuleController::class);
 Route::get("payment-settings", [PaymentSettingController::class, "index"])->name("payment-settings.index");
 Route::resource("paypal-setting", PaypalSettingController::class);
 Route::put("stripe-setting/{id}", [StripeSettingController::class, "update"])->name("stripe-setting.update");
+
+// Orders
+Route::put("order-status", [OrderController::class, "changeOrderStatus"])->name("order.status");
+Route::put("payment-status", [OrderController::class, "changePaymentStatus"])->name("order.payment-status");
+
+Route::get("order-filter", [OrderController::class, "orderFilter"])->name("order.filter");
+Route::resource("order", OrderController::class);
+
+Route::get("transactions", [TransactionController::class, "index"])->name("transactions.index");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

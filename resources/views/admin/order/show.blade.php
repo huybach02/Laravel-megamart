@@ -1,0 +1,352 @@
+@php
+    $address = json_decode($order->order_address);
+    $shipping = json_decode($order->shipping_method);
+    $coupon = json_decode($order->coupon);
+@endphp
+
+@extends('admin.layouts.master')
+
+@section('content')
+    <section class="section">
+        <div class="section-header">
+            <h1>Quản Lý Đơn Hàng</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Quản Lý Đơn Hàng</a></div>
+                <div class="breadcrumb-item"><a href="#">Tất Cả Đơn Hàng</a></div>
+                <div class="breadcrumb-item"><a href="#">Đơn Hàng #{{ $order->invoice_id }}</a></div>
+            </div>
+        </div>
+
+        <a href="{{ route('admin.order.index') }}">
+            < Quay lại</a>
+                <div class="section-body">
+                    <h2 class="section-title">Thông tin đơn hàng <span class=" p-2">#{{ $order->invoice_id }}</span>
+                    </h2>
+                    <div class="row mt-3">
+
+                        <div class="col-12">
+                            <div class="card">
+                                <section class="section">
+                                    <div class="section-body">
+                                        <div class="invoice">
+                                            <div class="invoice-print">
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <address>
+                                                                    <div class="section-title">Khách hàng:</div>
+                                                                    Tên khách hàng: {{ $address->name }}<br>
+                                                                    Email: {{ $address->email }}<br>
+                                                                    Số điện thoại: {{ $address->phone }}<br>
+
+                                                                </address>
+                                                            </div>
+                                                            <div class="col-md-6 ">
+                                                                <address>
+                                                                    <div class="section-title">Địa chỉ:</div>
+                                                                    Số nhà/Căn hộ: {{ $address->address }}<br>
+                                                                    Xã/Phường: {{ $address->commune_ward }}<br>
+                                                                    Quận/Huyện: {{ $address->district }}<br>
+                                                                    Tỉnh/Thành phố: {{ $address->province_city }}<br>
+                                                                    Lưu ý:
+                                                                    {{ $address->other ? $address->other : 'Không có' }}<br>
+
+                                                                </address>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <address>
+                                                                    <div class="section-title">Thanh toán:</div>
+                                                                    Thanh toán qua: {{ $order->payment_method }}<br>
+                                                                    Mã thanh toán:
+                                                                    {{ $order->transaction->transaction_id }}<br>
+                                                                    Số tiền thanh toán:
+                                                                    ${{ $order->transaction->amount_real_currency }}
+                                                                    <br>
+                                                                    Trạng thái thanh toán:
+                                                                    {{ $order->payment_status == 1 ? 'Thành công' : 'Không thành công' }}<br>
+
+                                                                </address>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <address>
+                                                                    <div class="section-title">Ngày đặt hàng:</div>
+                                                                    {{ $order->created_at }}<br><br>
+                                                                </address>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-md-12">
+                                                        <div class="section-title">Thông tin sản phẩm</div>
+                                                        <p class="section-lead">Tất cả sản phẩm thuộc đơn hàng.</p>
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-hover table-md">
+                                                                <tr>
+                                                                    <th data-width="40">#</th>
+                                                                    <th>Tên sản phẩm</th>
+                                                                    <th>Gian hàng</th>
+                                                                    <th class="text-center">Đơn giá</th>
+                                                                    <th class="text-center">Số lượng</th>
+                                                                    <th class="text-center">Phiên bản</th>
+                                                                    <th class="text-center">Tổng tiền phiên bản</th>
+                                                                    <th class="text-right">Thành tiền</th>
+                                                                </tr>
+
+                                                                @foreach ($order->orderProducts as $index => $product)
+                                                                    @php
+                                                                        $variants = json_decode($product->variants);
+                                                                    @endphp
+                                                                    <tr>
+                                                                        <td>{{ $index + 1 }}</td>
+                                                                        <td>
+                                                                            <a target="blank"
+                                                                                href="{{ route('product-detail', $product->product->slug) }}">{{ $product->product_name }}</a>
+                                                                        </td>
+                                                                        <td>{{ $product->vendor->name }}</td>
+                                                                        <td class="text-center">
+                                                                            {{ number_format($product->unit_price) }}đ</td>
+                                                                        <td class="text-center">{{ $product->quantity }}
+                                                                        </td>
+                                                                        <td>
+                                                                            @foreach ($variants as $key => $variant)
+                                                                                <span>{{ $key }}:
+                                                                                    {{ $variant->name }}
+                                                                                    {{ $variant->price > 0 ? '(+' . number_format($variant->price) . 'đ)' : '' }}
+                                                                                </span>
+                                                                                <br>
+                                                                            @endforeach
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            {{ number_format($product->variant_total) }}đ
+                                                                        </td>
+                                                                        <td class="text-right">
+                                                                            {{ number_format(($product->unit_price + $product->variant_total) * $product->quantity) }}đ
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </table>
+                                                        </div>
+                                                        <div class="row mt-4">
+                                                            <div class="col-lg-4">
+                                                                <div class="pb-5">
+                                                                    <div class="section-title">Trạng thái nhà cung cấp</div>
+                                                                    @php
+                                                                        $printedVendors = collect();
+                                                                        $allProcessed = true;
+                                                                        $checkArr = [];
+                                                                    @endphp
+                                                                    @foreach ($order->orderProducts as $item)
+                                                                        @if (!$printedVendors->contains($item->vendor->name))
+                                                                            @php
+                                                                                $vendorProducts = $order->orderProducts->where(
+                                                                                    'vendor_id',
+                                                                                    $item->vendor_id,
+                                                                                );
+                                                                                $allProcessed = $vendorProducts->every(
+                                                                                    function ($product) use (
+                                                                                        &$checkArr,
+                                                                                    ) {
+                                                                                        if (
+                                                                                            $product->status ==
+                                                                                            'processed_and_ready_to_ship'
+                                                                                        ) {
+                                                                                            $checkArr[] = true;
+                                                                                            return true;
+                                                                                        } else {
+                                                                                            $checkArr[] = false;
+                                                                                            return false;
+                                                                                        }
+                                                                                    },
+                                                                                );
+                                                                            @endphp
+                                                                            <h6><span
+                                                                                    class="text-primary">{{ $item->vendor->name }}:</span>
+                                                                                @if ($allProcessed)
+                                                                                    Đơn hàng sẵn sàng được vận chuyển
+                                                                                @else
+                                                                                    Đơn hàng đang được xử lý
+                                                                                @endif
+                                                                            </h6>
+                                                                            @php
+                                                                                $printedVendors->push(
+                                                                                    $item->vendor->name,
+                                                                                );
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="pt-3 border-top">
+                                                                    <div class="section-title">Trạng thái đơn hàng</div>
+                                                                    @if (!in_array(false, $checkArr, true))
+                                                                        <select name="order_status" id="order_status"
+                                                                            data-id="{{ $order->id }}"
+                                                                            class="form-control mb-5 order-product-status">
+                                                                            @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
+                                                                                <option
+                                                                                    {{ $order->order_status == $key ? 'selected' : '' }}
+                                                                                    value="{{ $key }}">
+                                                                                    {{ $orderStatus['status'] }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    @else
+                                                                        <input id="order_status_text"
+                                                                            class="form-control mb-5" value="Đang xử lý"
+                                                                            readonly>
+                                                                    @endif
+                                                                </div>
+                                                                @if ($order->payment_method == 'COD')
+                                                                    <div>
+                                                                        <div class="section-title">Trạng thái thanh toán
+                                                                            (Đơn
+                                                                            hàng COD)</div>
+                                                                        <select name="payment_status" id="payment_status"
+                                                                            data-id="{{ $order->id }}"
+                                                                            class="form-control mb-5">
+
+                                                                            <option
+                                                                                {{ $order->payment_status == 0 ? 'selected' : '' }}
+                                                                                value="0">Chưa thanh toán</option>
+                                                                            <option
+                                                                                {{ $order->payment_status == 1 ? 'selected' : '' }}
+                                                                                value="1">Đã thanh toán</option>
+
+                                                                        </select>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+
+                                                            <div class="col-lg-8 text-right">
+                                                                <div class="invoice-detail-item">
+                                                                    <div class="invoice-detail-name">Tổng tiền sản phẩm
+                                                                    </div>
+                                                                    <div class="invoice-detail-value">
+                                                                        {{ number_format($order->sub_total) }}đ</div>
+                                                                </div>
+                                                                <div class="invoice-detail-item">
+                                                                    <div class="invoice-detail-name">Phí vận chuyển</div>
+                                                                    <div class="invoice-detail-value">
+                                                                        + {{ number_format($shipping->cost) }}đ</div>
+                                                                </div>
+                                                                <div class="invoice-detail-item">
+                                                                    <div class="invoice-detail-name">Giảm giá</div>
+                                                                    <div class="invoice-detail-value">
+                                                                        @if ($coupon && $coupon->discount_type == 'amount')
+                                                                            - {{ number_format($coupon->discount) }}đ
+                                                                        @elseif ($coupon && $coupon->discount_type == 'percent')
+                                                                            -
+                                                                            {{ number_format(($order->sub_total * $coupon->discount) / 100) }}đ
+                                                                            ({{ $coupon->discount }}%)
+                                                                        @else
+                                                                            - 0đ
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                <hr class="mt-2 mb-2">
+                                                                <div class="invoice-detail-item">
+                                                                    <div class="invoice-detail-name">Tổng tiền đơn hàng
+                                                                    </div>
+                                                                    <div
+                                                                        class="invoice-detail-value invoice-detail-value-lg">
+                                                                        {{ number_format($order->amount) }}đ</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="text-md-right">
+                                                {{-- <div class="float-lg-left mb-lg-0 mb-3">
+                                                    <button class="btn btn-primary btn-icon icon-left"><i
+                                                            class="fas fa-credit-card"></i> Process Payment</button>
+                                                    <button class="btn btn-danger btn-icon icon-left"><i
+                                                            class="fas fa-times"></i>
+                                                        Cancel</button>
+                                                </div> --}}
+                                                <button class="btn btn-warning btn-icon icon-left print-invoice"><i
+                                                        class="fas fa-print"></i>
+                                                    Print</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </section>
+@endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $("body").on('change', "#order_status", function() {
+                let order_status = $(this).val()
+                let order_id = $(this).data("id")
+                $.ajax({
+                    url: "{{ route('admin.order.status') }}",
+                    method: "PUT",
+                    data: {
+                        order_status: order_status,
+                        order_id: order_id,
+                    },
+                    success: function(data) {
+                        if (data.status == "success") {
+                            toastr.success(data.message)
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                })
+            })
+
+            $("body").on('change', "#payment_status", function() {
+                let payment_status = $(this).val()
+                let order_id = $(this).data("id")
+                $.ajax({
+                    url: "{{ route('admin.order.payment-status') }}",
+                    method: "PUT",
+                    data: {
+                        payment_status: payment_status,
+                        order_id: order_id,
+                    },
+                    success: function(data) {
+                        if (data.status == "success") {
+                            toastr.success(data.message)
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data)
+                    }
+                })
+            })
+
+            $(".print-invoice").on("click", function() {
+                let printBody = $(".section-body")
+                let originalContents = $("body").html()
+
+                $("body").html(printBody.html())
+                window.print()
+                $("body").html(originalContents)
+            })
+        })
+    </script>
+
+    <script>
+        new DataTable('#example', {
+            "order": [
+                [0, "desc"]
+            ]
+        });
+    </script>
+@endpush

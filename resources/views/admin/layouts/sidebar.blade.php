@@ -10,7 +10,7 @@
         </div>
         <ul class="sidebar-menu">
             {{-- <li class="menu-header">Dashboard</li> --}}
-            <li class="dropdown">
+            <li class="{{ setActive(['admin.dashboard']) }}">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link"><i class="fas fa-fire"></i><span>Thống
                         kê</span></a>
             </li>
@@ -86,7 +86,24 @@
                 </ul>
             </li>
 
-            <li class="dropdown">
+            <li class="dropdown {{ setActive(['admin.order.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-scroll"></i>
+                    <span>Quản Lý Đơn Hàng</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.order.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.order.index') }}">Tất cả đơn hàng</a></li>
+
+                </ul>
+            </li>
+
+            <li class="{{ setActive(['admin.transactions.*']) }}">
+                <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
+                        class="fas fa-money-check"></i><span>Lịch
+                        sử thanh toán</span></a>
+            </li>
+
+
+            <li class="{{ setActive(['admin.setting.*']) }}">
                 <a href="{{ route('admin.setting.index') }}" class="nav-link"><i class="fas fa-cog"></i><span>Cài
                         đặt</span></a>
             </li>

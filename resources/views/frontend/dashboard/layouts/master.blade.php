@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/ranger_style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/jquery.classycountdown.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/venobox.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
@@ -115,6 +118,10 @@
     {{-- <script src="https://esgoo.net/scripts/jquery.js"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
 
     <!--main/custom js-->
     <script src="{{ asset('frontend/js/main.js') }}"></script>

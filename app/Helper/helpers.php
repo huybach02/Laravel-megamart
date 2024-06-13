@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 // Set sidebar item active
 
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -122,4 +124,9 @@ function getShippingFee()
 function getPayableAmount()
 {
   return getMainCartTotal() + getShippingFee();
+}
+
+function limitText($text, $limit = 50)
+{
+  return Str::limit($text, $limit);
 }

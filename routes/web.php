@@ -47,7 +47,9 @@ Route::get("/admin/login", [AdminController::class, "login"])->name("admin.login
 
 Route::get("flash-sale", [FlashSaleController::class, "index"])->name("flash-sale");
 
+Route::get("products", [FrontendProductController::class, "productIndex"])->name("product.index");
 Route::get("product-detail/{slug}", [FrontendProductController::class, "showProduct"])->name("product-detail");
+Route::get("change-product-list-view", [FrontendProductController::class, "changeListView"])->name("change-product-list-view");
 
 Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "user", "as" => "user."], function () {
   Route::get("dashboard", [UserDashboardController::class, "index"])->name("dashboard");

@@ -465,16 +465,16 @@ $(function () {
     });
 
     //*==========PRICE SLIDER=========
-    jQuery(function () {
-        jQuery("#slider_range").flatslider({
-            min: 0,
-            max: 10000,
-            step: 100,
-            values: [0, 8000],
-            range: true,
-            einheit: "$",
-        });
-    });
+    // jQuery(function () {
+    //     jQuery("#slider_range").flatslider({
+    //         min: 0,
+    //         max: 100000000,
+    //         step: 500000,
+    //         values: [0, 100000000],
+    //         range: true,
+    //         einheit: "VND",
+    //     });
+    // });
 
     //*========IMG & VIDEO UPLOAD=======
     $(".gallery").miv({ image: ".cam", video: ".vid" });

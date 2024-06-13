@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -90,6 +91,12 @@ Route::delete("flash-sale/{id}", [FlashSaleController::class, "destroy"])->name(
 // Settings
 Route::get("settings", [SettingController::class, "index"])->name("setting.index");
 Route::put("general-setting-update", [SettingController::class, "generalSettingUpdate"])->name("general-setting-update");
+Route::get("home-page-setting", [HomePageSettingController::class, "index"])->name("home-page-setting.index");
+Route::put("popular-category-section", [HomePageSettingController::class, "updatePopularCategorySection"])->name("popular-category-section");
+Route::put("product-slider-section-one", [HomePageSettingController::class, "updateProductSliderSectionOne"])->name("product-slider-section-one");
+Route::put("product-slider-section-two", [HomePageSettingController::class, "updateProductSliderSectionTwo"])->name("product-slider-section-two");
+Route::put("weekly-best-rated", [HomePageSettingController::class, "weeklyBestRated"])->name("weekly-best-rated");
+Route::put("weekly-best-sell", [HomePageSettingController::class, "weeklyBestSell"])->name("weekly-best-sell");
 
 // Coupon
 Route::put("coupons/change-status", [CouponController::class, "changeStatus"])->name("coupons.change-status");

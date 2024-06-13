@@ -2360,7 +2360,7 @@ HOME BLOGS END
 .wsus__hot_deals__single_text .wsus__tk del {
     color: #aaa;
     font-weight: 400;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 .wsus__hot_deals__single:hover h5 {
@@ -9571,4 +9571,10 @@ a:not([href]):not([class]):hover {
 
 #card-element {
     padding: 20px;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    display: flex !important;
+    align-items: center !important;
 }

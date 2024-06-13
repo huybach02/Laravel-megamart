@@ -30,7 +30,7 @@
 
                             <li>
                                 <a class="{{ count($category->subCategories) > 0 ? 'wsus__droap_arrow' : '' }}"
-                                    href="{{ $category->slug }}">
+                                    href="{{ route('product.index', ['category' => $category->slug]) }}">
                                     <i class="{{ $category->icon }}"></i> {{ $category->name }}
                                 </a>
 
@@ -38,7 +38,9 @@
                                     <ul class="wsus_menu_cat_droapdown">
 
                                         @foreach ($category->subCategories as $subCategory)
-                                            <li><a href="{{ $subCategory->slug }}">{{ $subCategory->name }} <i
+                                            <li><a
+                                                    href="{{ route('product.index', ['sub_category' => $subCategory->slug]) }}">{{ $subCategory->name }}
+                                                    <i
                                                         class="{{ count($subCategory->childCategories) > 0 ? 'fas fa-angle-right' : '' }}"></i></a>
 
                                                 @if (count($subCategory->childCategories) > 0)
@@ -47,7 +49,7 @@
                                                         @foreach ($subCategory->childCategories as $childCategory)
                                                             <li>
                                                                 <a
-                                                                    href="{{ $childCategory->slug }}">{{ $childCategory->name }}</a>
+                                                                    href="{{ route('product.index', ['child_category' => $childCategory->slug]) }}">{{ $childCategory->name }}</a>
                                                             </li>
                                                         @endforeach
 

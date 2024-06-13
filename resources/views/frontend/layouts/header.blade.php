@@ -18,8 +18,9 @@
             </div>
             <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block mt-lg-3">
                 <div class="wsus__search">
-                    <form>
-                        <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                    <form action="{{ route('product.index') }}">
+                        <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..."
+                            value="{{ request()->search }}">
                         <button type="submit"><i class="far fa-search"></i></button>
                     </form>
                 </div>

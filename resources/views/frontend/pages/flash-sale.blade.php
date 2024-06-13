@@ -74,13 +74,13 @@
                                     <span class="wsus__minus">-{{ calculateDiscountPercent($product) }}%</span>
                                     <a class="wsus__pro_link" href="{{ route('product-detail', $product->slug) }}">
                                         <img src="{{ asset($product->thumb_image) }}" alt="product"
-                                            class="img-fluid w-100 img_1" />
+                                            class="img-fluid w-100 img_1 p-4" />
                                         <img src="
                                 @if (isset($product->productImageGalleries[0]->image)) {{ asset($product->productImageGalleries[0]->image) }}
                                 @else
                                 {{ asset($product->thumb_image) }} @endif
                               "
-                                            alt="product" class="img-fluid w-100 img_2" />
+                                            alt="product" class="img-fluid w-100 img_2 p-4" />
                                     </a>
                                     <ul class="wsus__single_pro_icon">
                                         <li><a href="#" data-bs-toggle="modal"
@@ -101,7 +101,7 @@
                                             <span>(133 review)</span>
                                         </p>
                                         <a class="wsus__pro_name"
-                                            href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
+                                            href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
                                         @if (checkDiscount($product))
                                             <p class="wsus__price mt-2">{{ number_format($product->offer_price) }} đ
                                                 <del>{{ number_format($product->price) }} đ</del>
@@ -131,7 +131,7 @@
                                             <input class="form-control w-25" name="quantity" type="hidden" min="1"
                                                 max="100" value="1" />
 
-                                            <button type="submit" class="add_cart border-0">add to cart</button>
+                                            <button type="submit" class="add_cart border-0">Thêm vào giỏ hàng</button>
                                         </form>
                                     </div>
                                 </div>

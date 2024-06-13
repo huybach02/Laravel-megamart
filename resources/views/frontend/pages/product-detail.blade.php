@@ -274,7 +274,8 @@
                                     <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button>
                                     </li>
                                     <li><a class="buy_now" href="#">Mua ngay</a></li>
-                                    <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                    <li><a href="#" class="wishlist-btn" data-id="{{ $product->id }}"><i
+                                                class="fal fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a></li>
                                 </ul>
 

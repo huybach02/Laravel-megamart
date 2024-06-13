@@ -39,7 +39,8 @@
                                     <li><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#product-type-{{ $product->id }}"><i
                                                 class="far fa-eye"></i></a></li>
-                                    <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a href="#" class="wishlist-btn" data-id="{{ $product->id }}"><i
+                                                class="far fa-heart"></i></a></li>
                                     <li><a href="#"><i class="far fa-random"></i></a>
                                 </ul>
                                 <div class="wsus__product_details">
@@ -220,7 +221,9 @@
                                                                 hàng</button>
                                                         </li>
                                                         <li><a class="buy_now" href="#">Mua ngay</a></li>
-                                                        <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                                        <li><a href="#" class="wishlist-btn"
+                                                                data-id="{{ $product->id }}"><i
+                                                                    class="fal fa-heart"></i></a></li>
                                                         <li><a href="#"><i class="far fa-random"></i></a></li>
                                                     </ul>
 

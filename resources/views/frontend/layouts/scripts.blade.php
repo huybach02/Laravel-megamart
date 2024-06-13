@@ -127,5 +127,30 @@
             })
         }
 
+        $(".wishlist-btn").on("click", function(e) {
+            e.preventDefault();
+            let id = $(this).data("id")
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('wishlist.store') }}",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data.status == "error") {
+                        toastr.error(data.message)
+                    }
+                    if (data.status == "success") {
+                        toastr.success(data.message)
+                        $("#wishlist-count").text(data.count)
+                    }
+                },
+                error: function(data) {
+
+                }
+            })
+        })
+
     })
 </script>

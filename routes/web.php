@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -84,6 +85,10 @@ Route::post("cart/remove-sidebar-product", [CartController::class, "removeSideba
 Route::get("cart/sidebar-product-total", [CartController::class, "cartTotal"])->name("cart.cart-total");
 Route::post("apply-coupon", [CartController::class, "applyCoupon"])->name("apply-coupon");
 Route::get("coupon-calculation", [CartController::class, "couponCalculation"])->name("coupon-calculation");
+
+Route::get("wishlist", [WishlistController::class, "index"])->name("wishlist.index");
+Route::post("wishlist/add-product", [WishlistController::class, "addToWishlist"])->name("wishlist.store");
+Route::get("wishlist/remove-product/{id}", [WishlistController::class, "removeFromWishlist"])->name("wishlist.destroy");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

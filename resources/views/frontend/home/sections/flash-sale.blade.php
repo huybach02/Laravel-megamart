@@ -40,7 +40,8 @@
                                 <li><a href="#" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal-{{ $product->id }}"><i
                                             class="far fa-eye"></i></a></li>
-                                <li><a href="#"><i class="far fa-heart"></i></a></li>
+                                <li><a href="#" class="wishlist-btn" data-id="{{ $product->id }}"><i
+                                            class="far fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-random"></i></a>
                             </ul>
                             <div class="wsus__product_details">
@@ -84,7 +85,7 @@
                                     <input class="form-control w-25" name="quantity" type="hidden" min="1"
                                         max="100" value="1" />
 
-                                    <button type="submit" class="add_cart border-0">add to cart</button>
+                                    <button type="submit" class="add_cart border-0">Thêm vào giỏ hàng</button>
                                 </form>
                             </div>
                         </div>
@@ -218,7 +219,9 @@
                                                     hàng</button>
                                             </li>
                                             <li><a class="buy_now" href="#">Mua ngay</a></li>
-                                            <li><a href="#"><i class="fal fa-heart"></i></a></li>
+                                            <li><a href="#" class="wishlist-btn"
+                                                    data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
+                                            </li>
                                             <li><a href="#"><i class="far fa-random"></i></a></li>
                                         </ul>
 

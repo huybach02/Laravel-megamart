@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
+use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -134,6 +135,13 @@ Route::resource("footer-grid-two", FooterGridTwoController::class);
 // Subscriber
 Route::get("subscribers", [SubscriberController::class, "index"])->name("subscribers.index");
 Route::post("subscribers-send-mail", [SubscriberController::class, "sendMail"])->name("subscribers-send-mail");
+
+// Advertisement
+Route::get("advertisement", [AdvertisementController::class, "index"])->name("advertisement.index");
+Route::put("advertisement/home-page-banner-one", [AdvertisementController::class, "homePageBannerOne"])->name("advertisement.home-page-banner-one");
+Route::put("advertisement/home-page-banner-two", [AdvertisementController::class, "homePageBannerTwo"])->name("advertisement.home-page-banner-two");
+Route::put("advertisement/home-page-banner-three", [AdvertisementController::class, "homePageBannerThree"])->name("advertisement.home-page-banner-three");
+Route::put("advertisement/home-page-banner-four", [AdvertisementController::class, "homePageBannerFour"])->name("advertisement.home-page-banner-four");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

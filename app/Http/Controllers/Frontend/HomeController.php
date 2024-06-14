@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Advertisement;
 use App\Models\Brand;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
@@ -26,8 +27,16 @@ class HomeController extends Controller
     $categorySliderSectionTwo = HomePageSetting::where("key", "product_slider_section_two")->first();
     $weeklyBestRated = HomePageSetting::where("key", "weekly_best_rated")->first();
     $weeklyBestSell = HomePageSetting::where("key", "weekly_best_sell")->first();
+    $homePageBannerOne = Advertisement::where("key", "home_page_banner_one")->first();
+    $homePageBannerOne = json_decode($homePageBannerOne?->value);
+    $homePageBannerTwo = Advertisement::where("key", "home_page_banner_two")->first();
+    $homePageBannerTwo = json_decode($homePageBannerTwo?->value);
+    $homePageBannerThree = Advertisement::where("key", "home_page_banner_three")->first();
+    $homePageBannerThree = json_decode($homePageBannerThree?->value);
+    $homePageBannerFour = Advertisement::where("key", "home_page_banner_four")->first();
+    $homePageBannerFour = json_decode($homePageBannerFour?->value);
 
-    return view("frontend.home.home", compact("sliders", "flashSaleDate", "flashSaleItems", "popularCategories", "brands", "typeBaseProducts", "categorySliderSectionOne", "categorySliderSectionTwo", "weeklyBestRated", "weeklyBestSell"));
+    return view("frontend.home.home", compact("sliders", "flashSaleDate", "flashSaleItems", "popularCategories", "brands", "typeBaseProducts", "categorySliderSectionOne", "categorySliderSectionTwo", "weeklyBestRated", "weeklyBestSell", "homePageBannerOne", "homePageBannerTwo", "homePageBannerThree", "homePageBannerFour"));
   }
 
   public function getTypeBaseProduct()

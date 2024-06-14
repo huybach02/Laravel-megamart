@@ -119,6 +119,11 @@
                         class="fas fa-newspaper"></i><span>Người Đăng Ký Nhận Tin</span></a>
             </li>
 
+            <li class="{{ setActive(['admin.advertisement.*']) }}">
+                <a href="{{ route('admin.advertisement.index') }}" class="nav-link"><i
+                        class="fas fa-ad"></i><span>Quản
+                        Lý Quảng Cáo</span></a>
+            </li>
 
             <li class="{{ setActive(['admin.setting.*']) }}">
                 <a href="{{ route('admin.setting.index') }}" class="nav-link"><i class="fas fa-cog"></i><span>Cài

@@ -152,5 +152,40 @@
             })
         })
 
+        $("#new-letter").on("submit", function(e) {
+            e.preventDefault();
+
+            let data = $(this).serialize();
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('new-letter-request') }}",
+                data: data,
+                beforeSend: function() {
+                    $(".subscriber-btn").text("Đang gửi...")
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        toastr.success(data.message)
+                        $(".subscriber-btn").text("Đã Gửi")
+                    }
+                    if (data.status == "error") {
+                        toastr.error(data.message)
+                        $(".subscriber-btn").text("Đăng Ký")
+                    }
+                },
+                error: function(data) {
+                    let errors = data.responseJSON.errors;
+                    console.log(errors);
+                    if (errors) {
+                        $.each(errors, function(key, value) {
+                            toastr.error(value[0])
+                        })
+                    }
+                    $(".subscriber-btn").text("Đăng Ký")
+                }
+            })
+        })
+
     })
 </script>

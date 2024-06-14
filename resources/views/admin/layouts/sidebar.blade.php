@@ -96,10 +96,27 @@
                 </ul>
             </li>
 
+            <li class="dropdown {{ setActive(['admin.footer-info.*', 'admin.footer-grid-two.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-link"></i>
+                    <span>Quản Lý Chân Trang</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.footer-info.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.footer-info.index') }}">Thông tin liên hệ</a></li>
+                    <li class="{{ setActive(['admin.footer-grid-two.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.footer-grid-two.index') }}">Nội dung chân trang</a></li>
+
+                </ul>
+            </li>
+
             <li class="{{ setActive(['admin.transactions.*']) }}">
                 <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
                         class="fas fa-money-check"></i><span>Lịch
                         sử thanh toán</span></a>
+            </li>
+
+            <li class="{{ setActive(['admin.subscribers.*']) }}">
+                <a href="{{ route('admin.subscribers.index') }}" class="nav-link"><i
+                        class="fas fa-newspaper"></i><span>Người Đăng Ký Nhận Tin</span></a>
             </li>
 
 

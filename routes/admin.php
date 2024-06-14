@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\FlashSaleController;
+use App\Http\Controllers\Backend\FooterGridTwoController;
+use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\HomePageSettingController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
@@ -22,6 +24,7 @@ use App\Http\Controllers\Backend\ShippingRuleController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SubscriberController;
 use App\Http\Controllers\Backend\TransactionController;
 use App\Models\ShippingRule;
 use Illuminate\Support\Facades\Route;
@@ -91,6 +94,9 @@ Route::delete("flash-sale/{id}", [FlashSaleController::class, "destroy"])->name(
 // Settings
 Route::get("settings", [SettingController::class, "index"])->name("setting.index");
 Route::put("general-setting-update", [SettingController::class, "generalSettingUpdate"])->name("general-setting-update");
+Route::put("email-setting-update", [SettingController::class, "emailSettingUpdate"])->name("email-setting-update");
+
+// Homepage Settings
 Route::get("home-page-setting", [HomePageSettingController::class, "index"])->name("home-page-setting.index");
 Route::put("popular-category-section", [HomePageSettingController::class, "updatePopularCategorySection"])->name("popular-category-section");
 Route::put("product-slider-section-one", [HomePageSettingController::class, "updateProductSliderSectionOne"])->name("product-slider-section-one");
@@ -119,6 +125,15 @@ Route::get("order-filter", [OrderController::class, "orderFilter"])->name("order
 Route::resource("order", OrderController::class);
 
 Route::get("transactions", [TransactionController::class, "index"])->name("transactions.index");
+
+// Footer
+Route::resource("footer-info", FooterInfoController::class);
+Route::put("footer-grid-two/change-status", [FooterGridTwoController::class, "changeStatus"])->name("footer-grid-two.change-status");
+Route::resource("footer-grid-two", FooterGridTwoController::class);
+
+// Subscriber
+Route::get("subscribers", [SubscriberController::class, "index"])->name("subscribers.index");
+Route::post("subscribers-send-mail", [SubscriberController::class, "sendMail"])->name("subscribers-send-mail");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

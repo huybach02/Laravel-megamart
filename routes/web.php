@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\NewLetterController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
@@ -89,6 +90,9 @@ Route::get("coupon-calculation", [CartController::class, "couponCalculation"])->
 Route::get("wishlist", [WishlistController::class, "index"])->name("wishlist.index");
 Route::post("wishlist/add-product", [WishlistController::class, "addToWishlist"])->name("wishlist.store");
 Route::get("wishlist/remove-product/{id}", [WishlistController::class, "removeFromWishlist"])->name("wishlist.destroy");
+
+Route::post("new-letter-request", [NewLetterController::class, "newLetterRequest"])->name("new-letter-request");
+Route::get("new-letter-email-verify/{token}", [NewLetterController::class, "newLetterEmailVerify"])->name("new-letter-email-verify");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

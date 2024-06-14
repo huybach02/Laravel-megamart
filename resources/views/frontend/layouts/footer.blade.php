@@ -1,3 +1,10 @@
+@php
+    $footerInfo = \App\Models\FooterInfo::first();
+    $footerContent1 = \App\Models\FooterGridTwo::where(['column' => 1, 'status' => 1])->get();
+    $footerContent2 = \App\Models\FooterGridTwo::where(['column' => 2, 'status' => 1])->get();
+@endphp
+
+
 <!--============================
     FOOTER PART START
 ==============================-->
@@ -7,39 +14,42 @@
             <div class="col-xl-3 col-sm-7 col-md-6 col-lg-3">
                 <div class="wsus__footer_content">
                     <a class="wsus__footer_2_logo" href="#">
-                        <img src="{{ asset('logo.png') }}" alt="logo">
+                        <img src="{{ asset($footerInfo->logo) }}" alt="logo">
                     </a>
                     <a class="action" href="callto:+8896254857456"><i class="fas fa-phone-alt"></i>
-                        1800-1234</a>
+                        {{ $footerInfo->phone }}</a>
                     <a class="action" href="mailto:example@gmail.com"><i class="far fa-envelope"></i>
-                        magemart@gmail.com</a>
-                    <p><i class="fal fa-map-marker-alt"></i>209 Đ. 30 Tháng 4, Xuân Khánh, Ninh Kiều, Cần Thơ</p>
-                    <ul class="wsus__footer_social">
+                        {{ $footerInfo->email }}</a>
+                    <p><i class="fal fa-map-marker-alt"></i>{{ $footerInfo->address }}</p>
+                    {{-- <ul class="wsus__footer_social">
                         <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
                         <li><a class="twitter" href="#"><i class="fab fa-twitter"></i></a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
             <div class="col-xl-2 col-sm-5 col-md-4 col-lg-2">
                 <div class="wsus__footer_content">
                     <h5>Hỗ trợ - Dịch vụ</h5>
                     <ul class="wsus__footer_menu">
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Chính sách mua hàng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Hướng dẫn mua hàng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Chính sách bảo mật</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Chính sách giao hàng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Quy chế hoạt động</a></li>
+
+                        @foreach ($footerContent1 as $content)
+                            <li><a href="{{ $content->url }}"><i class="fas fa-caret-right"></i>
+                                    {{ $content->name }}</a></li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>
             <div class="col-xl-2 col-sm-5 col-md-4 col-lg-2">
                 <div class="wsus__footer_content">
-                    <h5>Thông Tin Liên Hệ</h5>
+                    <h5>Thông Tin</h5>
                     <ul class="wsus__footer_menu">
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Lịch sử mua hàng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Tra cứu đơn hàng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Tuyển dụng</a></li>
-                        <li><a href="#"><i class="fas fa-caret-right"></i> Góp ý, khiếu nại</a></li>
+
+                        @foreach ($footerContent2 as $content)
+                            <li><a href="{{ $content->url }}"><i class="fas fa-caret-right"></i>
+                                    {{ $content->name }}</a></li>
+                        @endforeach
+
                     </ul>
                 </div>
             </div>
@@ -47,9 +57,11 @@
                 <div class="wsus__footer_content wsus__footer_content_2">
                     <h3>Đăng ký nhận tin tức mới nhất</h3>
                     <p>Nhận tất cả thông tin về khuyến mãi, giảm giá, thành viên,... của chúng tôi</p>
-                    <form>
-                        <input type="text" placeholder="Email...">
-                        <button type="submit" class="common_btn">Đăng ký</button>
+                    <form action="{{ route('new-letter-request') }}" method="POST" id="new-letter">
+                        @csrf
+
+                        <input type="text" name="email" placeholder="Nhập email của bạn...">
+                        <button type="submit" class="common_btn subscriber-btn">Đăng ký</button>
                     </form>
                     {{-- <div class="footer_payment">
                       <p>We're using safe payment for :</p>

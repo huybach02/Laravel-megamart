@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\VendorController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
+use App\Http\Controllers\Backend\VendorProductReviewController;
 use App\Http\Controllers\Backend\VendorProductVariantController;
 use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
@@ -37,3 +38,5 @@ Route::delete("product-variant-item/{variantItemId}", [VendorProductVariantItemC
 Route::get("orders", [VendorOrderController::class, "index"])->name("orders.index");
 Route::get("orders/show/{id}", [VendorOrderController::class, "show"])->name("orders.show");
 Route::put("order/change-status/{id}", [VendorOrderController::class, "changeStatus"])->name("orders.change-status");
+
+Route::get("reviews", [VendorProductReviewController::class, "index"])->name("reviews.index");

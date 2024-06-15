@@ -119,6 +119,11 @@
                         class="fas fa-newspaper"></i><span>Người Đăng Ký Nhận Tin</span></a>
             </li>
 
+            <li class="{{ setActive(['admin.reviews.*']) }}">
+                <a href="{{ route('admin.reviews.index') }}" class="nav-link"><i class="fas fa-star"></i><span>Quản
+                        Lý Đánh Giá</span></a>
+            </li>
+
             <li class="{{ setActive(['admin.advertisement.*']) }}">
                 <a href="{{ route('admin.advertisement.index') }}" class="nav-link"><i
                         class="fas fa-ad"></i><span>Quản

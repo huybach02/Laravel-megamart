@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminProductReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
 use App\Http\Controllers\Backend\BrandController;
@@ -142,6 +143,11 @@ Route::put("advertisement/home-page-banner-one", [AdvertisementController::class
 Route::put("advertisement/home-page-banner-two", [AdvertisementController::class, "homePageBannerTwo"])->name("advertisement.home-page-banner-two");
 Route::put("advertisement/home-page-banner-three", [AdvertisementController::class, "homePageBannerThree"])->name("advertisement.home-page-banner-three");
 Route::put("advertisement/home-page-banner-four", [AdvertisementController::class, "homePageBannerFour"])->name("advertisement.home-page-banner-four");
+
+// Review
+Route::get("reviews", [AdminProductReviewController::class, "index"])->name("reviews.index");
+Route::put("reviews/change-status", [AdminProductReviewController::class, "changeStatus"])->name("reviews.change-status");
+Route::delete("reviews/{id}", [AdminProductReviewController::class, "destroy"])->name("reviews.destroy");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

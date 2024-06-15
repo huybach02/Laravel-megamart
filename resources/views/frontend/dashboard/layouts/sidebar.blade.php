@@ -12,11 +12,9 @@
                 về Trang
                 chủ</a>
         </li>
-        <li><a class="active" href="dsahboard.html"><i class="fas fa-tachometer"></i>Dashboard</a></li>
+        <li><a class="active" href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
         <li><a href="{{ route('user.orders.index') }}"><i class="far fa-scroll"></i> Đơn Hàng</a></li>
-        <li><a href="dsahboard_download.html"><i class="far fa-cloud-download-alt"></i> Downloads</a></li>
-        <li><a href="dsahboard_review.html"><i class="far fa-star"></i> Reviews</a></li>
-        <li><a href="dsahboard_wishlist.html"><i class="far fa-heart"></i> Wishlist</a></li>
+        <li><a href="{{ route('user.review.index') }}"><i class="far fa-star"></i> Đánh Giá</a></li>
         <li><a href="{{ route('user.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
         <li><a href="{{ route('user.address.index') }}"><i class="far fa-map"></i> Địa chỉ</a></li>
         <li>

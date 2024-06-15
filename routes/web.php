@@ -9,9 +9,11 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewLetterController;
+use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
+use App\Http\Controllers\Frontend\UserProductReviewController;
 use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
@@ -73,6 +75,12 @@ Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "us
 
   Route::get("orders", [UserOrderController::class, "index"])->name("orders.index");
   Route::get("orders/show/{id}", [UserOrderController::class, "show"])->name("orders.show");
+
+  Route::post("review", [ReviewController::class, "createReview"])->name("review.create");
+  Route::get("reviews", [ReviewController::class, "index"])->name("review.index");
+  Route::delete("reviews/{id}", [ReviewController::class, "destroy"])->name("reviews.destroy");
+  Route::get("reviews/{id}", [ReviewController::class, "edit"])->name("reviews.edit");
+  Route::put("reviews/{id}", [ReviewController::class, "update"])->name("reviews.update");
 });
 
 Route::post("add-to-cart", [CartController::class, "addToCart"])->name("add-to-cart");

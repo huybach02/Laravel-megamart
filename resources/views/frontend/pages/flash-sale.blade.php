@@ -54,7 +54,7 @@
                         <div class="wsus__section_header rounded-0">
                             <h3>flash sell</h3>
                             <div class="wsus__offer_countdown">
-                                <span class="end_text">ends time :</span>
+                                <span class="end_text">Giảm giá kết thúc sau :</span>
                                 <div class="simply-countdown simply-countdown-example"></div>
                             </div>
                         </div>
@@ -93,12 +93,19 @@
                                         <a class="wsus__category" href="">{{ $product->category->name }}
                                         </a>
                                         <p class="wsus__pro_rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>(133 review)</span>
+                                            @php
+                                                $avgRating = round($product->reviews->avg('rating'));
+                                            @endphp
+
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $avgRating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{ count($product->reviews) }} đánh giá)</span>
                                         </p>
                                         <a class="wsus__pro_name"
                                             href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
@@ -209,12 +216,19 @@
                                             <h4>{{ number_format($product->price) }} đ</h4>
                                         @endif
                                         <p class="review">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                            <span>20 review</span>
+                                            @php
+                                                $avgRating = round($product->reviews->avg('rating'));
+                                            @endphp
+
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $avgRating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+
+                                            <span>({{ count($product->reviews) }} đánh giá)</span>
                                         </p>
                                         <p class="description"><strong>Mô tả ngắn:</strong>
                                             {{ $product->short_description }}</p>

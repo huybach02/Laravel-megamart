@@ -15,8 +15,9 @@
         <li><a class="active" href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
         <li><a href="{{ route('vendor.products.index') }}"><i class="far fa-layer-group"></i> Quản lý sản phẩm</a>
         </li>
-        <li><a href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-hotel"></i> Thông tin gian hàng</a></li>
         <li><a href="{{ route('vendor.orders.index') }}"><i class="far fa-scroll"></i> Quản lý đơn hàng</a></li>
+        <li><a href="{{ route('vendor.reviews.index') }}"><i class="far fa-star"></i> Quản lý đánh giá</a></li>
+        <li><a href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-hotel"></i> Thông tin gian hàng</a></li>
         <li><a href="{{ route('vendor.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
         <li>
             <form method="POST" action="{{ route('logout') }}">

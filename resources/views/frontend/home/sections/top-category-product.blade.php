@@ -104,11 +104,17 @@
                                     <div class="wsus__hot_deals__single_text text-center">
                                         <h5>{{ limitText($item->name, 20) }}</h5>
                                         <p class="wsus__rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
+                                            @php
+                                                $avgRating = round($item->reviews->avg('rating'));
+                                            @endphp
+
+                                            @for ($i = 0; $i < 5; $i++)
+                                                @if ($i < $avgRating)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
                                         </p>
                                         @if (checkDiscount($item))
                                             <p class="wsus__tk"><del>{{ number_format($item->price) }} đ</del>

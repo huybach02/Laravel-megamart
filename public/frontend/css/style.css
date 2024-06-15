@@ -656,6 +656,7 @@ header {
     background: #0b2c3d;
     background: #fff;
     box-shadow: rgb(100 100 111 / 20%) 0px 3px 15px 0;
+    z-index: 20;
 }
 
 .wsus_menu_category_bar {
@@ -4189,8 +4190,8 @@ PRODUCT DETAILS START
 }
 
 .wsus__pro_det_review .wsus__comment_text ul li {
-    width: 70px !important;
-    height: 70px !important;
+    width: 150px !important;
+    height: 150px !important;
     margin-right: 10px;
     float: left;
 }
@@ -4198,6 +4199,7 @@ PRODUCT DETAILS START
 .wsus__pro_det_review .wsus__comment_text ul li img {
     height: 100%;
     object-fit: cover;
+    margin-top: 0 !important;
 }
 
 .wsus__pro_det_review h4 {

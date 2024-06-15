@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
 use App\Models\Product;
+use App\Models\ProductReview;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,11 @@ class FrontendProductController extends Controller
   {
     $product = Product::with(["vendor", "category", "productImageGalleries", "variants", "brand"])->where("slug", $slug)->where("status", 1)->first();
 
-    return view("frontend.pages.product-detail", compact("product"));
+    $reviews = ProductReview::where(["product_id" => $product->id, "status" => 1])->latest()->paginate(5);
+
+    $reviewCount = ProductReview::where(["product_id" => $product->id, "status" => 1])->count();
+
+    return view("frontend.pages.product-detail", compact("product", "reviews", "reviewCount"));
   }
 
   public function productIndex(Request $request)

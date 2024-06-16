@@ -505,18 +505,20 @@
                                                     @php
                                                         $isBought = false;
 
-                                                        $orders = \App\Models\Order::where([
-                                                            'user_id' => Auth::user()->id,
-                                                            'order_status' => 'delivered',
-                                                        ])->get();
+                                                        if (Auth::check()) {
+                                                            $orders = \App\Models\Order::where([
+                                                                'user_id' => Auth::user()->id,
+                                                                'order_status' => 'delivered',
+                                                            ])->get();
 
-                                                        foreach ($orders as $key => $order) {
-                                                            $existProduct = $order
-                                                                ->orderProducts()
-                                                                ->where('product_id', $product->id)
-                                                                ->first();
-                                                            if ($existProduct) {
-                                                                $isBought = true;
+                                                            foreach ($orders as $key => $order) {
+                                                                $existProduct = $order
+                                                                    ->orderProducts()
+                                                                    ->where('product_id', $product->id)
+                                                                    ->first();
+                                                                if ($existProduct) {
+                                                                    $isBought = true;
+                                                                }
                                                             }
                                                         }
                                                     @endphp

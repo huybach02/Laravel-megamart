@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProductReviewController;
 use App\Http\Controllers\Frontend\UserProfileController;
+use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -55,7 +56,7 @@ Route::get("products", [FrontendProductController::class, "productIndex"])->name
 Route::get("product-detail/{slug}", [FrontendProductController::class, "showProduct"])->name("product-detail");
 Route::get("change-product-list-view", [FrontendProductController::class, "changeListView"])->name("change-product-list-view");
 
-Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "user", "as" => "user."], function () {
+Route::group(["middleware" => ["auth", "verified", "role:user,vendor"], "prefix" => "user", "as" => "user."], function () {
   Route::get("dashboard", [UserDashboardController::class, "index"])->name("dashboard");
   Route::get("profile", [UserProfileController::class, "index"])->name("profile");
   Route::put("profile", [UserProfileController::class, "updateProfile"])->name("profile.update");
@@ -81,6 +82,9 @@ Route::group(["middleware" => ["auth", "verified", "role:user"], "prefix" => "us
   Route::delete("reviews/{id}", [ReviewController::class, "destroy"])->name("reviews.destroy");
   Route::get("reviews/{id}", [ReviewController::class, "edit"])->name("reviews.edit");
   Route::put("reviews/{id}", [ReviewController::class, "update"])->name("reviews.update");
+
+  Route::get("vendor-request", [UserVendorRequestController::class, "index"])->name("vendor-request.index");
+  Route::post("vendor-request", [UserVendorRequestController::class, "create"])->name("vendor-request.create");
 });
 
 Route::post("add-to-cart", [CartController::class, "addToCart"])->name("add-to-cart");
@@ -101,6 +105,9 @@ Route::get("wishlist/remove-product/{id}", [WishlistController::class, "removeFr
 
 Route::post("new-letter-request", [NewLetterController::class, "newLetterRequest"])->name("new-letter-request");
 Route::get("new-letter-email-verify/{token}", [NewLetterController::class, "newLetterEmailVerify"])->name("new-letter-email-verify");
+
+Route::get("vendors", [HomeController::class, "vendorPage"])->name("vendors.index");
+Route::get("vendors-detail/{id}", [HomeController::class, "vendorDetail"])->name("vendor.show");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

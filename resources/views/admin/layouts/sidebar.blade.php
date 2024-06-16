@@ -15,7 +15,8 @@
                         kê</span></a>
             </li>
             {{-- <li class="menu-header">Starter</li> --}}
-            <li class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*']) }}">
+            <li
+                class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*', 'admin.vendor-condition.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Quản Lý Website</span></a>
                 <ul class="dropdown-menu">
@@ -23,6 +24,8 @@
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
                     <li class="{{ setActive(['admin.home-page-setting.*']) }}"><a class="nav-link"
                             href="{{ route('admin.home-page-setting.index') }}">Cài Đặt Trang Chủ</a></li>
+                    <li class="{{ setActive(['admin.vendor-condition.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-condition.index') }}">Điều khoản gian hàng</a></li>
                 </ul>
             </li>
 
@@ -108,10 +111,25 @@
                 </ul>
             </li>
 
+            <li
+                class="dropdown {{ setActive(['admin.vendor-requests.*', 'admin.customers.*', 'admin.vendor-list.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i>
+                    <span>Quản Lý Người Dùng</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.vendor-requests.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-requests.index') }}">Gian hàng đang chờ duyệt</a></li>
+                    <li class="{{ setActive(['admin.customers.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.customers.index') }}">Khách hàng</a></li>
+                    <li class="{{ setActive(['admin.vendor-list.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.vendor-list.index') }}">Gian hàng</a></li>
+
+                </ul>
+            </li>
+
             <li class="{{ setActive(['admin.transactions.*']) }}">
                 <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
                         class="fas fa-money-check"></i><span>Lịch
-                        sử thanh toán</span></a>
+                        Sử Thanh Toán</span></a>
             </li>
 
             <li class="{{ setActive(['admin.subscribers.*']) }}">

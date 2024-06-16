@@ -70,8 +70,8 @@
                     </ul>
 
                     <ul class="wsus__menu_item">
-                        <li><a class="active" href="index.html">home</a></li>
-                        <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
+                        <li><a class="active" href="{{ route('home') }}">Trang Chủ</a></li>
+                        {{-- <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
                             <div class="wsus__mega_menu">
                                 <div class="row">
                                     <div class="col-xl-3 col-lg-3">
@@ -136,8 +136,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                        <li><a href="vendor.html">vendor</a></li>
+                        </li> --}}
+                        <li><a href="{{ route('product.index') }}">Sản Phẩm</a></li>
+                        <li><a href="{{ route('vendors.index') }}">Gian Hàng</a></li>
                         <li><a href="blog.html">blog</a></li>
                         <li><a href="daily_deals.html">campain</a></li>
                         <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>
@@ -164,8 +165,13 @@
                         <li><a href="contact.html">contact</a></li>
                         @auth
                             <li><a
-                                    href="{{ Auth::user()->role === 'user' ? route('user.dashboard') : route('vendor.dashboard') }}">Tài
+                                    href="{{ Auth::user()->role === 'user' || Auth::user()->role === 'vendor' ? route('user.dashboard') : route('home') }}">Tài
                                     khoản</a></li>
+                            @if (Auth::user()->role === 'vendor')
+                                <li><a
+                                        href="{{ Auth::user()->role === 'vendor' ? route('vendor.dashboard') : route('home') }}">Gian
+                                        hàng</a></li>
+                            @endif
                             <li>Xin chào, {{ Auth::user()->name }}!</li>
                         @else
                             <li><a href="{{ route('login') }}">Đăng nhập / Đăng ký</a></li>

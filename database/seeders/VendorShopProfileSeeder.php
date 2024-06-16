@@ -25,6 +25,8 @@ class VendorShopProfileSeeder extends Seeder
     $vendor->address = "3/2, Ninh Kiều, Cần Thơ";
     $vendor->description = "Description";
     $vendor->user_id = $user->id;
+    $vendor->status = 1;
+
     $vendor->save();
   }
 }

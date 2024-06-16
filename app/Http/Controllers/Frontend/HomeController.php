@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Models\Brand;
+use App\Models\Category;
+use App\Models\ChildCategory;
 use App\Models\FlashSale;
 use App\Models\FlashSaleItem;
 use App\Models\HomePageSetting;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\SubCategory;
+use App\Models\Vendor;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
@@ -49,5 +53,22 @@ class HomeController extends Controller
     $typeBaseProducts["best_product"] = Product::where(["product_type" => "best_product", "is_approved" => 1, "status" => 1])->orderBy("created_at", "desc")->take(8)->get();
 
     return $typeBaseProducts;
+  }
+
+  public function vendorPage()
+  {
+    $vendors = Vendor::latest()->paginate(12);
+
+    return view("frontend.pages.vendor", compact("vendors"));
+  }
+
+  public function vendorDetail(Request $request, $id)
+  {
+    $products = Product::where(["status" => 1, "is_approved" => 1, "vendor_id" => $id])->latest()->paginate(12);
+    $categories = Category::where("status", 1)->get();
+    $brands = Brand::where("status", 1)->get();
+    $vendor = Vendor::where("id", $id)->first();
+
+    return view("frontend.pages.vendor-detail", compact("products", "categories", "brands", "vendor"));
   }
 }

@@ -17,6 +17,16 @@
         <li><a href="{{ route('user.review.index') }}"><i class="far fa-star"></i> Đánh Giá</a></li>
         <li><a href="{{ route('user.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
         <li><a href="{{ route('user.address.index') }}"><i class="far fa-map"></i> Địa chỉ</a></li>
+        @if (auth()->user()->role !== 'vendor')
+            <li><a href="{{ route('user.vendor-request.index') }}"><i class="far fa-user-plus"></i> Đăng ký trở thành
+                    gian
+                    hàng</a>
+        @endif
+        </li>
+        @if (auth()->user()->role == 'vendor')
+            <li><a href="{{ route('vendor.dashboard') }}"><i class="far fa-angle-right"></i> Đi đến gian hàng</a>
+        @endif
+        </li>
         <li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

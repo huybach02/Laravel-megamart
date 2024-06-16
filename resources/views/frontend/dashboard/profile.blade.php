@@ -13,7 +13,7 @@
                     <div class="wsus__dash_pro_area">
 
                         <div class="row">
-                            <form method="POST" action="{{ route('vendor.profile.update') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -86,7 +86,7 @@
                                 </div>
                             </form>
 
-                            <form method="POST" action="{{ route('vendor.profile.update.password') }}">
+                            <form method="POST" action="{{ route('user.profile.update.password') }}">
                                 @csrf
 
                                 <h5 class="text-primary fw-bold my-3">Thay đổi mật khẩu</h5>

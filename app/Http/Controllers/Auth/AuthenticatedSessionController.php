@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use Brian2694\Toastr\Facades\Toastr;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -38,6 +39,16 @@ class AuthenticatedSessionController extends Controller
     // } else if ($request->user()->role === "vendor") {
     //   return redirect()->intended("vendor/dashboard");
     // }
+
+    if ($request->user()->status == "inactive") {
+      Auth::guard('web')->logout();
+
+      $request->session()->regenerateToken();
+
+      Toastr::error("Tài khoản của bạn đã bị khoá. Vui lòng liên hệ quản trị viên qua email hoặc số điện thoại để biết thêm chi tiết!", "Lỗi");
+
+      return redirect()->back();
+    }
 
     if ($request->user()->role === "user") {
       return redirect()->intended("/");

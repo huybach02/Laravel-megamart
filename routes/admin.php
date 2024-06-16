@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
 use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
@@ -28,6 +29,9 @@ use App\Http\Controllers\Backend\StripeSettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubscriberController;
 use App\Http\Controllers\Backend\TransactionController;
+use App\Http\Controllers\Backend\VendorConditionController;
+use App\Http\Controllers\Backend\VendorListController;
+use App\Http\Controllers\Backend\VendorRequestController;
 use App\Models\ShippingRule;
 use Illuminate\Support\Facades\Route;
 
@@ -148,6 +152,23 @@ Route::put("advertisement/home-page-banner-four", [AdvertisementController::clas
 Route::get("reviews", [AdminProductReviewController::class, "index"])->name("reviews.index");
 Route::put("reviews/change-status", [AdminProductReviewController::class, "changeStatus"])->name("reviews.change-status");
 Route::delete("reviews/{id}", [AdminProductReviewController::class, "destroy"])->name("reviews.destroy");
+
+// Vendor request
+Route::get("vendor-requests", [VendorRequestController::class, "index"])->name("vendor-requests.index");
+Route::get("vendor-requests-detail/{id}", [VendorRequestController::class, "show"])->name("vendor-requests.show");
+Route::put("vendor-requests-change-status/{id}", [VendorRequestController::class, "changeStatus"])->name("vendor-requests.change-status");
+
+// Customer List
+Route::get("customers", [CustomerListController::class, "index"])->name("customers.index");
+Route::put("customers/change-status", [CustomerListController::class, "changeStatus"])->name("customers.change-status");
+
+// Vendor List
+Route::get("vendor-list", [VendorListController::class, "index"])->name("vendor-list.index");
+Route::put("vendor-list/change-status", [VendorListController::class, "changeStatus"])->name("vendor-list.change-status");
+
+// Vendor Condition
+Route::get("vendor-condition", [VendorConditionController::class, "index"])->name("vendor-condition.index");
+Route::post("vendor-condition", [VendorConditionController::class, "update"])->name("vendor-condition.update");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

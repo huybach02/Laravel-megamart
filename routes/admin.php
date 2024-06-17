@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminProductReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Backend\FlashSaleController;
 use App\Http\Controllers\Backend\FooterGridTwoController;
 use App\Http\Controllers\Backend\FooterInfoController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\ManageUserController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaymentSettingController;
 use App\Http\Controllers\Backend\PaypalSettingController;
@@ -169,6 +171,15 @@ Route::put("vendor-list/change-status", [VendorListController::class, "changeSta
 // Vendor Condition
 Route::get("vendor-condition", [VendorConditionController::class, "index"])->name("vendor-condition.index");
 Route::post("vendor-condition", [VendorConditionController::class, "update"])->name("vendor-condition.update");
+
+// About
+Route::get("about", [AboutController::class, "index"])->name("about.index");
+Route::post("about", [AboutController::class, "update"])->name("about.update");
+
+// Manage User
+Route::get("manage-user", [ManageUserController::class, "index"])->name("manage-user.index");
+Route::post("manage-user", [ManageUserController::class, "create"])->name("manage-user.create");
+Route::put("manage-user/change-status", [ManageUserController::class, "changeStatus"])->name("manage-user.change-status");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

@@ -163,15 +163,18 @@
                 data: data,
                 beforeSend: function() {
                     $(".subscriber-btn").text("Đang gửi...")
+                    $(".subscriber-btn").attr("disabled", true)
                 },
                 success: function(data) {
                     if (data.status == "success") {
                         toastr.success(data.message)
                         $(".subscriber-btn").text("Đã Gửi")
+                        $(".subscriber-btn").attr("disabled", false)
                     }
                     if (data.status == "error") {
                         toastr.error(data.message)
                         $(".subscriber-btn").text("Đăng Ký")
+                        $(".subscriber-btn").attr("disabled", false)
                     }
                 },
                 error: function(data) {
@@ -183,6 +186,7 @@
                         })
                     }
                     $(".subscriber-btn").text("Đăng Ký")
+                    $(".subscriber-btn").attr("disabled", false)
                 }
             })
         })

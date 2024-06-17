@@ -9,6 +9,8 @@ use App\Http\Controllers\Frontend\FlashSaleController;
 use App\Http\Controllers\Frontend\FrontendProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NewLetterController;
+use App\Http\Controllers\Frontend\OrderTrackingController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
@@ -108,6 +110,11 @@ Route::get("new-letter-email-verify/{token}", [NewLetterController::class, "newL
 
 Route::get("vendors", [HomeController::class, "vendorPage"])->name("vendors.index");
 Route::get("vendors-detail/{id}", [HomeController::class, "vendorDetail"])->name("vendor.show");
+
+Route::get("about", [PageController::class, "about"])->name("about");
+Route::get("contact", [PageController::class, "contact"])->name("contact");
+Route::post("contact", [PageController::class, "handleContactForm"])->name("handle-contact-form");
+Route::get("order-tracking", [OrderTrackingController::class, "index"])->name("order-tracking.index");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

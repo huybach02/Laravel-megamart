@@ -22,14 +22,19 @@ class SettingController extends Controller
   {
     $request->validate([
       "site_name" => ["required", "max:100"],
-      "contact_email" => ["required", "email"]
+      "contact_email" => ["required", "email"],
+      "contact_phone" => ["required"],
+      "contact_address" => ["required"]
     ]);
 
     GeneralSetting::updateOrCreate([
       "id" => 1
     ], [
       "site_name" => $request->site_name,
-      "contact_email" => $request->contact_email
+      "contact_email" => $request->contact_email,
+      "contact_phone" => $request->contact_phone,
+      "contact_address" => $request->contact_address,
+      "map" => $request->map
     ]);
 
     Toastr::success("Cập nhật cài đặt thành công", "Thành công");

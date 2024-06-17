@@ -139,9 +139,10 @@
                         </li> --}}
                         <li><a href="{{ route('product.index') }}">Sản Phẩm</a></li>
                         <li><a href="{{ route('vendors.index') }}">Gian Hàng</a></li>
-                        <li><a href="blog.html">blog</a></li>
-                        <li><a href="daily_deals.html">campain</a></li>
-                        <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>
+                        <li><a href="blog.html">Bài Viết</a></li>
+                        <li><a href="{{ route('about') }}">Giới Thiệu</a></li>
+                        <li><a href="{{ route('contact') }}">Liên Hệ</a></li>
+                        {{-- <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>
                             <ul class="wsus__menu_droapdown">
                                 <li><a href="404.html">404</a></li>
                                 <li><a href="faqs.html">faq</a></li>
@@ -157,12 +158,11 @@
                                 <li><a href="product_category.html">product category</a></li>
                                 <li><a href="brands.html">brands</a></li>
                             </ul>
-                        </li>
-                        <li><a href="track_order.html">track order</a></li>
-                        <li><a href="daily_deals.html">daily deals</a></li>
+                        </li> --}}
+                        <li><a href="{{ route('order-tracking.index') }}">Trạng Thái Đơn Hàng</a></li>
+                        {{-- <li><a href="daily_deals.html">daily deals</a></li> --}}
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">
-                        <li><a href="contact.html">contact</a></li>
                         @auth
                             <li><a
                                     href="{{ Auth::user()->role === 'user' || Auth::user()->role === 'vendor' ? route('user.dashboard') : route('home') }}">Tài

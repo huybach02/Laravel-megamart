@@ -16,7 +16,7 @@
             </li>
             {{-- <li class="menu-header">Starter</li> --}}
             <li
-                class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*', 'admin.vendor-condition.*']) }}">
+                class="dropdown {{ setActive(['admin.slider.*', 'admin.home-page-setting.*', 'admin.vendor-condition.*', 'admin.about.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i>
                     <span>Quản Lý Website</span></a>
                 <ul class="dropdown-menu">
@@ -26,6 +26,8 @@
                             href="{{ route('admin.home-page-setting.index') }}">Cài Đặt Trang Chủ</a></li>
                     <li class="{{ setActive(['admin.vendor-condition.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-condition.index') }}">Điều khoản gian hàng</a></li>
+                    <li class="{{ setActive(['admin.about.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.about.index') }}">Giới thiệu trang web</a></li>
                 </ul>
             </li>
 
@@ -112,7 +114,7 @@
             </li>
 
             <li
-                class="dropdown {{ setActive(['admin.vendor-requests.*', 'admin.customers.*', 'admin.vendor-list.*']) }}">
+                class="dropdown {{ setActive(['admin.vendor-requests.*', 'admin.customers.*', 'admin.vendor-list.*', 'admin.manage-user.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i>
                     <span>Quản Lý Người Dùng</span></a>
                 <ul class="dropdown-menu">
@@ -122,6 +124,8 @@
                             href="{{ route('admin.customers.index') }}">Khách hàng</a></li>
                     <li class="{{ setActive(['admin.vendor-list.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-list.index') }}">Gian hàng</a></li>
+                    <li class="{{ setActive(['admin.manage-user.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.manage-user.index') }}">Tài khoản</a></li>
 
                 </ul>
             </li>

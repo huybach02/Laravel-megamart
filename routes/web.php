@@ -115,6 +115,8 @@ Route::get("about", [PageController::class, "about"])->name("about");
 Route::get("contact", [PageController::class, "contact"])->name("contact");
 Route::post("contact", [PageController::class, "handleContactForm"])->name("handle-contact-form");
 Route::get("order-tracking", [OrderTrackingController::class, "index"])->name("order-tracking.index");
+Route::get("blog-detail/{slug}", [PageController::class, "blogDetail"])->name("blog-detail");
+Route::get("blog-list", [PageController::class, "blogList"])->name("blog-list");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);

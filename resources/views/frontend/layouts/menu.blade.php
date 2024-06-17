@@ -139,7 +139,7 @@
                         </li> --}}
                         <li><a href="{{ route('product.index') }}">Sản Phẩm</a></li>
                         <li><a href="{{ route('vendors.index') }}">Gian Hàng</a></li>
-                        <li><a href="blog.html">Bài Viết</a></li>
+                        <li><a href="{{ route('blog-list') }}">Bài Viết</a></li>
                         <li><a href="{{ route('about') }}">Giới Thiệu</a></li>
                         <li><a href="{{ route('contact') }}">Liên Hệ</a></li>
                         {{-- <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>

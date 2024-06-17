@@ -138,7 +138,7 @@
 
             <li class="{{ setActive(['admin.subscribers.*']) }}">
                 <a href="{{ route('admin.subscribers.index') }}" class="nav-link"><i
-                        class="fas fa-newspaper"></i><span>Người Đăng Ký Nhận Tin</span></a>
+                        class="fas fa-paper-plane"></i><span>Người Đăng Ký Nhận Tin</span></a>
             </li>
 
             <li class="{{ setActive(['admin.reviews.*']) }}">
@@ -150,6 +150,11 @@
                 <a href="{{ route('admin.advertisement.index') }}" class="nav-link"><i
                         class="fas fa-ad"></i><span>Quản
                         Lý Quảng Cáo</span></a>
+            </li>
+
+            <li class="{{ setActive(['admin.blog.*']) }}">
+                <a href="{{ route('admin.blog.index') }}" class="nav-link"><i
+                        class="fas fa-newspaper"></i><span>Quản Lý Bài Viết</span></a>
             </li>
 
             <li class="{{ setActive(['admin.setting.*']) }}">

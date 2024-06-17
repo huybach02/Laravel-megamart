@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
@@ -39,8 +40,9 @@ class HomeController extends Controller
     $homePageBannerThree = json_decode($homePageBannerThree?->value);
     $homePageBannerFour = Advertisement::where("key", "home_page_banner_four")->first();
     $homePageBannerFour = json_decode($homePageBannerFour?->value);
+    $blogs = Blog::where("status", 1)->latest()->get();
 
-    return view("frontend.home.home", compact("sliders", "flashSaleDate", "flashSaleItems", "popularCategories", "brands", "typeBaseProducts", "categorySliderSectionOne", "categorySliderSectionTwo", "weeklyBestRated", "weeklyBestSell", "homePageBannerOne", "homePageBannerTwo", "homePageBannerThree", "homePageBannerFour"));
+    return view("frontend.home.home", compact("sliders", "flashSaleDate", "flashSaleItems", "popularCategories", "brands", "typeBaseProducts", "categorySliderSectionOne", "categorySliderSectionTwo", "weeklyBestRated", "weeklyBestSell", "homePageBannerOne", "homePageBannerTwo", "homePageBannerThree", "homePageBannerFour", "blogs"));
   }
 
   public function getTypeBaseProduct()

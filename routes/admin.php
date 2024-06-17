@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminProductReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
@@ -180,6 +181,10 @@ Route::post("about", [AboutController::class, "update"])->name("about.update");
 Route::get("manage-user", [ManageUserController::class, "index"])->name("manage-user.index");
 Route::post("manage-user", [ManageUserController::class, "create"])->name("manage-user.create");
 Route::put("manage-user/change-status", [ManageUserController::class, "changeStatus"])->name("manage-user.change-status");
+
+// Blog
+Route::put("blog/change-status", [BlogController::class, "changeStatus"])->name("blog.change-status");
+Route::resource("blog", BlogController::class);
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

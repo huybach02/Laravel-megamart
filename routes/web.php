@@ -76,6 +76,8 @@ Route::group(["middleware" => ["auth", "verified", "role:user,vendor"], "prefix"
 
   Route::post("stripe/payment", [PaymentController::class, "payWithStripe"])->name("stripe.payment");
 
+  Route::get("cod/payment", [PaymentController::class, "payWithCOD"])->name("cod.payment");
+
   Route::get("orders", [UserOrderController::class, "index"])->name("orders.index");
   Route::get("orders/show/{id}", [UserOrderController::class, "show"])->name("orders.show");
 
@@ -120,4 +122,8 @@ Route::get("blog-list", [PageController::class, "blogList"])->name("blog-list");
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);
+});
+
+Route::fallback(function () {
+  return redirect()->route("home");
 });

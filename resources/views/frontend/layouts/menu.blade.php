@@ -70,7 +70,7 @@
                     </ul>
 
                     <ul class="wsus__menu_item">
-                        <li><a class="active" href="{{ route('home') }}">Trang Chủ</a></li>
+                        <li><a class="{{ setActive(['home']) }}" href="{{ route('home') }}">Trang Chủ</a></li>
                         {{-- <li><a href="product_grid_view.html">shop <i class="fas fa-caret-down"></i></a>
                             <div class="wsus__mega_menu">
                                 <div class="row">
@@ -137,11 +137,16 @@
                                 </div>
                             </div>
                         </li> --}}
-                        <li><a href="{{ route('product.index') }}">Sản Phẩm</a></li>
-                        <li><a href="{{ route('vendors.index') }}">Gian Hàng</a></li>
-                        <li><a href="{{ route('blog-list') }}">Bài Viết</a></li>
-                        <li><a href="{{ route('about') }}">Giới Thiệu</a></li>
-                        <li><a href="{{ route('contact') }}">Liên Hệ</a></li>
+                        <li><a class="{{ setActive(['product.index']) }}" href="{{ route('product.index') }}">Sản
+                                Phẩm</a></li>
+                        <li><a class="{{ setActive(['vendors.index', 'vendor.show']) }}"
+                                href="{{ route('vendors.index') }}">Gian
+                                Hàng</a></li>
+                        <li><a class="{{ setActive(['blog-list', 'blog-detail']) }}"
+                                href="{{ route('blog-list') }}">Bài Viết</a>
+                        </li>
+                        <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">Giới Thiệu</a></li>
+                        <li><a class="{{ setActive(['contact']) }}" href="{{ route('contact') }}">Liên Hệ</a></li>
                         {{-- <li class="wsus__relative_li"><a href="#">pages <i class="fas fa-caret-down"></i></a>
                             <ul class="wsus__menu_droapdown">
                                 <li><a href="404.html">404</a></li>
@@ -159,7 +164,8 @@
                                 <li><a href="brands.html">brands</a></li>
                             </ul>
                         </li> --}}
-                        <li><a href="{{ route('order-tracking.index') }}">Trạng Thái Đơn Hàng</a></li>
+                        <li><a class="{{ setActive(['order-tracking.index']) }}"
+                                href="{{ route('order-tracking.index') }}">Trạng Thái Đơn Hàng</a></li>
                         {{-- <li><a href="daily_deals.html">daily deals</a></li> --}}
                     </ul>
                     <ul class="wsus__menu_item wsus__menu_item_right">

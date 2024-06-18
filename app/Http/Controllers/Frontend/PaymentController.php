@@ -225,4 +225,21 @@ class PaymentController extends Controller
       return redirect()->route("user.payment");
     }
   }
+
+  public function payWithCOD(Request $request)
+  {
+    $codSetting = StripeSetting::first();
+
+    if ($codSetting->status == 0) {
+      return redirect()->back();
+    }
+
+    $total = getPayableAmount();
+
+    $this->storeOrder("COD", 0, Str::random(15), $total, "VND");
+
+    $this->clearSession();
+
+    return redirect()->route("user.payment.success");
+  }
 }

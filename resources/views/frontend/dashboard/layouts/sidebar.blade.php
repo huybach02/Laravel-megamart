@@ -12,19 +12,26 @@
                 về Trang
                 chủ</a>
         </li>
-        <li><a class="active" href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer"></i>Dashboard</a></li>
-        <li><a href="{{ route('user.orders.index') }}"><i class="far fa-scroll"></i> Đơn Hàng</a></li>
-        <li><a href="{{ route('user.review.index') }}"><i class="far fa-star"></i> Đánh Giá</a></li>
-        <li><a href="{{ route('user.profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a></li>
-        <li><a href="{{ route('user.address.index') }}"><i class="far fa-map"></i> Địa chỉ</a></li>
+        <li><a class="{{ setActive(['user.dashboard']) }}" href="{{ route('user.dashboard') }}"><i
+                    class="fas fa-tachometer"></i>Thống Kê</a></li>
+        <li><a class="{{ setActive(['user.orders.*']) }}" href="{{ route('user.orders.index') }}"><i
+                    class="far fa-scroll"></i> Đơn Hàng</a></li>
+        <li><a class="{{ setActive(['user.review.*']) }}" href="{{ route('user.review.index') }}"><i
+                    class="far fa-star"></i> Đánh Giá</a></li>
+        <li><a class="{{ setActive(['user.profile']) }}" href="{{ route('user.profile') }}"><i class="far fa-user"></i>
+                Thông tin tài khoản</a></li>
+        <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"><i
+                    class="far fa-map"></i> Địa chỉ</a></li>
         @if (auth()->user()->role !== 'vendor')
-            <li><a href="{{ route('user.vendor-request.index') }}"><i class="far fa-user-plus"></i> Đăng ký trở thành
+            <li><a class="{{ setActive(['user.vendor-request.*']) }}"
+                    href="{{ route('user.vendor-request.index') }}"><i class="far fa-user-plus"></i> Đăng ký trở thành
                     gian
                     hàng</a>
         @endif
         </li>
         @if (auth()->user()->role == 'vendor')
-            <li><a href="{{ route('vendor.dashboard') }}"><i class="far fa-angle-right"></i> Đi đến gian hàng</a>
+            <li><a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}"><i
+                        class="far fa-angle-right"></i> Đi đến gian hàng</a>
         @endif
         </li>
         <li>

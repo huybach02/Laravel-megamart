@@ -39,6 +39,10 @@
                                 <button class="nav-link border-0 bg-info" id="v-pills-stripe-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-stripe" type="button" role="tab"
                                     aria-controls="v-pills-stripe" aria-selected="false">Thanh toán qua Stripe</button>
+                                <button class="nav-link border-0 bg-warning" id="v-pills-stripe-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-cod" type="button" role="tab" aria-controls="v-pills-cod"
+                                    aria-selected="false">Thanh toán khi nhận hàng
+                                    (COD)</button>
 
                             </div>
                         </div>
@@ -106,6 +110,8 @@
                             </div>
 
                             @include('frontend.pages.payment-gateway.stripe')
+
+                            @include('frontend.pages.payment-gateway.cod')
 
                             {{-- <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                                 aria-labelledby="v-pills-profile-tab">

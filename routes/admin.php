@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ChildCategoryController;
+use App\Http\Controllers\Backend\CODSettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\CustomerListController;
 use App\Http\Controllers\Backend\FlashSaleController;
@@ -125,6 +126,7 @@ Route::resource("shipping-rule", ShippingRuleController::class);
 Route::get("payment-settings", [PaymentSettingController::class, "index"])->name("payment-settings.index");
 Route::resource("paypal-setting", PaypalSettingController::class);
 Route::put("stripe-setting/{id}", [StripeSettingController::class, "update"])->name("stripe-setting.update");
+Route::put("cod-setting/{id}", [CODSettingController::class, "update"])->name("cod-setting.update");
 
 // Orders
 Route::put("order-status", [OrderController::class, "changeOrderStatus"])->name("order.status");

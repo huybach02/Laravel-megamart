@@ -12,40 +12,59 @@
                     <div class="row">
                         <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item red" href="dsahboard_order.html">
-                                <i class="far fa-address-book"></i>
-                                <p>order</p>
+                                <i class="far fa-layer-group"></i>
+                                <p>Sản Phẩm</p>
+                                <h4 style="color: #fff">{{ $products }}</h4>
                             </a>
                         </div>
                         <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item green" href="dsahboard_download.html">
-                                <i class="fal fa-cloud-download"></i>
-                                <p>download</p>
+                                <i class="fal fa-scroll"></i>
+                                <p>Tổng Đơn Hàng</p>
+                                <h4 style="color: #fff">{{ $totalOrders }}</h4>
+                            </a>
+                        </div>
+                        <div class="col-xl-2 col-6 col-md-4">
+                            <a class="wsus__dashboard_item green" href="dsahboard_download.html">
+                                <i class="fal fa-calendar-week"></i>
+                                <p>Đơn Hàng Hôm Nay</p>
+                                <h4 style="color: #fff">{{ $todayOrders }}</h4>
                             </a>
                         </div>
                         <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item sky" href="dsahboard_review.html">
-                                <i class="fas fa-star"></i>
-                                <p>review</p>
+                                <i class="fas fa-check"></i>
+                                <p>Đơn Hàng Thành Công</p>
+                                <h4 style="color: #fff">{{ $successOrders }}</h4>
                             </a>
                         </div>
                         <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item blue" href="dsahboard_wishlist.html">
-                                <i class="far fa-heart"></i>
-                                <p>wishlist</p>
+                                <i class="far fa-star"></i>
+                                <p>Đánh Giá</p>
+                                <h4 style="color: #fff">{{ $reviews }}</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-4 col-6 col-md-4">
                             <a class="wsus__dashboard_item orange" href="dsahboard_profile.html">
-                                <i class="fas fa-user-shield"></i>
-                                <p>profile</p>
+                                <i class="far fa-money-bill"></i>
+                                <p>Doanh Thu</p>
+                                <h4 style="color: #fff">{{ number_format($totalEarnings) }}đ</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-4 col-6 col-md-4">
+                            <a class="wsus__dashboard_item orange" href="dsahboard_profile.html">
+                                <i class="far fa-money-bill"></i>
+                                <p>Doanh Thu Hôm Nay</p>
+                                <h4 style="color: #fff">{{ number_format($todayEarnings) }}đ</h4>
+                            </a>
+                        </div>
+                        {{-- <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item purple" href="dsahboard_address.html">
                                 <i class="fal fa-map-marker-alt"></i>
                                 <p>address</p>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
 
                 </div>

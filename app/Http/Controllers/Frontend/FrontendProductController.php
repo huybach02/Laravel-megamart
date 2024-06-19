@@ -21,7 +21,9 @@ class FrontendProductController extends Controller
 
     $reviewCount = ProductReview::where(["product_id" => $product->id, "status" => 1])->count();
 
-    return view("frontend.pages.product-detail", compact("product", "reviews", "reviewCount"));
+    $relatedProducts=Product::where("category_id",$product->category_id)->latest()->limit(12)->get();
+
+    return view("frontend.pages.product-detail", compact("product", "reviews", "reviewCount","relatedProducts"));
   }
 
   public function productIndex(Request $request)

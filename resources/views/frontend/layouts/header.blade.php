@@ -40,7 +40,7 @@
                         <li><a href="{{ route('wishlist.index') }}"><i class="fal fa-heart"></i><span
                                     id="wishlist-count">{{ Auth::check() ? \App\Models\Wishlist::where('user_id', Auth::user()->id)->count() : 0 }}</span></a>
                         </li>
-                        <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li>
+                        {{-- <li><a href="compare.html"><i class="fal fa-random"></i><span>03</span></a></li> --}}
                         <li><a class="wsus__cart_icon" href="#"><i class="fal fa-shopping-bag"></i><span
                                     id="cart-count">{{ Cart::content()->count() }}</span></a></li>
                     </ul>
@@ -83,9 +83,9 @@
 
         <div class="mini-cart-action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
             <h5>Tổng tiền <span id="mini-cart-subtotal">{{ number_format(getCartTotal()) }}đ</span></h5>
-            <div class="wsus__minicart_btn_area">
+            <div class="wsus__minicart_btn_area mt-3">
+                <a class="" href="check_out.html"></a>
                 <a class="common_btn" href="{{ route('cart-details') }}">Xem giỏ hàng</a>
-                <a class="common_btn" href="check_out.html">checkout</a>
             </div>
         </div>
 

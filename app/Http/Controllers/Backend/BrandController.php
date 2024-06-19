@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\BrandDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Product;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -108,6 +109,13 @@ class BrandController extends Controller
   public function destroy(string $id)
   {
     $brand = Brand::findOrFail($id);
+
+    if (Product::where("brand_id", $brand->id)->count() > 0) {
+      return response([
+        "message" => "Thương hiệu này đang có ít nhất 1 sản phẩm, vui lòng xoá các sản phẩm trước",
+        "status" => "error"
+      ]);
+    }
 
     $this->deleteImage($brand->logo);
 

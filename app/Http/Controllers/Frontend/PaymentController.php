@@ -70,6 +70,10 @@ class PaymentController extends Controller
       $orderProduct->quantity = $item->qty;
       $orderProduct->status = $product->vendor_id == 1 ? "processed_and_ready_to_ship" : "pending";
       $orderProduct->save();
+
+      $updateQuantity = $product->quantity - $item->qty;
+      $product->quantity = $updateQuantity;
+      $product->save();
     }
 
 

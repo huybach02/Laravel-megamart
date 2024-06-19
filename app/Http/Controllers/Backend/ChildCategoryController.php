@@ -6,6 +6,8 @@ use App\DataTables\ChildCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -107,6 +109,14 @@ class ChildCategoryController extends Controller
   public function destroy(string $id)
   {
     $category = ChildCategory::findOrFail($id);
+
+    if (Product::where("child_category_id", $category->id)->count() > 0) {
+      return response([
+        "message" => "Danh mục cấp 3 này đang có ít nhất 1 sản phẩm, vui lòng xoá các sản phẩm trước",
+        "status" => "error"
+      ]);
+    }
+
     $category->delete();
 
     return response([

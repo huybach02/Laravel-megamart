@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -106,6 +108,13 @@ class CategoryController extends Controller
     if ($subCategoryCount > 0) {
       return response([
         "message" => "Danh mục cấp 1 này đang có ít nhất 1 danh mục cấp 2, vui lòng xoá các danh mục cấp 2 trước",
+        "status" => "error"
+      ]);
+    }
+
+    if (Product::where("category_id", $category->id)->count() > 0) {
+      return response([
+        "message" => "Danh mục cấp 1 này đang có ít nhất 1 sản phẩm, vui lòng xoá các sản phẩm trước",
         "status" => "error"
       ]);
     }

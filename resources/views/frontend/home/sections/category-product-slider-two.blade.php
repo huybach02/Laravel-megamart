@@ -11,18 +11,27 @@
 
     if (array_keys($lastKey)[0] == 'category') {
         $categoryItem = \App\Models\Category::find($lastKey['category']);
+        if (!$categoryItem) {
+            return;
+        }
         $products = \App\Models\Product::where('category_id', $categoryItem->id)
             ->take(12)
             ->orderBy('created_at', 'desc')
             ->get();
     } elseif (array_keys($lastKey)[0] == 'sub_category') {
         $categoryItem = \App\Models\SubCategory::find($lastKey['sub_category']);
+        if (!$categoryItem) {
+            return;
+        }
         $products = \App\Models\Product::where('sub_category_id', $categoryItem->id)
             ->take(12)
             ->orderBy('created_at', 'desc')
             ->get();
     } else {
         $categoryItem = \App\Models\ChildCategory::find($lastKey['child_category']);
+        if (!$categoryItem) {
+            return;
+        }
         $products = \App\Models\Product::where('child_category_id', $categoryItem->id)
             ->take(12)
             ->orderBy('created_at', 'desc')
@@ -36,7 +45,8 @@
             <div class="col-xl-12">
                 <div class="wsus__section_header">
                     <h3>{{ $categoryItem->name }}</h3>
-                    <a class="see_btn" href="#">Xem thêm <i class="fas fa-caret-right"></i></a>
+                    <a class="see_btn" href="{{ route('product.index', ['category' => $categoryItem->slug]) }}">Xem thêm
+                        <i class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>

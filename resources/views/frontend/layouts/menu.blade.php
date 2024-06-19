@@ -171,7 +171,7 @@
                     <ul class="wsus__menu_item wsus__menu_item_right">
                         @auth
                             <li><a
-                                    href="{{ Auth::user()->role === 'user' || Auth::user()->role === 'vendor' ? route('user.dashboard') : route('home') }}">Tài
+                                    href="{{ Auth::user()->role === 'user' || Auth::user()->role === 'vendor' ? route('user.dashboard') : (Auth::user()->role === 'admin' ? route('admin.dashboard') : route('home')) }}">Tài
                                     khoản</a></li>
                             @if (Auth::user()->role === 'vendor')
                                 <li><a
@@ -200,18 +200,26 @@
     <span class="wsus__mobile_menu_close"><i class="fal fa-times"></i></span>
     <ul class="wsus__mobile_menu_header_icon d-inline-flex">
 
-        <li><a href="wishlist.html"><i class="far fa-heart"></i> <span>2</span></a></li>
+        <li><a href="{{ route('wishlist.index') }}"><i class="fal fa-heart"></i><span
+                    id="wishlist-count">{{ Auth::check() ? \App\Models\Wishlist::where('user_id', Auth::user()->id)->count() : 0 }}</span></a>
+        </li>
 
-        <li><a href="compare.html"><i class="far fa-random"></i> </i><span>3</span></a></li>
+        {{-- <li><a href="compare.html"><i class="far fa-random"></i> </i><span>3</span></a></li> --}}
 
         @auth
-            <li><a href="compare.html"><i class="far fa-user"></i> </i></a></li>
+            <li><a
+                    href="{{ Auth::user()->role === 'user' || Auth::user()->role === 'vendor' ? route('user.dashboard') : (Auth::user()->role === 'admin' ? route('admin.dashboard') : route('home')) }}"><i
+                        class="fas fa-user"></i></a></li>
+            @if (Auth::user()->role === 'vendor')
+                <li><a href="{{ Auth::user()->role === 'vendor' ? route('vendor.dashboard') : route('home') }}"><i
+                            class="fas fa-warehouse"></i></a></li>
+            @endif
         @else
-            <li><a href="{{ route('login') }}"><i class="far fa-user"></i> </i></a></li>
+            <li><a href="{{ route('login') }}">Đăng nhập / Đăng ký</a></li>
         @endauth
     </ul>
-    <form>
-        <input type="text" placeholder="Search">
+    <form action="{{ route('product.index') }}">
+        <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." value="{{ request()->search }}">
         <button type="submit"><i class="far fa-search"></i></button>
     </form>
 
@@ -273,8 +281,20 @@
             <div class="wsus__mobile_menu_main_menu">
                 <div class="accordion accordion-flush" id="accordionFlushExample2">
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
+                        <li><a class="{{ setActive(['home']) }}" href="{{ route('home') }}">Trang Chủ</a></li>
+                        <li><a class="{{ setActive(['product.index']) }}" href="{{ route('product.index') }}">Sản
+                                Phẩm</a></li>
+                        <li><a class="{{ setActive(['vendors.index', 'vendor.show']) }}"
+                                href="{{ route('vendors.index') }}">Gian
+                                Hàng</a></li>
+                        <li><a class="{{ setActive(['blog-list', 'blog-detail']) }}"
+                                href="{{ route('blog-list') }}">Bài Viết</a>
+                        </li>
+                        <li><a class="{{ setActive(['about']) }}" href="{{ route('about') }}">Giới Thiệu</a></li>
+                        <li><a class="{{ setActive(['contact']) }}" href="{{ route('contact') }}">Liên Hệ</a></li>
+                        <li><a class="{{ setActive(['order-tracking.index']) }}"
+                                href="{{ route('order-tracking.index') }}">Trạng Thái Đơn Hàng</a></li>
+                        {{-- <li><a href="#" class="accordion-button collapsed" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseThree" aria-expanded="false"
                                 aria-controls="flush-collapseThree">shop</a>
                             <div id="flush-collapseThree" class="accordion-collapse collapse"
@@ -312,7 +332,7 @@
                             </div>
                         </li>
                         <li><a href="track_order.html">track order</a></li>
-                        <li><a href="daily_deals.html">daily deals</a></li>
+                        <li><a href="daily_deals.html">daily deals</a></li> --}}
                     </ul>
                 </div>
             </div>

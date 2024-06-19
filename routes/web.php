@@ -50,8 +50,6 @@ Route::get("/admin", function () {
   return redirect()->route("admin.dashboard");
 });
 
-Route::get("/admin/login", [AdminController::class, "login"])->name("admin.login");
-
 Route::get("flash-sale", [FlashSaleController::class, "index"])->name("flash-sale");
 
 Route::get("products", [FrontendProductController::class, "productIndex"])->name("product.index");

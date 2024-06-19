@@ -106,6 +106,7 @@
                         $(".mini-cart-wrapper").html(
                             "<li style='text-align: center'>Giỏ hàng đang trống</li>")
                     }
+                    getCartCount()
                     toastr.success(data.message)
                 },
                 error: function(data) {

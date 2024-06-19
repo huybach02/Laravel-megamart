@@ -215,12 +215,19 @@
                             @endif
 
                             <p class="review">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>20 review</span>
+                                @php
+                                    $avgRating = round($product->reviews->avg('rating'));
+                                @endphp
+
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($i < $avgRating)
+                                        <i class="fas fa-star"></i>
+                                    @else
+                                        <i class="far fa-star"></i>
+                                    @endif
+                                @endfor
+
+                                <span>({{ count($product->reviews) }} đánh giá)</span>
                             </p>
 
                             <p class="description"><strong>Mô tả ngắn:</strong> {{ $product->short_description }}</p>
@@ -273,10 +280,10 @@
                                 <ul class="wsus__button_area mt-md-0 mt-5">
                                     <li><button type="submit" class="add_cart" href="#">Thêm vào giỏ hàng</button>
                                     </li>
-                                    <li><a class="buy_now" href="#">Mua ngay</a></li>
-                                    <li><a href="#" class="wishlist-btn" data-id="{{ $product->id }}"><i
-                                                class="fal fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="far fa-random"></i></a></li>
+                                    {{-- <li><a class="buy_now" href="#">Mua ngay</a></li> --}}
+                                    <li><a href="#" class="wishlist-btn btn btn-info text-light rounded-circle"
+                                            data-id="{{ $product->id }}"><i class="far fa-heart"></i></a></li>
+                                    {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 </ul>
 
                             </form>
@@ -295,32 +302,33 @@
                                 <li>
                                     <span><i class="fal fa-truck"></i></span>
                                     <div class="text">
-                                        <h4>Return Available</h4>
+                                        <h4>Vận chuyển nhanh chóng</h4>
                                         <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
                                     </div>
                                 </li>
                                 <li>
-                                    <span><i class="far fa-shield-check"></i></span>
+                                    <span><i class="far fa-envelope-open-dollar"></i></span>
                                     <div class="text">
-                                        <h4>Secure Payment</h4>
+                                        <h4>Thanh toán dễ dàng</h4>
                                         <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
                                     </div>
                                 </li>
                                 <li>
-                                    <span><i class="fal fa-envelope-open-dollar"></i></span>
+                                    <span><i class="fal fa-shield-check"></i></span>
                                     <div class="text">
-                                        <h4>Warranty Available</h4>
+                                        <h4>Bảo mật thông tin</h4>
                                         <!-- <p>Lorem Ipsum is simply dummy text of the printing</p> -->
                                     </div>
                                 </li>
                             </ul>
                             <div class="wsus__det_sidebar_banner">
-                                <img src="images/blog_1.jpg" alt="banner" class="img-fluid w-100">
+                                <img src="https://www.salesforce.com/blog/wp-content/uploads/sites/2/2023/07/product-listing-page-crop-background.jpg?w=889"
+                                    alt="banner" class="img-fluid w-100">
                                 <div class="wsus__det_sidebar_banner_text_overlay">
                                     <div class="wsus__det_sidebar_banner_text">
-                                        <p>Black Friday Sale</p>
-                                        <h4>Up To 70% Off</h4>
-                                        <a href="#" class="common_btn">shope now</a>
+                                        <p>Còn nhiều sản phẩm hấp dẫn khác</p>
+                                        <h4></h4>
+                                        <a href="{{ route('product.index') }}" class="common_btn">Xem ngay</a>
                                     </div>
                                 </div>
                             </div>
@@ -601,28 +609,23 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="wsus__contact_question">
-                                                <h5>People usually ask these</h5>
+                                                <h5>Câu hỏi thường gặp</h5>
                                                 <div class="accordion" id="accordionExample">
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header" id="headingOne">
                                                             <button class="accordion-button" type="button"
                                                                 data-bs-toggle="collapse" data-bs-target="#collapseOne"
                                                                 aria-expanded="true" aria-controls="collapseOne">
-                                                                How can I cancel my order?
+                                                                Thời gian giao hàng dự kiến là bao lâu?
                                                             </button>
                                                         </h2>
                                                         <div id="collapseOne" class="accordion-collapse collapse show"
                                                             aria-labelledby="headingOne"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
+                                                                <p>Thời gian giao hàng dự kiến từ 3-5 ngày làm việc đối với
+                                                                    các đơn hàng trong nước và từ 7-10 ngày làm việc đối với
+                                                                    các đơn hàng quốc tế.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -631,21 +634,18 @@
                                                             <button class="accordion-button collapsed" type="button"
                                                                 data-bs-toggle="collapse" data-bs-target="#collapseTwo"
                                                                 aria-expanded="false" aria-controls="collapseTwo">
-                                                                Why is my registration delayed?
+                                                                Chi phí vận chuyển là bao nhiêu?
                                                             </button>
                                                         </h2>
                                                         <div id="collapseTwo" class="accordion-collapse collapse"
                                                             aria-labelledby="headingTwo"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
+                                                                <p>Thông thường chi phí vận chuyển trong nước là 30,000 VND.
+                                                                    Miễn phí vận chuyển cho các đơn hàng trên 500,000 VND.
+                                                                    Tuy nhiên chi phí này có thể thay đổi, bạn có thể xem
+                                                                    chi tiết trong phần "Chi phí vận chuyển" khi đặt hàng để
+                                                                    chọn phương thức vận chuyển tối ưu nhất.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -654,21 +654,18 @@
                                                             <button class="accordion-button collapsed" type="button"
                                                                 data-bs-toggle="collapse" data-bs-target="#collapseThree"
                                                                 aria-expanded="false" aria-controls="collapseThree">
-                                                                What do I need to buy products?
+                                                                Sản phẩm này có bảo hành không? Nếu có thì thời gian bảo
+                                                                hành là bao lâu?
                                                             </button>
                                                         </h2>
                                                         <div id="collapseThree" class="accordion-collapse collapse"
                                                             aria-labelledby="headingThree"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
+                                                                <p>Sản phẩm được bảo hành 12 tháng kể từ ngày mua. Trong
+                                                                    thời gian bảo hành, nếu sản phẩm gặp bất kỳ vấn đề gì,
+                                                                    bạn có thể liên hệ với chúng tôi để được hỗ trợ sửa chữa
+                                                                    hoặc thay thế.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -678,21 +675,17 @@
                                                                 data-bs-toggle="collapse"
                                                                 data-bs-target="#collapseThreet1" aria-expanded="false"
                                                                 aria-controls="collapseThreet1">
-                                                                How can I track an order?
+                                                                Hướng dẫn sử dụng sản phẩm này như thế nào?
                                                             </button>
                                                         </h2>
                                                         <div id="collapseThreet1" class="accordion-collapse collapse"
                                                             aria-labelledby="headingThreet1"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
+                                                                <p>Vui lòng tham khảo hướng dẫn sử dụng đính kèm trong hộp
+                                                                    sản phẩm. Nếu bạn cần thêm thông tin, có thể xem video
+                                                                    hướng dẫn trên trang sản phẩm hoặc liên hệ với chúng tôi
+                                                                    để được hỗ trợ.</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -702,21 +695,17 @@
                                                                 data-bs-toggle="collapse"
                                                                 data-bs-target="#collapseThreet2" aria-expanded="false"
                                                                 aria-controls="collapseThreet2">
-                                                                How can I get money back?
+                                                                Làm sao để liên hệ với bộ phận hỗ trợ khách hàng?
                                                             </button>
                                                         </h2>
                                                         <div id="collapseThreet2" class="accordion-collapse collapse"
                                                             aria-labelledby="headingThreet2"
                                                             data-bs-parent="#accordionExample">
                                                             <div class="accordion-body">
-                                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing
-                                                                    elit.
-                                                                    Voluptatum voluptas ea hic excepturi sit, sapiente
-                                                                    optio
-                                                                    deleniti pariatur. Dolorum in quos magni?
-                                                                    Necessitatibus
-                                                                    recusandae cupiditate iste expedita amet voluptatem
-                                                                    laudantium.</p>
+                                                                <p>Bạn có thể liên hệ với bộ phận hỗ trợ khách hàng qua
+                                                                    email <b>megamart@gmail.com</b> hoặc gọi điện thoại đến
+                                                                    số <b>1800
+                                                                        1234</b> (miễn phí cước).</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -740,159 +729,97 @@
             <div class="row">
                 <div class="col-xl-12">
                     <div class="wsus__section_header">
-                        <h3>Related Products</h3>
-                        <a class="see_btn" href="#">see more <i class="fas fa-caret-right"></i></a>
+                        <h3>Sản phẩm tương tự</h3>
+                        <a class="see_btn"
+                            href="{{ route('product.index', ['category' => $product->category->slug]) }}">Xem thêm <i
+                                class="fas fa-caret-right"></i></a>
                     </div>
                 </div>
             </div>
             <div class="row flash_sell_slider">
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro3.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro3_3.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">Electronics </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(133 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">hp 24" FHD monitore</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
+
+                @foreach ($relatedProducts as $relatedProduct)
+                    @if ($relatedProduct->slug !== $product->slug)
+                        <div class="col-xl-3 col-sm-6 col-lg-4">
+                            <div class="wsus__product_item">
+                                <span class="wsus__new">{{ productType($relatedProduct) }}</span>
+                                @if (checkDiscount($relatedProduct))
+                                    <span class="wsus__minus">-{{ calculateDiscountPercent($relatedProduct) }}%</span>
+                                @endif
+                                <a class="wsus__pro_link" href="{{ route('product-detail', $relatedProduct->slug) }}">
+                                    <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product"
+                                        class="img-fluid w-100 img_1 p-4" />
+                                    <img src="
+            @if (isset($relatedProduct->productImageGalleries[0]->image)) {{ asset($relatedProduct->productImageGalleries[0]->image) }}
+            @else
+            {{ asset($relatedProduct->thumb_image) }} @endif
+          "
+                                        alt="product" class="img-fluid w-100 img_2 p-4" />
+                                </a>
+                                <ul class="wsus__single_pro_icon">
+                                    <li><a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#product-slider-1-{{ $relatedProduct->id }}"><i
+                                                class="far fa-eye"></i></a>
+                                    </li>
+                                    <li><a href="#" class="wishlist-btn" data-id="{{ $relatedProduct->id }}"><i
+                                                class="far fa-heart"></i></a></li>
+                                    <li><a href="#"><i class="far fa-random"></i></a>
+                                </ul>
+                                <div class="wsus__product_details">
+                                    <a class="wsus__category" href="">{{ $relatedProduct->category->name }}
+                                    </a>
+                                    <p class="wsus__pro_rating">
+                                        @php
+                                            $avgRating = round($relatedProduct->reviews->avg('rating'));
+                                        @endphp
+
+                                        @for ($i = 0; $i < 5; $i++)
+                                            @if ($i < $avgRating)
+                                                <i class="fas fa-star"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+
+                                        <span>({{ count($relatedProduct->reviews) }} đánh giá)</span>
+                                    </p>
+                                    <a class="wsus__pro_name"
+                                        href="{{ route('product-detail', $relatedProduct->slug) }}">{{ limitText($relatedProduct->name, 30) }}</a>
+                                    @if (checkDiscount($relatedProduct))
+                                        <p class="wsus__price mt-2">{{ number_format($relatedProduct->offer_price) }} đ
+                                            <del>{{ number_format($relatedProduct->price) }} đ</del>
+                                        </p>
+                                    @else
+                                        <p class="wsus__price mt-2">{{ number_format($relatedProduct->price) }} đ</p>
+                                    @endif
+                                    <form class="shopping-cart-form">
+                                        <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
+
+                                        @foreach ($relatedProduct->variants as $variant)
+                                            @if ($variant->status !== 0)
+                                                <select class="form-select d-none" name="variants_items[]">
+                                                    @foreach ($variant->productVariantItems as $item)
+                                                        @if ($item->status !== 0)
+                                                            <option value="{{ $item->id }}"
+                                                                {{ $item->is_default == 1 ? 'selected' : '' }}>
+                                                                {{ $item->name }}
+                                                                {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            @endif
+                                        @endforeach
+                                        <input class="form-control w-25" name="quantity" type="hidden" min="1"
+                                            max="100" value="1" />
+
+                                        <button type="submit" class="add_cart border-0">Thêm vào giỏ hàng</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(17 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro9.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro9_9.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(120 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">men's fashion sholder bag</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__new">New</span>
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro2.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro2_2.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(72 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">men's casual shoes</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-sm-6 col-lg-4">
-                    <div class="wsus__product_item">
-                        <span class="wsus__minus">-20%</span>
-                        <a class="wsus__pro_link" href="product_details.html">
-                            <img src="images/pro4.jpg" alt="product" class="img-fluid w-100 img_1" />
-                            <img src="images/pro4_4.jpg" alt="product" class="img-fluid w-100 img_2" />
-                        </a>
-                        <ul class="wsus__single_pro_icon">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2"><i
-                                        class="far fa-eye"></i></a></li>
-                            <li><a href="#"><i class="far fa-heart"></i></a></li>
-                            <li><a href="#"><i class="far fa-random"></i></a>
-                        </ul>
-                        <div class="wsus__product_details">
-                            <a class="wsus__category" href="#">fashion </a>
-                            <p class="wsus__pro_rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span>(17 review)</span>
-                            </p>
-                            <a class="wsus__pro_name" href="#">men's casual fashion watch</a>
-                            <p class="wsus__price">$159 <del>$200</del></p>
-                            <a class="add_cart" href="#">add to cart</a>
-                        </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
 
             </div>
         </div>

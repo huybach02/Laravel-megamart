@@ -23,7 +23,7 @@
                     <li class="{{ setActive(['admin.slider.*']) }}"><a class="nav-link"
                             href="{{ route('admin.slider.index') }}">Slider</a></li>
                     <li class="{{ setActive(['admin.home-page-setting.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.home-page-setting.index') }}">Cài Đặt Trang Chủ</a></li>
+                            href="{{ route('admin.home-page-setting.index') }}">Cài đặt trang chủ</a></li>
                     <li class="{{ setActive(['admin.vendor-condition.*']) }}"><a class="nav-link"
                             href="{{ route('admin.vendor-condition.index') }}">Điều khoản gian hàng</a></li>
                     <li class="{{ setActive(['admin.about.*']) }}"><a class="nav-link"
@@ -52,29 +52,30 @@
                     <span>Quản Lý Sản Phẩm</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.brand.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.brand.index') }}">Thương Hiệu</a></li>
+                            href="{{ route('admin.brand.index') }}">Thương hiệu</a></li>
                     <li class="{{ setActive(['admin.products.index']) }}">
-                        <a class="nav-link" href="{{ route('admin.products.index') }}">Sản Phẩm Của MegaMart</a>
+                        <a class="nav-link" href="{{ route('admin.products.index') }}">Sản phẩm của MegaMart</a>
                     </li>
                     <li class="{{ setActive(['admin.seller-products.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.seller-products.index') }}">Sản Phẩm Của Người Bán</a></li>
+                            href="{{ route('admin.seller-products.index') }}">Sản phẩm của người bán</a></li>
                     <li class="{{ setActive(['admin.seller-pending-products.index']) }}"><a class="nav-link"
-                            href="{{ route('admin.seller-pending-products.index') }}">Sản Phẩm Đang Chờ Duyệt</a></li>
+                            href="{{ route('admin.seller-pending-products.index') }}">Sản phẩm đang chờ duyệt</a></li>
 
                 </ul>
             </li>
 
             <li
                 class="dropdown {{ setActive(['admin.vendor-profile.*', 'admin.shipping-rule.*', 'admin.payment-settings.*']) }}">
-                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-briefcase"></i>
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                        class="fas fa-shopping-cart"></i>
                     <span>Quản Lý Bán Hàng</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.vendor-profile.index') }}">Thông Tin Gian Hàng</a></li>
+                            href="{{ route('admin.vendor-profile.index') }}">Thông tin gian hàng</a></li>
                     <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.shipping-rule.index') }}">Thông Tin Vận Chuyển</a></li>
+                            href="{{ route('admin.shipping-rule.index') }}">Thông tin vận chuyển</a></li>
                     <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.payment-settings.index') }}">Thông Tin Thanh Toán</a></li>
+                            href="{{ route('admin.payment-settings.index') }}">Thông tin thanh toán</a></li>
 
                 </ul>
             </li>

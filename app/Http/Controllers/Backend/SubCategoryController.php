@@ -6,6 +6,8 @@ use App\DataTables\SubCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\HomePageSetting;
+use App\Models\Product;
 use App\Models\SubCategory;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -107,6 +109,13 @@ class SubCategoryController extends Controller
     if ($childCategoryCount > 0) {
       return response([
         "message" => "Danh mục cấp 2 này đang có ít nhất 1 danh mục cấp 3, vui lòng xoá các danh mục cấp 3 trước",
+        "status" => "error"
+      ]);
+    }
+
+    if (Product::where("sub_category_id", $subCategory->id)->count() > 0) {
+      return response([
+        "message" => "Danh mục cấp 2 này đang có ít nhất 1 sản phẩm, vui lòng xoá các sản phẩm trước",
         "status" => "error"
       ]);
     }

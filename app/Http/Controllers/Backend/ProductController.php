@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\ChildCategory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductImageGallery;
 use App\Models\ProductVariant;
@@ -176,6 +177,13 @@ class ProductController extends Controller
   {
 
     $product = Product::findOrFail($id);
+
+    if (OrderProduct::where("product_id", $product->id)->count() > 0) {
+      return response([
+        "message" => "Sản phẩm này đang có trong ít nhất 1 đơn hàng, bạn không thể xoá sản phẩm. Vui lòng chuyển đổi trạng thái sản phẩm",
+        "status" => "error"
+      ]);
+    }
 
     $variants = ProductVariant::where("product_id", $product->id)->get();
 

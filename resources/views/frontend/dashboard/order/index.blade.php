@@ -45,7 +45,7 @@
                                             </td>
                                             <td style="text-align: center">{{ $order->payment_method }} </td>
                                             <td style="text-align: center">
-                                                {{ $order->payment_status == 1 ? 'Thành công' : 'Không thành công' }}
+                                                {{ $order->payment_status == 1 ? 'Thành công' : 'Chưa thanh toán' }}
                                             </td>
                                             <td style="text-align: center">
                                                 @foreach (config('order_status.order_status_admin') as $key => $orderStatus)

@@ -22,6 +22,8 @@
                     class="far fa-scroll"></i> Quản lý đơn hàng</a></li>
         <li><a class="{{ setActive(['vendor.reviews.*']) }}" href="{{ route('vendor.reviews.index') }}"><i
                     class="far fa-star"></i> Quản lý đánh giá</a></li>
+        <li><a class="{{ setActive(['vendor.withdraw.*']) }}" href="{{ route('vendor.withdraw.index') }}"><i
+                    class="far fa-coins"></i> Quản lý thanh toán</a></li>
         <li><a class="{{ setActive(['vendor.shop-profile.index']) }}"
                 href="{{ route('vendor.shop-profile.index') }}"><i class="far fa-hotel"></i> Thông tin gian hàng</a>
         </li>

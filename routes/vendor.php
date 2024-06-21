@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\VendorProductVariantController;
 use App\Http\Controllers\Backend\VendorProductVariantItemController;
 use App\Http\Controllers\Backend\VendorProfileController;
 use App\Http\Controllers\Backend\VendorShopProfileController;
+use App\Http\Controllers\Backend\VendorWithdrawController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("dashboard", [VendorController::class, "dashboard"])->name("dashboard");
@@ -38,5 +39,9 @@ Route::delete("product-variant-item/{variantItemId}", [VendorProductVariantItemC
 Route::get("orders", [VendorOrderController::class, "index"])->name("orders.index");
 Route::get("orders/show/{id}", [VendorOrderController::class, "show"])->name("orders.show");
 Route::put("order/change-status/{id}", [VendorOrderController::class, "changeStatus"])->name("orders.change-status");
+
+Route::get("withdraw-detail/{id}", [VendorWithdrawController::class, "showRequest"])->name("withdraw.detail");
+Route::post("withdraw-info", [VendorWithdrawController::class, "addWithdrawInfo"])->name("withdraw.add-info");
+Route::resource("withdraw", VendorWithdrawController::class);
 
 Route::get("reviews", [VendorProductReviewController::class, "index"])->name("reviews.index");

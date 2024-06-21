@@ -131,6 +131,19 @@
                 </ul>
             </li>
 
+            <li
+                class="dropdown {{ setActive(['admin.withdraw-method.*', 'admin.withdraw-list.*', 'admin.withdraw.*']) }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-coins"></i>
+                    <span>Quản Lý Rút Tiền</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setActive(['admin.withdraw-method.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.withdraw-method.index') }}">Phương thức rút tiền</a></li>
+                    <li class="{{ setActive(['admin.withdraw-list.*', 'admin.withdraw.*']) }}"><a class="nav-link"
+                            href="{{ route('admin.withdraw-list.index') }}">Yêu cầu rút tiền</a></li>
+
+                </ul>
+            </li>
+
             <li class="{{ setActive(['admin.transactions.*']) }}">
                 <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
                         class="fas fa-money-check"></i><span>Lịch

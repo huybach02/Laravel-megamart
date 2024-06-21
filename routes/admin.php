@@ -36,6 +36,8 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\WithdrawController;
+use App\Http\Controllers\Backend\WithdrawMethodController;
 use App\Models\ShippingRule;
 use Illuminate\Support\Facades\Route;
 
@@ -187,6 +189,12 @@ Route::put("manage-user/change-status", [ManageUserController::class, "changeSta
 // Blog
 Route::put("blog/change-status", [BlogController::class, "changeStatus"])->name("blog.change-status");
 Route::resource("blog", BlogController::class);
+
+// Withdraw
+Route::resource("withdraw-method", WithdrawMethodController::class);
+Route::get("withdraw-list", [WithdrawController::class, "index"])->name("withdraw-list.index");
+Route::get("withdraw/{id}", [WithdrawController::class, "show"])->name("withdraw.show");
+Route::put("withdraw/{id}", [WithdrawController::class, "update"])->name("withdraw.update");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

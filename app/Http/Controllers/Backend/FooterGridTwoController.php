@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FooterGridTwo;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterGridTwoController extends Controller
 {
@@ -49,6 +50,9 @@ class FooterGridTwoController extends Controller
 
     Toastr::success("Tạo mới nội dung thành công", "Thành công");
 
+    Cache::forget("footer_content_1");
+    Cache::forget("footer_content_2");
+
     return redirect()->route("admin.footer-grid-two.index");
   }
 
@@ -88,6 +92,9 @@ class FooterGridTwoController extends Controller
 
     Toastr::success("Cập nhật nội dung thành công", "Thành công");
 
+    Cache::forget("footer_content_1");
+    Cache::forget("footer_content_2");
+
     return redirect()->route("admin.footer-grid-two.index");
   }
 
@@ -98,6 +105,9 @@ class FooterGridTwoController extends Controller
   {
     $footer = FooterGridTwo::findOrFail($id);
     $footer->delete();
+
+    Cache::forget("footer_content_1");
+    Cache::forget("footer_content_2");
 
     return response([
       "message" => "Xóa nội dung thành công",
@@ -111,6 +121,9 @@ class FooterGridTwoController extends Controller
 
     $footer->status = $request->status == "true" ? 1 : 0;
     $footer->save();
+
+    Cache::forget("footer_content_1");
+    Cache::forget("footer_content_2");
 
     return response([
       "message" => "Cập nhật trạng thái nội dung thành công",

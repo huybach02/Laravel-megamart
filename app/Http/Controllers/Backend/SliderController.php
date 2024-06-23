@@ -8,6 +8,7 @@ use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use App\DataTables\SliderDataTable;
+use Illuminate\Support\Facades\Cache;
 
 class SliderController extends Controller
 {
@@ -61,6 +62,8 @@ class SliderController extends Controller
 
     Toastr::success("Tạo mới slider thành công", "Thành công");
 
+    Cache::forget("sliders");
+
     return redirect()->route("admin.slider.index");
   }
 
@@ -108,6 +111,8 @@ class SliderController extends Controller
 
     Toastr::success("Cập nhật slider thành công", "Thành công");
 
+    Cache::forget("sliders");
+
     return redirect()->route("admin.slider.index");
   }
 
@@ -122,6 +127,8 @@ class SliderController extends Controller
 
     $slider->delete();
 
+    Cache::forget("sliders");
+
     return response([
       "message" => "Xóa slider thành công",
       "status" => "success"
@@ -134,6 +141,8 @@ class SliderController extends Controller
 
     $slider->status = $request->status == "true" ? 1 : 0;
     $slider->save();
+
+    Cache::forget("sliders");
 
     return response([
       "message" => "Cập nhật trạng thái slider thành công",

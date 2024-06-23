@@ -13,7 +13,7 @@ class FlashSaleController extends Controller
   {
     $flashSaleDate = FlashSale::first();
 
-    $flashSaleItems = FlashSaleItem::where("status", 1)->paginate();
+    $flashSaleItems = FlashSaleItem::where("status", 1)->latest()->pluck("product_id")->toArray();
 
     return view('frontend.pages.flash-sale', compact("flashSaleDate", "flashSaleItems"));
   }

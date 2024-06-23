@@ -4,7 +4,7 @@
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").replace(".", ",");
         }
 
-        $(".shopping-cart-form").on("submit", function(e) {
+        $(document).on("submit", ".shopping-cart-form", function(e) {
             e.preventDefault();
 
             let formData = $(this).serialize();
@@ -128,7 +128,7 @@
             })
         }
 
-        $(".wishlist-btn").on("click", function(e) {
+        $(document).on("click", ".wishlist-btn", function(e) {
             e.preventDefault();
             let id = $(this).data("id")
 
@@ -192,5 +192,27 @@
             })
         })
 
+        $(".show-product-modal").on("click", function() {
+            let id = $(this).data("id")
+            $.ajax({
+                method: "GET",
+                url: "{{ route('show-product-modal', ':id') }}".replace(":id", id),
+                beforeSend: function() {
+                    $(".product-modal-content").html(`
+                    <span class='loader'></span>
+                  `)
+                },
+                success: function(data) {
+                    $(".product-modal-content").html(data)
+                },
+                error: function(data) {
+
+                },
+                complete: function() {
+
+                }
+            })
+
+        })
     })
 </script>

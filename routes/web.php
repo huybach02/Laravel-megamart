@@ -118,6 +118,8 @@ Route::get("order-tracking", [OrderTrackingController::class, "index"])->name("o
 Route::get("blog-detail/{slug}", [PageController::class, "blogDetail"])->name("blog-detail");
 Route::get("blog-list", [PageController::class, "blogList"])->name("blog-list");
 
+Route::get("show-product-modal/{id}", [HomeController::class, "showProductModal"])->name("show-product-modal");
+
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);
 });

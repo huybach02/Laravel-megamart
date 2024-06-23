@@ -9580,3 +9580,98 @@ a:not([href]):not([class]):hover {
     display: flex !important;
     align-items: center !important;
 }
+
+.loader {
+    width: 16px;
+    height: 16px;
+    box-shadow: 0 30px, 0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    display: block;
+    margin: -50px auto 0;
+    position: relative;
+    color: #fff;
+    transform: translateY(30px);
+    box-sizing: border-box;
+    animation: animloader 2s ease infinite;
+}
+.loader::after,
+.loader::before {
+    content: "";
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    box-shadow: 0 30px, 0 -30px;
+    border-radius: 4px;
+    background: currentColor;
+    color: #fff;
+    position: absolute;
+    left: 30px;
+    top: 0;
+    animation: animloader 2s 0.2s ease infinite;
+}
+.loader::before {
+    animation-delay: 0.4s;
+    left: 60px;
+}
+
+@keyframes animloader {
+    0% {
+        top: 0;
+        color: white;
+    }
+    50% {
+        top: 30px;
+        color: rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        top: 0;
+        color: white;
+    }
+}
+
+.simply-countdown-mini-1 .simply-section > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    padding: 4px 18px;
+    /* border: 2px solid #dc3545; */
+    border-radius: 5px;
+    background: linear-gradient(11deg, #f7434c, #ff8949);
+}
+
+.simply-countdown-mini-1 .simply-amount {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.simply-countdown-mini-1 .simply-word {
+    font-size: 14px;
+    color: #fff;
+}
+
+/* *********************************** */
+
+.simply-countdown-mini-2 .simply-section > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    /* padding: 0px 10px; */
+    /* border: 2px solid #dc3545; */
+    border-radius: 5px;
+    background: linear-gradient(11deg, #f7434c, #ff8949);
+}
+
+.simply-countdown-mini-2 .simply-amount {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.simply-countdown-mini-2 .simply-word {
+    font-size: 12px;
+    color: #fff;
+}

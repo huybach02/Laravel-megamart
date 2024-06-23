@@ -1,7 +1,13 @@
 @php
-    $footerInfo = \App\Models\FooterInfo::first();
-    $footerContent1 = \App\Models\FooterGridTwo::where(['column' => 1, 'status' => 1])->get();
-    $footerContent2 = \App\Models\FooterGridTwo::where(['column' => 2, 'status' => 1])->get();
+    $footerInfo = Cache::rememberForever('footer_info', function () {
+        return \App\Models\FooterInfo::first();
+    });
+    $footerContent1 = Cache::rememberForever('footer_content_1', function () {
+        return \App\Models\FooterGridTwo::where(['column' => 1, 'status' => 1])->get();
+    });
+    $footerContent2 = Cache::rememberForever('footer_content_2', function () {
+        return \App\Models\FooterGridTwo::where(['column' => 2, 'status' => 1])->get();
+    });
 @endphp
 
 

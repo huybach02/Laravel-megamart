@@ -7,6 +7,7 @@ use App\Models\FooterInfo;
 use App\Traits\ImageUploadTraits;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class FooterInfoController extends Controller
 {
@@ -80,6 +81,8 @@ class FooterInfoController extends Controller
     ]);
 
     Toastr::success("Cập nhật thông tin thành công", "Thành công");
+
+    Cache::forget("footer_info");
 
     return redirect()->back();
   }

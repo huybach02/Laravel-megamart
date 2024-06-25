@@ -144,6 +144,11 @@
                 </ul>
             </li>
 
+            <li class="{{ setActive(['admin.messages.*']) }}">
+                <a href="{{ route('admin.messages.index') }}" class="nav-link"><i
+                        class="fas fa-comments"></i><span>Tin Nhắn</span></a>
+            </li>
+
             <li class="{{ setActive(['admin.transactions.*']) }}">
                 <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
                         class="fas fa-money-check"></i><span>Lịch

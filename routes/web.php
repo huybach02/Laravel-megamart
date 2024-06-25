@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\UserAddressController;
 use App\Http\Controllers\Frontend\UserDashboardController;
+use App\Http\Controllers\Frontend\UserMessageController;
 use App\Http\Controllers\Frontend\UserOrderController;
 use App\Http\Controllers\Frontend\UserProductReviewController;
 use App\Http\Controllers\Frontend\UserProfileController;
@@ -87,6 +88,10 @@ Route::group(["middleware" => ["auth", "verified", "role:user,vendor"], "prefix"
 
   Route::get("vendor-request", [UserVendorRequestController::class, "index"])->name("vendor-request.index");
   Route::post("vendor-request", [UserVendorRequestController::class, "create"])->name("vendor-request.create");
+
+  Route::get("messages", [UserMessageController::class, "index"])->name("messages.index");
+  Route::post("send-message", [UserMessageController::class, "sendMessage"])->name("send-message");
+  Route::get("get-messages", [UserMessageController::class, "getMessages"])->name("get-messages");
 });
 
 Route::post("add-to-cart", [CartController::class, "addToCart"])->name("add-to-cart");

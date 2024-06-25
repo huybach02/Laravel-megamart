@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminMessageController;
 use App\Http\Controllers\Backend\AdminProductReviewController;
 use App\Http\Controllers\Backend\AdminVendorProfileController;
 use App\Http\Controllers\Backend\AdvertisementController;
@@ -195,6 +196,11 @@ Route::resource("withdraw-method", WithdrawMethodController::class);
 Route::get("withdraw-list", [WithdrawController::class, "index"])->name("withdraw-list.index");
 Route::get("withdraw/{id}", [WithdrawController::class, "show"])->name("withdraw.show");
 Route::put("withdraw/{id}", [WithdrawController::class, "update"])->name("withdraw.update");
+
+// Message
+Route::get("messages", [AdminMessageController::class, "index"])->name("messages.index");
+Route::post("send-message", [AdminMessageController::class, "sendMessage"])->name("send-message");
+Route::get("get-messages", [AdminMessageController::class, "getMessages"])->name("get-messages");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

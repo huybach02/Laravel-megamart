@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\VendorController;
+use App\Http\Controllers\Backend\VendorMessageController;
 use App\Http\Controllers\Backend\VendorOrderController;
 use App\Http\Controllers\Backend\VendorProductController;
 use App\Http\Controllers\Backend\VendorProductImageGalleryController;
@@ -45,3 +46,7 @@ Route::post("withdraw-info", [VendorWithdrawController::class, "addWithdrawInfo"
 Route::resource("withdraw", VendorWithdrawController::class);
 
 Route::get("reviews", [VendorProductReviewController::class, "index"])->name("reviews.index");
+
+Route::get("messages", [VendorMessageController::class, "index"])->name("messages.index");
+Route::post("send-message", [VendorMessageController::class, "sendMessage"])->name("send-message");
+Route::get("get-messages", [VendorMessageController::class, "getMessages"])->name("get-messages");

@@ -18,7 +18,10 @@
                     class="far fa-scroll"></i> Đơn Hàng</a></li>
         <li><a class="{{ setActive(['user.review.*']) }}" href="{{ route('user.review.index') }}"><i
                     class="far fa-star"></i> Đánh Giá</a></li>
-        <li><a class="{{ setActive(['user.profile']) }}" href="{{ route('user.profile') }}"><i class="far fa-user"></i>
+        <li><a class="{{ setActive(['user.messages.*']) }}" href="{{ route('user.messages.index') }}"><i
+                    class="far fa-comments"></i> Tin Nhắn</a></li>
+        <li><a class="{{ setActive(['user.profile']) }}" href="{{ route('user.profile') }}"><i
+                    class="far fa-user"></i>
                 Thông tin tài khoản</a></li>
         <li><a class="{{ setActive(['user.address.*']) }}" href="{{ route('user.address.index') }}"><i
                     class="far fa-map"></i> Địa chỉ</a></li>

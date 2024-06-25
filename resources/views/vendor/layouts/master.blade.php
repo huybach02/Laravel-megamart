@@ -45,7 +45,15 @@
         gtag('config', 'UA-94034622-3');
     </script> --}}
 
-    @vite('resources/js/app.js')
+    @vite(['resources/js/app.js', 'resources/js/frontend.js'])
+
+    <script>
+        const USER = {
+            id: "{{ auth()->user()->id }}",
+            name: "{{ auth()->user()->name }}",
+            image: "{{ asset(auth()->user()->image) }}",
+        }
+    </script>
 
 </head>
 

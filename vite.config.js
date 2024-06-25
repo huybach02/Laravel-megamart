@@ -25,7 +25,9 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
-                "public/backend/assets/css/skins/style.css", // Đường dẫn chính xác đến file CSS
+                "resources/js/admin.js",
+                "resources/js/frontend.js",
+                // "public/backend/assets/css/skins/style.css",
             ],
             refresh: [
                 "resources/css/**",

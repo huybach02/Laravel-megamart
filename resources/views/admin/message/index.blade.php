@@ -34,16 +34,17 @@
                                         style="cursor: pointer;
                                         padding-bottom: 10px;
                                         border-bottom: 1px solid #eee;">
-                                        <img alt="image" class="mr-3 rounded-circle" width="50"
+                                        <img alt="image" class="mr-3 rounded-circle"
+                                            style="border: {{ $unseenMessages ? '3px solid red' : '' }}" width="50"
                                             src="{{ asset($chatUser->senderProfile->image) }}">
 
-                                        @if ($unseenMessages)
+                                        {{-- @if ($unseenMessages)
                                             <div class="notify">
                                                 <div class="text-danger text-small font-600-bold mr-2"><i
                                                         class="fas fa-circle"></i>
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif --}}
 
                                         <div class="font-weight-bold profile-name">
                                             {{ limitText($chatUser->senderProfile->name, 20) }}
@@ -144,12 +145,13 @@
                 $(".title").html(`<h4>Nhắn tin với ${receiverName}</h4>`);
                 $("#receiver_id").val(receiverId);
 
-                let $span = $(this).find(".notify");
+                $(this).children("img").css("border", "none");
+                // let $span = $(this).find(".notify");
 
-                // Nếu thẻ span đã tồn tại thì xóa, nếu không thì thêm mới
-                if ($span.length > 0) {
-                    $span.remove();
-                }
+                // // Nếu thẻ span đã tồn tại thì xóa, nếu không thì thêm mới
+                // if ($span.length > 0) {
+                //     $span.remove();
+                // }
 
                 $.ajax({
                     url: "{{ route('admin.get-messages') }}",

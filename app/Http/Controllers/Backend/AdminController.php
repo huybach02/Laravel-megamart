@@ -10,6 +10,7 @@ use App\Models\ChildCategory;
 use App\Models\Coupon;
 use App\Models\FlashSaleItem;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\SubCategory;
@@ -17,10 +18,11 @@ use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
-  public function dashboard()
+  public function dashboard(Request $request)
   {
     $categories = Category::count();
     $subCategories = SubCategory::count();
@@ -51,6 +53,23 @@ class AdminController extends Controller
     $amount = Order::where("payment_status", 1)->where("order_status", "delivered")->sum("amount");
     $amountSale = $subTotals - $amount;
 
+    $year = $request->input('year', Carbon::now()->year);
+    $currentMonth = Carbon::now()->month;
+
+    $monthlyEarnings = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
+      ->whereYear('order_products.created_at', $year)
+      ->where("orders.payment_status", 1)
+      ->selectRaw('MONTH(order_products.created_at) as month, SUM((order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity) as total')
+      ->groupByRaw('MONTH(order_products.created_at)')
+      ->orderByRaw('MONTH(order_products.created_at)')
+      ->pluck('total', 'month');
+
+    // Monthly orders count
+    $monthlyOrders = Order::whereYear('created_at', $year)
+      ->selectRaw('MONTH(created_at) as month, COUNT(*) as orders_count')
+      ->groupBy('month')
+      ->pluck('orders_count', 'month');
+
     return view("admin.dashboard", compact(
       "categories",
       "subCategories",
@@ -79,7 +98,10 @@ class AdminController extends Controller
       "blogs",
       "subTotals",
       "amount",
-      "amountSale"
+      "amountSale",
+      "monthlyEarnings",
+      "monthlyOrders",
+      "year"
     ));
   }
 

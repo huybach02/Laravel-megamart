@@ -135,7 +135,7 @@
     <script>
         $(document).ready(function() {
             // Lấy tỉnh thành
-            $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function(data_tinh) {
+            $.getJSON('/fetch-tinhthanh/1/0', function(data_tinh) {
                 if (data_tinh.error == 0) {
                     $.each(data_tinh.data, function(key_tinh, val_tinh) {
                         $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh
@@ -169,7 +169,7 @@
 
             // Hàm xử lý cập nhật dữ liệu cho quan và phuong
             function handleDistrictAndWardChange(idtinh) {
-                $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function(data_quan) {
+                $.getJSON('/fetch-tinhthanh/2/' + idtinh, function(data_quan) {
                     if (data_quan.error == 0) {
                         $("#quan").html('<option value="0">Quận Huyện</option>');
                         $("#phuong").html('<option value="0">Phường Xã</option>');
@@ -194,7 +194,7 @@
 
             // Hàm xử lý cập nhật dữ liệu cho phuong
             function handleWardChange(idquan) {
-                $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function(data_phuong) {
+                $.getJSON('/fetch-tinhthanh/3/' + idquan, function(data_phuong) {
                     if (data_phuong.error == 0) {
                         $("#phuong").html('<option value="0">Phường Xã</option>');
                         $.each(data_phuong.data, function(key_phuong, val_phuong) {

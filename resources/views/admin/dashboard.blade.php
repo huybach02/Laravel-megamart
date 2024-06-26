@@ -494,6 +494,32 @@
             </div>
         </div>
 
+        <form method="GET" class="d-flex align-items-center gap-3 mb-3">
+            <label for="year">Chọn năm:</label>
+            <select class="form-control w-25 ml-2" name="year" id="year">
+                @foreach (range(\Carbon\Carbon::now()->year - 2, \Carbon\Carbon::now()->year) as $y)
+                    <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                        {{ $y }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-primary ml-2" type="submit">Xem</button>
+        </form>
+        <div class="row">
+            <!-- Biểu đồ doanh thu -->
+            <div class="col-xl-6">
+                <div class="wsus__dashboard_item">
+                    <canvas id="monthlyRevenueChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Biểu đồ số đơn hàng -->
+            <div class="col-xl-6">
+                <div class="wsus__dashboard_item">
+                    <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
 
         {{-- <div class="row">
             <div class="col-lg-8 col-md-12 col-12 col-sm-12">
@@ -1053,3 +1079,84 @@
         </div> --}}
     </section>
 @endsection
+
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Biểu đồ doanh thu
+            var ctxRevenue = document.getElementById('monthlyRevenueChart').getContext('2d');
+            var chartRevenue = new Chart(ctxRevenue, {
+                type: 'bar',
+                data: {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
+                        'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+                    ],
+                    datasets: [{
+                        label: 'Doanh thu',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data: [
+                            @foreach (range(1, 12) as $month)
+                                {{ $monthlyEarnings[$month] ?? 0 }},
+                            @endforeach
+                        ],
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                callback: function(value) {
+                                    return value.toLocaleString('en-US') + 'đ';
+                                }
+                            }
+                        }]
+                    },
+                    hover: {
+                        animationDuration: 0 // Tắt hiệu ứng zoom khi hover
+                    },
+                    animation: {
+                        duration: 0 // Tắt toàn bộ animation
+                    }
+                }
+            });
+
+            // Biểu đồ số đơn hàng
+            var ctxOrders = document.getElementById('monthlyOrdersChart').getContext('2d');
+            var chartOrders = new Chart(ctxOrders, {
+                type: 'bar',
+                data: {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7',
+                        'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
+                    ],
+                    datasets: [{
+                        label: 'Số đơn hàng',
+                        backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1,
+                        data: [
+                            @foreach (range(1, 12) as $month)
+                                {{ $monthlyOrders[$month] ?? 0 }},
+                            @endforeach
+                        ],
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: 1
+                            }
+                        }]
+                    },
+                }
+            });
+        });
+    </script>
+@endpush

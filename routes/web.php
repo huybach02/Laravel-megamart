@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\UserProfileController;
 use App\Http\Controllers\Frontend\UserVendorRequestController;
 use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -127,6 +128,11 @@ Route::get("show-product-modal/{id}", [HomeController::class, "showProductModal"
 
 Route::get('/csrf-token', function () {
   return response()->json(['csrfToken' => csrf_token()]);
+});
+
+Route::get('/fetch-tinhthanh/{type}/{id}', function ($type, $id) {
+  $response = Http::get("https://esgoo.net/api-tinhthanh/{$type}/{$id}.htm");
+  return $response->body();
 });
 
 Route::fallback(function () {

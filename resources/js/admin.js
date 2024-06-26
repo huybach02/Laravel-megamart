@@ -63,13 +63,17 @@ window.Echo.private("message." + USER.id).listen("MessageEvent", (e) => {
         let profileUserId = $(this).data("id");
 
         if (profileUserId == e.sender_id) {
-            $(this).children("img").after(`
-          <div class="notify">
-              <div class="text-danger text-small font-600-bold mr-2"><i
-                      class="fas fa-circle"></i>
-              </div>
-          </div>
-          `);
+            $(this).children("img").css("border", "3px solid red");
+
+            // if ($(this).find(".notify").length === 0) {
+            //     $(this).children("img").after(`
+            //     <div class="notify">
+            //         <div class="text-danger text-small font-600-bold mr-2"><i
+            //                 class="fas fa-circle"></i>
+            //         </div>
+            //     </div>
+            //     `);
+            // }
         }
     });
 });

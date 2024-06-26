@@ -24,15 +24,26 @@ window.Echo.private("message." + USER.id).listen("MessageEvent", (e) => {
         var message = `
           <div class="wsus__chat_single mb-3">
               <div class="wsus__chat_single_img">
-                  <img src="${e.sender_image}"
-                      alt="user" class="img-fluid">
+                  <img src="${e.sender_image}" alt="user" class="img-fluid">
               </div>
               <div class="wsus__chat_single_text">
                   <p>${e.message}</p>
+                  ${
+                      e.images && e.images.length > 0
+                          ? `<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px">` +
+                            e.images
+                                .map(
+                                    (image) =>
+                                        `<img src="${image}" alt="image" class="img-fluid mb-3" style="width: 100px;">`
+                                )
+                                .join("") +
+                            `</div>`
+                          : ""
+                  }
                   <span>${formatDatetime(e.date_time)}</span>
               </div>
           </div>
-          `;
+      `;
     }
 
     mainChatBox.append(message);

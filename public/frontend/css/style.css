@@ -9129,7 +9129,7 @@ DASHBOARD CHAT START
 }
 
 .wsus__chatlist .nav-pills .nav-link.active {
-    background-color: #eeeeeeb3;
+    background-color: #fff;
 }
 
 .wsus__chatlist .wsus_chat_list_img {
@@ -9220,7 +9220,7 @@ DASHBOARD CHAT START
 }
 
 .wsus__chat_area_body {
-    max-height: 591px;
+    max-height: 550px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: #08c #0b172d;
@@ -9262,7 +9262,8 @@ DASHBOARD CHAT START
 .wsus__chat_single_text p {
     text-align: left;
     padding: 10px;
-    background: #eeeeeeb3;
+    background: #279974;
+    color: #fff;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;

@@ -17,15 +17,17 @@ class MessageEvent implements ShouldBroadcast
   public $message;
   public $receiver_id;
   public $dateTime;
+  public $images;
 
   /**
    * Create a new event instance.
    */
-  public function __construct($message, $receiver_id, $dateTime)
+  public function __construct($message, $receiver_id, $dateTime, $images = [])
   {
     $this->message = $message;
     $this->receiver_id = $receiver_id;
     $this->dateTime = $dateTime;
+    $this->images = $images;
   }
 
   /**
@@ -47,7 +49,8 @@ class MessageEvent implements ShouldBroadcast
       'receiver_id' => $this->receiver_id,
       "sender_id" => auth()->user()->id,
       "date_time" => $this->dateTime,
-      "sender_image" => asset(auth()->user()->image)
+      "sender_image" => asset(auth()->user()->image),
+      'images' => $this->images,
     ];
   }
 }

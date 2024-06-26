@@ -12,7 +12,7 @@
         <div class="section-body">
 
             <div class="row align-items-center justify-content-center">
-                <div class="col-12 col-sm-6 col-lg-4">
+                <div class="col-12 col-sm-4 col-lg-3">
                     <div class="card" style="height: 70vh">
                         <div class="card-header">
                             <h4>Danh sách khách hàng</h4>
@@ -30,7 +30,10 @@
                                     @endphp
 
                                     <li class="d-flex align-items-center chat-user-profile"
-                                        data-id="{{ $chatUser->senderProfile->id }}">
+                                        data-id="{{ $chatUser->senderProfile->id }}"
+                                        style="cursor: pointer;
+                                        padding-bottom: 10px;
+                                        border-bottom: 1px solid #eee;">
                                         <img alt="image" class="mr-3 rounded-circle" width="50"
                                             src="{{ asset($chatUser->senderProfile->image) }}">
 
@@ -42,7 +45,8 @@
                                             </div>
                                         @endif
 
-                                        <div class="font-weight-bold profile-name">{{ $chatUser->senderProfile->name }}
+                                        <div class="font-weight-bold profile-name">
+                                            {{ limitText($chatUser->senderProfile->name, 20) }}
                                         </div>
                                     </li>
                                 @endforeach
@@ -51,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-8">
+                <div class="col-12 col-sm-8 col-lg-9">
                     <div class="card chat-box" id="mychatbox" style="height: 70vh">
                         <div class="card-header title">
                             {{-- <h4>Chat with Rizal</h4> --}}
@@ -73,13 +77,15 @@
                             </div> --}}
                         </div>
                         <div class="card-footer chat-form" style="display: none;">
-                            <form id="message-form">
+                            <form id="message-form" enctype="multipart/form-data">
                                 <input type="text" class="form-control message-box" placeholder="Nhập tin nhắn"
                                     name="message">
                                 <input type="hidden" name="receiver_id" value="" id="receiver_id">
                                 <button class="btn btn-primary">
                                     <i class="far fa-paper-plane"></i>
                                 </button>
+                                <input class="" type="file" name="images[]" id="file-input"
+                                    style="padding: 5px 15px" multiple>
                             </form>
                         </div>
                     </div>
@@ -88,6 +94,10 @@
             </div>
         </div>
     </section>
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 @endsection
 
 @push('scripts')
@@ -126,17 +136,13 @@
             $(".chat-user-profile").on("click", function() {
                 $(".card-footer.chat-form").css("display", "block");
 
-                let receiverId = $(this).data("id")
-
+                let receiverId = $(this).data("id");
                 let receiverImage = $(this).find("img").attr("src");
-
                 let receiverName = $(this).find(".profile-name").text();
 
-                mainChatBox.attr("data-inbox", receiverId)
-
+                mainChatBox.attr("data-inbox", receiverId);
                 $(".title").html(`<h4>Nhắn tin với ${receiverName}</h4>`);
-
-                $("#receiver_id").val(receiverId)
+                $("#receiver_id").val(receiverId);
 
                 let $span = $(this).find(".notify");
 
@@ -152,100 +158,235 @@
                         receiverId: receiverId
                     },
                     beforeSend: function() {
-                        mainChatBox.html("")
+                        mainChatBox.html("");
                     },
                     success: function(data) {
                         console.log(data);
 
-                        // let title = `<h2>Nhắn tin với ${data.vendorName}</h2>`
-                        // $(".wsus__chat_area").html(title)
                         $.each(data, function(index, value) {
-                            let message = ""
-                            if (value.sender_id == USER.id) {
-                                message = `
-                                  <div class="chat-item chat-right">
-                                      <img src="${USER.image}" alt="">
-                                      <div class="chat-details">
-                                          <div class="chat-text">${value.message}</div>
-                                          <div class="chat-time">${formatDatetime(value.created_at)}</div>
-                                      </div>
-                                  </div>
-                                  `
-                            } else {
-                                message = `
-                                  <div class="chat-item chat-left">
-                                      <img src="${receiverImage}" alt="">
-                                      <div class="chat-details">
-                                          <div class="chat-text">${value.message}</div>
-                                          <div class="chat-time">${formatDatetime(value.created_at)}</div>
-                                      </div>
-                                  </div>
-                                  `
+                            let message = "";
+                            let imagesHtml = "";
+
+                            // Xử lý hình ảnh nếu có
+                            if (value.images && value.images.length > 0) {
+                                imagesHtml = value.images.map(image =>
+                                    `<img src="${image}" alt="image" class="img-fluid mt-3" width="100px">`
+                                ).join('');
                             }
 
-                            mainChatBox.append(message)
-                        })
+                            if (value.sender_id == USER.id) {
+                                message = `
+                                    <div class="chat-item chat-right">
+                                        <img src="${USER.image}" alt="">
+                                        <div class="chat-details">
+                                            <div class="chat-text">${value.message}</div></br>
+                                            <div class="d-flex justify-content-end mb-2">${imagesHtml}</div>
+                                            <div class="chat-time">${formatDatetime(value.created_at)}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            } else {
+                                message = `
+                                    <div class="chat-item chat-left">
+                                        <img src="${receiverImage}" alt="">
+                                        <div class="chat-details">
+                                            <div class="chat-text">${value.message}</div></br>
+                                            ${imagesHtml}
+                                            <div class="chat-time">${formatDatetime(value.created_at)}</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }
 
-                        scrollToBottom()
+                            mainChatBox.append(message);
+                        });
 
+
+                        scrollToBottom();
                     },
                     error: function(error) {
-                        console.log(error)
+                        console.log(error);
                     },
                     complete: function() {
 
                     }
-                })
-            })
+                });
+            });
+
 
             $("#message-form").on("submit", function(e) {
                 e.preventDefault();
-                let formData = $(this).serialize();
+                let formData = new FormData(this);
                 let messageData = $(".message-box").val();
+                let files = $("#file-input")[0].files;
 
                 var formSubmitting = false;
 
                 if (formSubmitting || messageData === "") {
                     return
                 }
+                // let message = `
+            //     <div class="chat-item chat-right">
+            //         <img src="${USER.image}" alt="">
+            //         <div class="chat-details">
+            //             <div class="chat-text">${messageData}</div>
+            //             <div class="chat-time"></div>
+            //         </div>
+            //     </div>
+            //     `
+
+                // if (files.length > 0) {
+                //     $.each(files, function(index, file) {
+                //         let reader = new FileReader();
+                //         reader.onload = function(e) {
+                //             message += `
+            //                 <div class="chat-item chat-right">
+            //                     <img src="${USER.image}" alt="">
+            //                     <div class="chat-details">
+            //                         <img src="${e.target.result}" alt="image" class="img-fluid" style="width: 100px;"">
+            //                         <div class="chat-time"></div>
+            //                     </div>
+            //                 </div>
+            //             `;
+                //             if (index === files.length - 1) {
+                //                 mainChatBox.append(message);
+                //                 scrollToBottom();
+                //             }
+                //         }
+                //         reader.readAsDataURL(file);
+                //     });
+                // } else {
+                //     mainChatBox.append(message);
+                //     scrollToBottom();
+                // }
+
                 let message = `
                     <div class="chat-item chat-right">
                         <img src="${USER.image}" alt="">
                         <div class="chat-details">
                             <div class="chat-text">${messageData}</div>
-                            <div class="chat-time"></div>
-                        </div>
-                    </div>
-                    `
+                `;
 
-                mainChatBox.append(message)
-                scrollToBottom()
+                if (files.length > 0) {
+                    let imagesHtml =
+                        `<div class="mt-3" style="display: flex; justify-content: end; gap: 10px;">`;
+                    let filesProcessed = 0;
+
+                    $.each(files, function(index, file) {
+                        let reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagesHtml +=
+                                `<img src="${e.target.result}" alt="image" class="img-fluid" style="width: 100px;">`;
+                            filesProcessed++;
+
+                            if (filesProcessed === files.length) {
+                                imagesHtml += `</div>`; // Đóng thẻ div cho image-row
+                                message += imagesHtml;
+                                message +=
+                                    `<div class="chat-time"></div></div></div>`; // Đóng thẻ div cho chat-details và chat-item
+                                mainChatBox.append(message);
+                                scrollToBottom();
+                            }
+                        }
+                        reader.readAsDataURL(file);
+                    });
+                } else {
+                    message +=
+                        `<div class="chat-time"></div></div></div>`; // Đóng thẻ div cho chat-details và chat-item
+                    mainChatBox.append(message);
+                    scrollToBottom();
+                }
+
 
                 $.ajax({
                     method: "POST",
                     url: "{{ route('admin.send-message') }}",
                     data: formData,
+                    contentType: false,
+                    processData: false,
                     beforeSend: function() {
                         $(".send-button").prop("disabled", true)
                         $(".message-box").prop("disabled", true)
+                        $("#file-input").prop("disabled", true);
                         formSubmitting = true
                     },
                     success: function(data) {
                         $(".message-box").val("")
+                        $("#file-input").val("");
                     },
                     error: function(data) {
                         toastr.error(data.responseJSON.message)
                         $(".send-button").prop("disabled", false)
                         $(".message-box").prop("disabled", false)
+                        $("#file-input").prop("disabled", false);
                         formSubmitting = false
                     },
                     complete: function(data) {
                         $(".send-button").prop("disabled", false)
                         $(".message-box").prop("disabled", false)
+                        $("#file-input").prop("disabled", false);
                         formSubmitting = false
                     }
                 })
             })
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Xử lý sự kiện click vào hình ảnh trong tin nhắn
+            $('.chat-content').on('click', '.img-fluid', function() {
+                var modal = document.getElementById("imageModal");
+                var modalImg = document.getElementById("modalImage");
+
+                modal.style.display = "block";
+                modalImg.src = this.src;
+
+                var span = document.getElementsByClassName("close")[0];
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Style cho modal overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 @endpush

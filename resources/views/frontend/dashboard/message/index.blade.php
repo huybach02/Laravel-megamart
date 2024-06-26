@@ -53,7 +53,7 @@
                                                 </div>
                                                 <div class="wsus_chat_list_text">
                                                     <h4 class="fw-bold text-primary">
-                                                        {{ $chatUser->receiverProfile && $chatUser->receiverProfile->vendor ? $chatUser->receiverProfile->vendor->name : 'Người dùng' }}
+                                                        {{ $chatUser->receiverProfile && $chatUser->receiverProfile->vendor ? limitText($chatUser->receiverProfile->vendor->name, 20) : 'Người dùng' }}
                                                     </h4>
                                                     {{-- <span class="status active">online</span> --}}
                                                 </div>
@@ -100,7 +100,7 @@
                                                 </div>
                                                 <div class="wsus__chat_area_footer"
                                                     style="position: absolute; width: 100%; bottom: 0; left: 0; right: 0">
-                                                    <form id="message-form">
+                                                    <form id="message-form" enctype="multipart/form-data">
                                                         @csrf
 
                                                         <input type="text" class="message-box"
@@ -108,8 +108,12 @@
                                                             autocomplete="off">
                                                         <input type="hidden" name="receiver_id" value="5"
                                                             id="receiver_id">
+
                                                         <button type="submit"><i class="fas fa-paper-plane send-button"
                                                                 aria-hidden="true"></i></button>
+
+                                                        <input class="" type="file" name="images[]" id="file-input"
+                                                            style="padding: 5px 15px" multiple>
                                                     </form>
                                                 </div>
                                             </div>
@@ -123,6 +127,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
 @endsection
 
@@ -162,18 +170,15 @@
             // })
 
             $(".chat-user-profile").on("click", function() {
-                let receiverId = $(this).data("id")
-
+                let receiverId = $(this).data("id");
                 let receiverImage = $(this).find("img").attr("src");
 
-                mainChatBox.attr("data-inbox", receiverId)
-
-                $("#receiver_id").val(receiverId)
+                mainChatBox.attr("data-inbox", receiverId);
+                $("#receiver_id").val(receiverId);
 
                 let $imgDiv = $(this).find(".wsus_chat_list_img");
                 let $span = $imgDiv.find("span.shadow");
 
-                // Nếu thẻ span đã tồn tại thì xóa, nếu không thì thêm mới
                 if ($span.length > 0) {
                     $span.remove();
                 }
@@ -185,62 +190,75 @@
                         receiverId: receiverId
                     },
                     beforeSend: function() {
-                        mainChatBox.html("")
+                        mainChatBox.html("");
                     },
                     success: function(data) {
-
-                        let title = `<h2>Nhắn tin với ${data.vendorName}</h2>`
-                        $(".wsus__chat_area").html(title)
+                        let title = `<h2>Nhắn tin với ${data.vendorName}</h2>`;
+                        $(".wsus__chat_area").html(title);
                         $.each(data.messages, function(index, value) {
-                            let message = ""
-                            if (value.sender_id == USER.id) {
-                                message = `
-                              <div class="wsus__chat_single single_chat_2">
-                                  <div class="wsus__chat_single_img">
-                                      <img src="${USER.image}"
-                                          alt="user" class="img-fluid">
-                                  </div>
-                                  <div class="wsus__chat_single_text">
-                                      <p>${value.message}</p>
-                                      <span>${formatDatetime(value.created_at)}</span>
-                                  </div>
-                              </div>
-                              `
-                            } else {
-                                message = `
-                              <div class="wsus__chat_single">
-                                  <div class="wsus__chat_single_img">
-                                      <img src="${receiverImage}"
-                                          alt="user" class="img-fluid">
-                                  </div>
-                                  <div class="wsus__chat_single_text">
-                                      <p>${value.message}</p>
-                                      <span>${formatDatetime(value.created_at)}</span>
-                                  </div>
-                              </div>
-                              `
+                            let message = "";
+                            let imagesHtml = "";
+
+                            if (value.images && value.images.length > 0) {
+                                // Kiểm tra nếu div cha ngoài cùng có class single_chat_2
+                                let imageAlignment = value.sender_id == USER.id ?
+                                    'flex-end' : 'flex-start';
+                                imagesHtml =
+                                    `<div style="display: flex; gap: 10px; margin-top: 10px; justify-content: ${imageAlignment};">` +
+                                    value.images.map(image =>
+                                        `<img src="${image}" alt="image" class="img-fluid mt-2" width="100px">`
+                                    ).join('') +
+                                    `</div>`;
                             }
 
+                            if (value.sender_id == USER.id) {
+                                message = `
+                                    <div class="wsus__chat_single single_chat_2">
+                                        <div class="wsus__chat_single_img">
+                                            <img src="${USER.image}" alt="user" class="img-fluid">
+                                        </div>
+                                        <div class="wsus__chat_single_text">
+                                            <p>${value.message}</p>
+                                            ${imagesHtml}
+                                            <span>${formatDatetime(value.created_at)}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            } else {
+                                message = `
+                                    <div class="wsus__chat_single">
+                                        <div class="wsus__chat_single_img">
+                                            <img src="${receiverImage}" alt="user" class="img-fluid">
+                                        </div>
+                                        <div class="wsus__chat_single_text">
+                                            <p>${value.message}</p>
+                                            ${imagesHtml}
+                                            <span>${formatDatetime(value.created_at)}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            }
 
-                            mainChatBox.append(message)
-                        })
+                            mainChatBox.append(message);
+                        });
 
-                        scrollToBottom()
 
+
+                        scrollToBottom();
                     },
                     error: function(error) {
-                        console.log(error)
+                        console.log(error);
                     },
-                    complete: function() {
+                    complete: function() {}
+                });
+            });
 
-                    }
-                })
-            })
 
             $("#message-form").on("submit", function(e) {
                 e.preventDefault();
-                let formData = $(this).serialize();
+                let formData = new FormData(this);
                 let messageData = $(".message-box").val();
+                let files = $("#file-input")[0].files;
 
                 var formSubmitting = false;
 
@@ -248,46 +266,170 @@
                     return
                 }
 
+                // let message = `
+            //     <div class="wsus__chat_single single_chat_2 mb-3">
+            //         <div class="wsus__chat_single_img">
+            //             <img src="${USER.image}"
+            //                 alt="user" class="img-fluid">
+            //         </div>
+            //         <div class="wsus__chat_single_text">
+            //             <p>${messageData}</p>
+            //             <span></span>
+            //         </div>
+            //     </div>
+            //     `
+                // if (files.length > 0) {
+                //     $.each(files, function(index, file) {
+                //         let reader = new FileReader();
+                //         reader.onload = function(e) {
+                //             message += `
+            //                 <div class="wsus__chat_single single_chat_2 mb-3">
+            //                     <div class="wsus__chat_single_img">
+            //                         <img src="${USER.image}" alt="user" class="img-fluid">
+            //                     </div>
+            //                     <div class="wsus__chat_single_text">
+            //                         <img src="${e.target.result}" alt="image" class="img-fluid" width="100px">
+            //                     </div>
+            //                 </div>
+            //             `;
+                //             if (index === files.length - 1) {
+                //                 mainChatBox.append(message);
+                //                 scrollToBottom();
+                //             }
+                //         }
+                //         reader.readAsDataURL(file);
+                //     });
+                // } else {
+                //     mainChatBox.append(message);
+                //     scrollToBottom();
+                // }
+
                 let message = `
                     <div class="wsus__chat_single single_chat_2 mb-3">
                         <div class="wsus__chat_single_img">
-                            <img src="${USER.image}"
-                                alt="user" class="img-fluid">
+                            <img src="${USER.image}" alt="user" class="img-fluid">
                         </div>
                         <div class="wsus__chat_single_text">
                             <p>${messageData}</p>
-                            <span></span>
-                        </div>
-                    </div>
-                    `
-                mainChatBox.append(message)
-                scrollToBottom()
+                `;
+
+                if (files.length > 0) {
+                    let imagesHtml =
+                        '<div style="display: flex;justify-content: flex-end; gap: 10px; margin-top: 10px;">';
+                    let filesProcessed = 0;
+
+                    $.each(files, function(index, file) {
+                        let reader = new FileReader();
+                        reader.onload = function(e) {
+                            imagesHtml += `
+                                <img src="${e.target.result}" alt="image" class="img-fluid" style="width: 100px;">
+                            `;
+                            filesProcessed++;
+
+                            if (filesProcessed === files.length) {
+                                imagesHtml += '</div>'; // Đóng div chứa hình ảnh
+                                message += imagesHtml;
+                                message +=
+                                    `</div><span></span></div>`; // Đóng thẻ div cho tin nhắn
+                                mainChatBox.append(message);
+                                scrollToBottom();
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                } else {
+                    message += `</div><span></span></div>`; // Đóng thẻ div cho tin nhắn
+                    mainChatBox.append(message);
+                    scrollToBottom();
+                }
+
 
                 $.ajax({
                     method: "POST",
                     url: "{{ route('user.send-message') }}",
                     data: formData,
+                    contentType: false,
+                    processData: false,
                     beforeSend: function() {
-                        $(".send-button").prop("disabled", true)
-                        $(".message-box").prop("disabled", true)
-                        formSubmitting = true
+                        $(".send-button").prop("disabled", true);
+                        $(".message-box").prop("disabled", true);
+                        $("#file-input").prop("disabled", true);
                     },
                     success: function(data) {
-                        $(".message-box").val("")
+                        $(".message-box").val("");
+                        $("#file-input").val("");
                     },
                     error: function(data) {
-                        toastr.error(data.responseJSON.message)
-                        $(".send-button").prop("disabled", false)
-                        $(".message-box").prop("disabled", false)
-                        formSubmitting = false
+                        toastr.error(data.responseJSON.message);
+                        $(".send-button").prop("disabled", false);
+                        $(".message-box").prop("disabled", false);
+                        $("#file-input").prop("disabled", false);
                     },
                     complete: function(data) {
-                        $(".send-button").prop("disabled", false)
-                        $(".message-box").prop("disabled", false)
-                        formSubmitting = false
+                        $(".send-button").prop("disabled", false);
+                        $(".message-box").prop("disabled", false);
+                        $("#file-input").prop("disabled", false);
                     }
                 })
             })
         })
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Xử lý sự kiện click vào hình ảnh trong tin nhắn
+            $('.wsus__chat_area_body').on('click', '.img-fluid', function() {
+                var modal = document.getElementById("imageModal");
+                var modalImg = document.getElementById("modalImage");
+
+                modal.style.display = "block";
+                modalImg.src = this.src;
+
+                var span = document.getElementsByClassName("close")[0];
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+    <style>
+        /* Style cho modal overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 @endpush

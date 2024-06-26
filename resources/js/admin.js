@@ -18,17 +18,41 @@ function formatDatetime(datetimeString) {
 }
 
 window.Echo.private("message." + USER.id).listen("MessageEvent", (e) => {
-    let mainChatBox = $(".chat-content");
+    var mainChatBox = $(".chat-content");
+
+    // if (mainChatBox.attr("data-inbox") == e.sender_id) {
+    //     var message = `
+    //   <div class="chat-item chat-left">
+    //       <img src="${e.sender_image}" alt="">
+    //       <div class="chat-details">
+    //           <div class="chat-text">${e.message}</div>
+    //           <div class="chat-time">${formatDatetime(e.date_time)}</div>
+    //       </div>
+    //   </div>
+    //   `;
+    // }
 
     if (mainChatBox.attr("data-inbox") == e.sender_id) {
         var message = `
-      <div class="chat-item chat-left">
-          <img src="${e.sender_image}" alt="">
-          <div class="chat-details">
-              <div class="chat-text">${e.message}</div>
-              <div class="chat-time">${formatDatetime(e.date_time)}</div>
+          <div class="chat-item chat-left">
+              <img src="${e.sender_image}" alt="">
+              <div class="chat-details">
+                  <div class="chat-text">${e.message}</div>
+                  ${
+                      e.images && e.images.length > 0
+                          ? `<div style="display: flex; gap: 10px; margin-top: 10px;">` +
+                            e.images
+                                .map(
+                                    (image) =>
+                                        `<img src="${image}" alt="image" class="img-fluid mb-3" width="100px">`
+                                )
+                                .join("") +
+                            `</div>`
+                          : ""
+                  }
+                  <div class="chat-time">${formatDatetime(e.date_time)}</div>
+              </div>
           </div>
-      </div>
       `;
     }
 

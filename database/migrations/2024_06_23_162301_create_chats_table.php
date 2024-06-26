@@ -17,6 +17,7 @@ return new class extends Migration
       $table->foreignId("receiver_id");
       $table->text("message");
       $table->boolean("seen")->default(0);
+      $table->text("images")->nullable();
       $table->timestamps();
     });
   }

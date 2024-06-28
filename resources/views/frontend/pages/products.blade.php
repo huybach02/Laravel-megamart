@@ -157,22 +157,28 @@
                                             <i class="fas fa-list-ul"></i>
                                         </button>
                                     </div>
-                                    <div class="wsus__topbar_select">
-                                        <select class="select_2" name="state">
-                                            <option>default shorting</option>
-                                            <option>short by rating</option>
-                                            <option>short by latest</option>
-                                            <option>low to high </option>
-                                            <option>high to low</option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <div class="wsus__topbar_select">
-                                    <select class="select_2" name="state">
-                                        <option>show 12</option>
-                                        <option>show 15</option>
-                                        <option>show 18</option>
-                                        <option>show 21</option>
+                                    <select class="select_2" name="sort" id="sortSelect">
+                                        <option
+                                            value="{{ route('product.index', array_merge(request()->query(), ['sort' => 'default'])) }}"
+                                            {{ !request()->has('sort') ? 'selected' : '' }}>Mặc định</option>
+                                        <option
+                                            value="{{ route('product.index', array_merge(request()->query(), ['sort' => 'name-asc'])) }}"
+                                            {{ request()->sort == 'name-asc' ? 'selected' : '' }}>Sắp xếp từ A-Z
+                                        </option>
+                                        <option
+                                            value="{{ route('product.index', array_merge(request()->query(), ['sort' => 'name-desc'])) }}"
+                                            {{ request()->sort == 'name-desc' ? 'selected' : '' }}>Sắp xếp từ Z-A
+                                        </option>
+                                        <option
+                                            value="{{ route('product.index', array_merge(request()->query(), ['sort' => 'price-low-to-high'])) }}"
+                                            {{ request()->sort == 'price-low-to-high' ? 'selected' : '' }}>Giá tăng dần
+                                        </option>
+                                        <option
+                                            value="{{ route('product.index', array_merge(request()->query(), ['sort' => 'price-high-to-low'])) }}"
+                                            {{ request()->sort == 'price-high-to-low' ? 'selected' : '' }}>Giá giảm dần
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -322,7 +328,13 @@
                     }
                 })
             })
+
+            $('#sortSelect').on('change', function() {
+                window.location.href = this.value;
+            });
         })
+
+
 
         @php
             if (request()->has('price_range') && request()->price_range != '') {

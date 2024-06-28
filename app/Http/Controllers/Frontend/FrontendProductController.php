@@ -47,7 +47,7 @@ class FrontendProductController extends Controller
           $to = $price[1];
 
           return $query->where("price", ">=", $from)->where("price", "<=", $to);
-        })->paginate(12);
+        })->latest()->paginate(12);
     }
     if ($request->has("sub_category")) {
       $subCategory = SubCategory::where("slug", $request->sub_category)->first();
@@ -60,7 +60,7 @@ class FrontendProductController extends Controller
           $to = $price[1];
 
           return $query->where("price", ">=", $from)->where("price", "<=", $to);
-        })->paginate(12);
+        })->latest()->paginate(12);
     }
     if ($request->has("child_category")) {
       $childCategory = ChildCategory::where("slug", $request->child_category)->first();
@@ -73,7 +73,27 @@ class FrontendProductController extends Controller
           $to = $price[1];
 
           return $query->where("price", ">=", $from)->where("price", "<=", $to);
-        })->paginate(12);
+        })->latest()->paginate(12);
+    }
+    if ($request->has("price_range")) {
+      $products = Product::withAvg('reviews', 'rating')
+        ->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(["status" => 1, "is_approved" => 1])->where("name", "like", "%$request->search%")->when($request->has("category"), function ($query) use ($request) {
+          $category = Category::where("slug", $request->category)->first();
+
+          return $query->where("category_id", $category->id);
+        })->when($request->has("brand"), function ($query) use ($request) {
+          $brand = Brand::where("slug", $request->brand)->first();
+
+          return $query->where("brand_id", $brand->id);
+        })->when($request->has("price_range"), function ($query) use ($request) {
+          $price = explode(";", $request->price_range);
+          $from = $price[0];
+          $to = $price[1];
+
+          return $query->where("price", ">=", $from)->where("price", "<=", $to);
+        })->latest()->paginate(12);
     }
     if ($request->has("brand")) {
       $brand = Brand::where("slug", $request->brand)->first();
@@ -90,7 +110,7 @@ class FrontendProductController extends Controller
           $category = Category::where("slug", $request->category)->first();
 
           return $query->where("category_id", $category->id);
-        })->paginate(12);
+        })->latest()->paginate(12);
     }
     if ($request->has("search")) {
       $products = Product::withAvg('reviews', 'rating')
@@ -110,7 +130,44 @@ class FrontendProductController extends Controller
           $to = $price[1];
 
           return $query->where("price", ">=", $from)->where("price", "<=", $to);
-        })->paginate(12);
+        })->latest()->paginate(12);
+    }
+    if ($request->has("sort")) {
+      $querySort = Product::withAvg('reviews', 'rating')
+        ->withCount('reviews')
+        ->with(['variants', 'category', 'productImageGalleries'])
+        ->where(["status" => 1, "is_approved" => 1])->where("name", "like", "%$request->search%")->when($request->has("category"), function ($query) use ($request) {
+          $category = Category::where("slug", $request->category)->first();
+
+          return $query->where("category_id", $category->id);
+        })->when($request->has("brand"), function ($query) use ($request) {
+          $brand = Brand::where("slug", $request->brand)->first();
+
+          return $query->where("brand_id", $brand->id);
+        })->when($request->has("price_range"), function ($query) use ($request) {
+          $price = explode(";", $request->price_range);
+          $from = $price[0];
+          $to = $price[1];
+
+          return $query->where("price", ">=", $from)->where("price", "<=", $to);
+        });
+
+      if ($request->has("sort")) {
+        switch ($request->sort) {
+          case 'name-asc':
+            $products = $querySort->orderBy('name', 'asc')->paginate(12);
+            break;
+          case 'name-desc':
+            $products = $querySort->orderBy('name', 'desc')->paginate(12);
+            break;
+          case 'price-low-to-high':
+            $products = $querySort->orderBy('offer_price', 'asc')->paginate(12);
+            break;
+          case 'price-high-to-low':
+            $products = $querySort->orderBy('offer_price', 'desc')->paginate(12);
+            break;
+        }
+      }
     }
 
     $categories = Category::where("status", 1)->get();

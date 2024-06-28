@@ -95,7 +95,7 @@
 
                                     </p>
                                     @if (checkDiscount($item))
-                                        <p class="wsus__tk"><del>{{ number_format($item->price) }} đ</del>
+                                        <p class="wsus__tk"><del>{{ number_format($item->price) }} đ</del></br>
                                             {{ number_format($item->offer_price) }} đ
                                         </p>
                                     @else
@@ -134,7 +134,7 @@
 
                                     </p>
                                     @if (checkDiscount($item))
-                                        <p class="wsus__tk"><del>{{ number_format($item->price) }} đ</del>
+                                        <p class="wsus__tk"><del>{{ number_format($item->price) }} đ</del></br>
                                             {{ number_format($item->offer_price) }} đ
                                         </p>
                                     @else

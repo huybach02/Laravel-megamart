@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class="col-xl-12 d-none d-lg-block">
                             <div class="wsus__product_topbar">
-                                <div class="wsus__topbar_select">
+                                {{-- <div class="wsus__topbar_select">
                                     <select class="select_2" name="state">
                                         <option>default shorting</option>
                                         <option>short by rating</option>
@@ -44,7 +44,7 @@
                                         <option>show 18</option>
                                         <option>show 21</option>
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 

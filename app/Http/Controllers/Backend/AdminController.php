@@ -19,6 +19,7 @@ use App\Models\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -59,6 +60,7 @@ class AdminController extends Controller
     $monthlyEarnings = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
       ->whereYear('order_products.created_at', $year)
       ->where("orders.payment_status", 1)
+      ->where('orders.order_status', '!=', 'cancelled')
       ->selectRaw('MONTH(order_products.created_at) as month, SUM((order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity) as total')
       ->groupByRaw('MONTH(order_products.created_at)')
       ->orderByRaw('MONTH(order_products.created_at)')
@@ -69,6 +71,56 @@ class AdminController extends Controller
       ->selectRaw('MONTH(created_at) as month, COUNT(*) as orders_count')
       ->groupBy('month')
       ->pluck('orders_count', 'month');
+
+    $totalEarningsAdminVendor = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
+      ->where('order_products.vendor_id', Auth::user()->vendor->id)
+      ->where('orders.order_status', 'delivered')
+      ->where("orders.payment_status", 1)
+      ->sum(DB::raw('(order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity'));
+
+    // Tính 10% tổng doanh thu từ các gian hàng khác
+    $totalEarningsOtherVendors = OrderProduct::join('orders', 'order_products.order_id', '=', 'orders.id')
+      ->where('order_products.vendor_id', '<>', Auth::user()->vendor->id)
+      ->where('orders.order_status', 'delivered')
+      ->where("orders.payment_status", 1)
+      ->sum(DB::raw('(order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity')) * 0.1;
+
+    // Tính tổng doanh thu
+    $finalTotalEarnings = $totalEarningsAdminVendor + $totalEarningsOtherVendors;
+
+    // $ratings = ProductReview::select('rating', DB::raw('count(*) as total'))
+    //   ->where('vendor_id', Auth::user()->vendor->id)
+    //   ->groupBy('rating')
+    //   ->pluck('total', 'rating')
+    //   ->toArray();
+    $ratings = ProductReview::select('rating', DB::raw('count(*) as total'))
+      ->groupBy('rating')
+      ->pluck('total', 'rating')
+      ->toArray();
+
+    // Truy vấn để lấy danh sách sản phẩm bán chạy
+    $topSellingProducts = OrderProduct::select('product_id', DB::raw('count(*) as total_sales'))
+      ->join('orders', 'order_products.order_id', '=', 'orders.id')
+      ->where('orders.order_status', 'delivered')
+      ->groupBy('product_id')
+      ->orderBy('total_sales', 'desc')
+      ->take(5) // Lấy top 10 sản phẩm bán chạy
+      ->get();
+
+    // Lấy thông tin chi tiết sản phẩm và vendor
+    $productsBestSale = Product::whereIn('id', $topSellingProducts->pluck('product_id'))->get();
+    $vendorsProduct = Vendor::whereIn('id', $productsBestSale->pluck('vendor_id'))->get();
+
+    // Gộp thông tin chi tiết sản phẩm với số lần xuất hiện và tên gian hàng
+    $topSellingProducts = $topSellingProducts->map(function ($item) use ($productsBestSale, $vendorsProduct) {
+      $product = $productsBestSale->where('id', $item->product_id)->first();
+      $vendorsProduct = $vendorsProduct->where('id', $product->vendor_id)->first();
+      return [
+        'product' => $product,
+        'vendor_name' => $vendorsProduct->name,
+        'total_sales' => $item->total_sales
+      ];
+    });
 
     return view("admin.dashboard", compact(
       "categories",
@@ -101,7 +153,12 @@ class AdminController extends Controller
       "amountSale",
       "monthlyEarnings",
       "monthlyOrders",
-      "year"
+      "year",
+      "finalTotalEarnings",
+      "totalEarningsAdminVendor",
+      "totalEarningsOtherVendors",
+      "ratings",
+      "topSellingProducts"
     ));
   }
 

@@ -31,7 +31,7 @@
                                 <h4 style="color: #fff">{{ $todayOrders }}</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item sky" href="dsahboard_review.html">
                                 <i class="fas fa-check"></i>
                                 <p>Đơn Hàng Thành Công</p>
@@ -83,6 +83,74 @@
                         <div class="col-xl-6">
                             <div class="wsus__dashboard_item">
                                 <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card-header">
+                                <h6 class="fw-bold">Sản phẩm bán chạy</h6>
+                            </div>
+                            <div class="row">
+
+                                @foreach ($topSellingProducts as $item)
+                                    <div class="col-12 mb-1">
+                                        <div class="col-12 p-3 d-flex align-items-center bg-white shadow">
+                                            <div class="col-3">
+                                                <img src="{{ asset($item['product']->thumb_image) }}" alt=""
+                                                    style="width: 80px; height: 80px;">
+                                            </div>
+                                            <div class="col-9 d-flex justify-content-between">
+                                                <div>
+                                                    <a href="{{ route('product-detail', $item['product']->slug) }}">
+                                                        <h6 class="text-primary fw-bold">{{ $item['product']->name }}</h6>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <h6>Đã bán: {{ $item['total_sales'] }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card-header">
+                                <h6 class="fw-bold">Sản phẩm có đánh giá trung bình cao</h6>
+                            </div>
+
+                            @foreach ($topRatedProducts as $item)
+                                <div class="col-12 mb-1">
+                                    <div class="col-12 p-3 d-flex align-items-center bg-white shadow">
+                                        <div class="col-3">
+                                            <img src="{{ asset($item['product']->thumb_image) }}" alt=""
+                                                style="width: 80px; height: 80px;">
+                                        </div>
+                                        <div class="col-9 d-flex justify-content-between">
+                                            <div>
+                                                <a href="{{ route('product-detail', $item['product']->slug) }}">
+                                                    <h6 class="text-primary fw-bold">{{ $item['product']->name }}</h6>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <h6>Rating trung bình: {{ number_format($item['average_rating'], 2) }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="col-md-4 mx-auto">
+                            <div class="col-12 bg-white pb-3 shadow">
+                                <div class="card-header mb-3">
+                                    <h6 class="fw-bold">Biểu đồ số đánh giá</h6>
+                                </div>
+                                <div class="col-md-6 mx-auto">
+                                    <canvas id="ratingChart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,6 +233,48 @@
                             }
                         }]
                     },
+                }
+            });
+
+            var ctxRating = document.getElementById('ratingChart').getContext('2d');
+            var chartRating = new Chart(ctxRating, {
+                type: 'pie',
+                data: {
+                    labels: ['1 Sao', '2 Sao', '3 Sao', '4 Sao', '5 Sao'],
+                    datasets: [{
+                        data: [
+                            {{ $ratings[1] ?? 0 }},
+                            {{ $ratings[2] ?? 0 }},
+                            {{ $ratings[3] ?? 0 }},
+                            {{ $ratings[4] ?? 0 }},
+                            {{ $ratings[5] ?? 0 }},
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
                 }
             });
         });

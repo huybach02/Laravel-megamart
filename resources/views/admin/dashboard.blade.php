@@ -11,14 +11,14 @@
                 <h6>Doanh thu</h6>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
-                        <div class="card-icon bg-info">
+                        <div class="card-icon bg-warning">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Tổng doanh thu hàng hoá</h4>
+                                <h4>Doanh thu đơn hàng đã giao</h4>
                             </div>
                             <div class="card-body">
                                 {{ number_format($subTotals) }}đ
@@ -26,14 +26,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-danger">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Tổng tiền khuyến mãi</h4>
+                                <h4>Tổng tiền khuyến mãi khi dùng mã giảm giá</h4>
                             </div>
                             <div class="card-body">
                                 {{ number_format($amountSale) }}đ
@@ -41,17 +41,62 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-info">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Doanh thu đơn hàng đã giao sau khi trừ khuyến mãi</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ number_format($amount) }}đ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
                         <div class="card-icon bg-success">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Tổng doanh thu nhận được</h4>
+                                <h4>Tổng doanh thu từ các sản phẩm của MegaMart</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($amount) }}đ
+                                {{ number_format($totalEarningsAdminVendor) }}đ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Tổng doanh thu từ hoa hồng của các gian hàng</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ number_format($totalEarningsOtherVendors) }}đ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-success">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Tổng doanh thu MegaMart nhận được</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ number_format($finalTotalEarnings) }}đ
                             </div>
                         </div>
                     </div>
@@ -494,29 +539,71 @@
             </div>
         </div>
 
-        <form method="GET" class="d-flex align-items-center gap-3 mb-3">
-            <label for="year">Chọn năm:</label>
-            <select class="form-control w-25 ml-2" name="year" id="year">
-                @foreach (range(\Carbon\Carbon::now()->year - 2, \Carbon\Carbon::now()->year) as $y)
-                    <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
-                        {{ $y }}</option>
-                @endforeach
-            </select>
-            <button class="btn btn-primary ml-2" type="submit">Xem</button>
-        </form>
-        <div class="row">
-            <!-- Biểu đồ doanh thu -->
-            <div class="col-xl-6">
-                <div class="wsus__dashboard_item">
-                    <canvas id="monthlyRevenueChart" width="400" height="200"></canvas>
+        <div class="">
+            <div class="card-header">
+                <h6>Biểu đồ doanh thu và đơn hàng của toàn hệ thống</h6>
+            </div>
+            <form method="GET" class="d-flex align-items-center gap-3 my-3">
+                <label for="year">Chọn năm:</label>
+                <select class="form-control w-25 ml-2" name="year" id="year">
+                    @foreach (range(\Carbon\Carbon::now()->year - 4, \Carbon\Carbon::now()->year) as $y)
+                        <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>
+                            {{ $y }}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-primary ml-2" type="submit">Xem</button>
+            </form>
+            <div class="row">
+                <!-- Biểu đồ doanh thu -->
+                <div class="col-xl-6">
+                    <div class="wsus__dashboard_item">
+                        <canvas id="monthlyRevenueChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <!-- Biểu đồ số đơn hàng -->
+                <div class="col-xl-6">
+                    <div class="wsus__dashboard_item">
+                        <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Biểu đồ số đơn hàng -->
-            <div class="col-xl-6">
-                <div class="wsus__dashboard_item">
-                    <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="card-header">
+                    <h6>Sản phẩm bán chạy</h6>
                 </div>
+                <div class="row">
+
+                    @foreach ($topSellingProducts as $item)
+                        <div class="col-12">
+                            <div class="card card-statistic-1">
+                                <div class="card-icon">
+                                    <img src="{{ asset($item['product']->thumb_image) }}" alt=""
+                                        style="width: 80px; height: 80px;">
+                                </div>
+                                <div class="card-wrap ml-3">
+                                    <div class="card-header">
+                                        <h5>{{ $item['product']->name }}</h5>
+                                    </div>
+                                    <div class="card-body d-flex justify-content-between p-0 pr-3">
+                                        <h6>{{ $item['vendor_name'] }}</h6>
+                                        <h6>Đã bán: {{ $item['total_sales'] }}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+            <div class="col-md-4 mx-auto">
+                <div class="card-header mb-3">
+                    <h6>Biểu đồ số đánh giá</h6>
+                </div>
+                <canvas id="ratingChart"></canvas>
             </div>
         </div>
 
@@ -1155,6 +1242,48 @@
                             }
                         }]
                     },
+                }
+            });
+
+            var ctxRating = document.getElementById('ratingChart').getContext('2d');
+            var chartRating = new Chart(ctxRating, {
+                type: 'pie',
+                data: {
+                    labels: ['1 Sao', '2 Sao', '3 Sao', '4 Sao', '5 Sao'],
+                    datasets: [{
+                        data: [
+                            {{ $ratings[1] ?? 0 }},
+                            {{ $ratings[2] ?? 0 }},
+                            {{ $ratings[3] ?? 0 }},
+                            {{ $ratings[4] ?? 0 }},
+                            {{ $ratings[5] ?? 0 }},
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
                 }
             });
         });

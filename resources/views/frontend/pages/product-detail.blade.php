@@ -152,12 +152,14 @@
                                     {{-- <li><a class="buy_now" href="#">Mua ngay</a></li> --}}
                                     <li><a href="#" class="wishlist-btn btn btn btn-outline-danger rounded-circle"
                                             data-id="{{ $product->id }}"><i class="far fa-heart"></i></a></li>
-                                    <li>
-                                        <div class="btn btn-outline-success rounded mt-md-0 mt-3" style="margin-left: 10px"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                            Nhắn tin với người bán
-                                        </div>
-                                    </li>
+                                    @auth
+                                        <li>
+                                            <div class="btn btn-outline-success rounded mt-md-0 mt-3" style="margin-left: 10px"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                Nhắn tin với người bán
+                                            </div>
+                                        </li>
+                                    @endauth
                                     {{-- <li><a href="#"><i class="far fa-random"></i></a></li> --}}
                                 </ul>
 

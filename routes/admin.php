@@ -37,6 +37,7 @@ use App\Http\Controllers\Backend\TransactionController;
 use App\Http\Controllers\Backend\VendorConditionController;
 use App\Http\Controllers\Backend\VendorListController;
 use App\Http\Controllers\Backend\VendorRequestController;
+use App\Http\Controllers\Backend\VNPaySettingController;
 use App\Http\Controllers\Backend\WithdrawController;
 use App\Http\Controllers\Backend\WithdrawMethodController;
 use App\Models\ShippingRule;
@@ -130,12 +131,16 @@ Route::get("payment-settings", [PaymentSettingController::class, "index"])->name
 Route::resource("paypal-setting", PaypalSettingController::class);
 Route::put("stripe-setting/{id}", [StripeSettingController::class, "update"])->name("stripe-setting.update");
 Route::put("cod-setting/{id}", [CODSettingController::class, "update"])->name("cod-setting.update");
+Route::put("vnpay-setting/{id}", [VNPaySettingController::class, "update"])->name("vnpay-setting.update");
 
 // Orders
 Route::put("order-status", [OrderController::class, "changeOrderStatus"])->name("order.status");
 Route::put("payment-status", [OrderController::class, "changePaymentStatus"])->name("order.payment-status");
 
 Route::get("order-filter", [OrderController::class, "orderFilter"])->name("order.filter");
+Route::get("cancel-orders", [OrderController::class, "cancelOrders"])->name("order.cancel-orders");
+Route::get("cancel-orders/detail/{id}", [OrderController::class, "cancelOrdersShow"])->name("order.cancel-orders-show");
+Route::post("cancel-orders/change-refund-status", [OrderController::class, "changeRefundStatus"])->name("order.cancel-orders-change-refund-status");
 Route::resource("order", OrderController::class);
 
 Route::get("transactions", [TransactionController::class, "index"])->name("transactions.index");

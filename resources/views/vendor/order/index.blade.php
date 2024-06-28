@@ -70,9 +70,11 @@
                                                         ->first();
                                                     $statusText =
                                                         $orderItem &&
-                                                        $orderItem->status != 'processed_and_ready_to_ship'
-                                                            ? 'Đang xử lý'
-                                                            : 'Đơn hàng đã đến kho vận chuyển';
+                                                        $orderItem->status == 'processed_and_ready_to_ship'
+                                                            ? 'Đơn hàng sẵn sàng để vận chuyển'
+                                                            : ($orderItem->status == 'cancelled'
+                                                                ? 'Đơn hàng đã huỷ'
+                                                                : 'Đang xử lý');
                                                 @endphp
                                                 {{ $statusText }}
                                             </td>

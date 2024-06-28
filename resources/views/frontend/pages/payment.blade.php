@@ -39,9 +39,12 @@
                                 <button class="nav-link border-0 bg-info" id="v-pills-stripe-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-stripe" type="button" role="tab"
                                     aria-controls="v-pills-stripe" aria-selected="false">Thanh toán qua Stripe</button>
-                                <button class="nav-link border-0 bg-warning" id="v-pills-stripe-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-cod" type="button" role="tab" aria-controls="v-pills-cod"
-                                    aria-selected="false">Thanh toán khi nhận hàng
+                                <button class="nav-link border-0 bg-success" id="v-pills-stripe-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-vnpay" type="button" role="tab"
+                                    aria-controls="v-pills-vnpay" aria-selected="false">Thanh toán qua VNPay</button>
+                                <button class="nav-link border-0 bg-dark text-light" id="v-pills-stripe-tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-cod" type="button" role="tab"
+                                    aria-controls="v-pills-cod" aria-selected="false">Thanh toán khi nhận hàng
                                     (COD)</button>
 
                             </div>
@@ -112,6 +115,25 @@
                             @include('frontend.pages.payment-gateway.stripe')
 
                             @include('frontend.pages.payment-gateway.cod')
+
+                            <div class="tab-pane fade show" id="v-pills-vnpay" role="tabpanel"
+                                aria-labelledby="v-pills-vnpay-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 m-auto">
+                                        <div class="wsus__payment_area">
+
+                                            <form action="{{ route('user.vnpay.payment') }}" method="POST">
+                                                @csrf
+
+                                                <button type="submit" name="redirect"
+                                                    class="nav-link bg-success text-light rounded text-center border-0">Thanh
+                                                    toán với
+                                                    VNPay ngay!</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             {{-- <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
                                 aria-labelledby="v-pills-profile-tab">

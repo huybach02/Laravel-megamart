@@ -66,6 +66,10 @@
                                                 @endif
                                             @endforeach
                                             <br><br>
+                                            @if ($order->order_status == 'cancelled')
+                                                <span
+                                                    class="{{ @$order->refund_status == 'Đã hoàn tiền' ? 'text-success' : 'text-danger' }} fw-bold">{{ @$order->refund_status }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +149,39 @@
                             <div class="">
                                 <button class="btn btn-warning print-invoice">Print</button>
                             </div>
+                            @if ($order->order_status == 'pending')
+                                <div class="row pb-5">
+                                    <h5 class="mt-5 mb-3 text-danger fw-bold">Huỷ đơn hàng</h5>
+
+                                    <form action="{{ route('user.orders.cancel') }}" class="d-flex gap-2" method="POST">
+                                        @csrf
+
+                                        <select name="cancel_reason" class="form-control w-25" id="">
+                                            <option value="">- - Chọn lý do huỷ đơn hàng - -</option>
+                                            <option value="Sản phẩm không còn cần thiết">Sản phẩm không còn cần thiết
+                                            </option>
+                                            <option value="Thay đổi địa chỉ giao hàng">Thay đổi địa chỉ giao hàng</option>
+                                            <option value="Thay đổi mã khuyến mãi">Thay đổi mã khuyến mãi</option>
+                                            <option value="Dịch vụ khách hàng không tốt">Dịch vụ khách hàng không tốt
+                                            </option>
+                                            <option value="Thay đổi quyết định mua hàng">Thay đổi quyết định mua hàng
+                                            </option>
+                                            <option value="Tìm thấy sản phẩm thay thế tốt hơn">Tìm thấy sản phẩm thay thế
+                                                tốt
+                                                hơn</option>
+                                            <option value="Lý do khác...">Lý do khác...</option>
+                                        </select>
+                                        @if ($errors->has('cancel_reason'))
+                                            <p class="text-danger">{{ $errors->first('cancel_reason') }}</p>
+                                        @endif
+                                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                        <button class="btn btn-danger">Xác nhận huỷ</button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
+
+
                     </div>
                 </div>
             </div>

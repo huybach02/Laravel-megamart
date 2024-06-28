@@ -122,28 +122,36 @@
                         </div>
 
                         <div class="row pt-5 border-top">
-                            <form action="{{ route('vendor.orders.change-status', $order->id) }}" class="col-md-4"
-                                method="POST">
-                                @csrf
-                                @method('PUT')
+                            @if ($order->order_status == 'cancelled')
+                                <div class="col-md-4">
+                                    <label for="" class="mb-2 fw-bold">Trạng thái đơn hàng</label>
+                                    <input id="order_status_text" class="form-control mb-5" value="Đơn hàng đã huỷ"
+                                        readonly>
+                                </div>
+                            @else
+                                <form action="{{ route('vendor.orders.change-status', $order->id) }}" class="col-md-4"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
 
-                                <input type="hidden" name="vendor_id" value="{{ Auth::user()->id }}">
-                                <label for="" class="mb-2 fw-bold">Trạng thái đơn hàng</label>
-                                <select name="status" id="" class="form-control">
-                                    @foreach (config('order_status.order_status_vendor') as $key => $option)
-                                        @php
-                                            $orderItem = \App\Models\OrderProduct::where('order_id', $order->id)
-                                                ->where('vendor_id', Auth::user()->id)
-                                                ->first();
-                                        @endphp
-                                        <option value="{{ $key }}"
-                                            {{ $orderItem && $orderItem->status == $key ? 'selected' : '' }}>
-                                            {{ $option['status'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <button type="submit" class="btn btn-primary mt-3">Xác nhận</button>
-                            </form>
+                                    <input type="hidden" name="vendor_id" value="{{ Auth::user()->id }}">
+                                    <label for="" class="mb-2 fw-bold">Trạng thái đơn hàng</label>
+                                    <select name="status" id="" class="form-control">
+                                        @foreach (config('order_status.order_status_vendor') as $key => $option)
+                                            @php
+                                                $orderItem = \App\Models\OrderProduct::where('order_id', $order->id)
+                                                    ->where('vendor_id', Auth::user()->id)
+                                                    ->first();
+                                            @endphp
+                                            <option value="{{ $key }}"
+                                                {{ $orderItem && $orderItem->status == $key ? 'selected' : '' }}>
+                                                {{ $option['status'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-primary mt-3">Xác nhận</button>
+                                </form>
+                            @endif
                             <div class="col-md-8 h-25 d-flex justify-content-end">
                                 <button class="btn btn-warning print-invoice">Print</button>
                             </div>

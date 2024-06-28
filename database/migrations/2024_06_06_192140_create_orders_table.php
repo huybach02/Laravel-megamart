@@ -26,6 +26,8 @@ return new class extends Migration
       $table->text("shipping_method");
       $table->text("coupon");
       $table->string("order_status");
+      $table->text("cancel_reason")->nullable();
+      $table->string("refund_status")->nullable();
 
       $table->timestamps();
     });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CODSetting;
 use App\Models\PaypalSetting;
 use App\Models\StripeSetting;
+use App\Models\VNPaySetting;
 use Illuminate\Http\Request;
 
 class PaymentSettingController extends Controller
@@ -15,7 +16,8 @@ class PaymentSettingController extends Controller
     $paypalSetting = PaypalSetting::first();
     $stripeSetting = StripeSetting::first();
     $codSetting = CODSetting::first();
+    $vnpaySetting = VNPaySetting::first();
 
-    return view('admin.payment-settings.index', compact("paypalSetting", "stripeSetting", "codSetting"));
+    return view('admin.payment-settings.index', compact("paypalSetting", "stripeSetting", "codSetting", "vnpaySetting"));
   }
 }

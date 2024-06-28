@@ -30,10 +30,10 @@ return [
       "status" => "Đơn hàng đã bị hủy",
       "detail" => "Đơn hàng đã bị hủy"
     ],
-    "refunded" => [
-      "status" => "Đơn hàng đã được hoàn trả",
-      "detail" => "Đơn hàng đã được hoàn trả"
-    ]
+    // "refunded" => [
+    //   "status" => "Đơn hàng đã được hoàn trả",
+    //   "detail" => "Đơn hàng đã được hoàn trả"
+    // ]
   ],
 
   "order_status_vendor" => [

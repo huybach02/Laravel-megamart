@@ -96,8 +96,10 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-scroll"></i>
                     <span>Quản Lý Đơn Hàng</span></a>
                 <ul class="dropdown-menu">
-                    <li class="{{ setActive(['admin.order.*']) }}"><a class="nav-link"
+                    <li class="{{ setActive(['admin.order.index', 'admin.order.show']) }}"><a class="nav-link"
                             href="{{ route('admin.order.index') }}">Tất cả đơn hàng</a></li>
+                    <li class="{{ setActive(['admin.order.cancel-orders', 'admin.order.cancel-orders-show']) }}"><a
+                            class="nav-link" href="{{ route('admin.order.cancel-orders') }}">Đơn hàng đã huỷ</a></li>
 
                 </ul>
             </li>

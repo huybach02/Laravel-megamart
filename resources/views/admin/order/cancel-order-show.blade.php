@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.order.index') }}">
+        <a href="{{ route('admin.order.cancel-orders') }}">
             < Quay lại</a>
                 <div class="section-body">
                     <h2 class="section-title">Thông tin đơn hàng <span class=" p-2">#{{ $order->invoice_id }}</span>
@@ -191,31 +191,54 @@
                                                                         @endif
                                                                     @endforeach
                                                                 </div>
-                                                                <div class="pt-3 border-top">
+                                                                <div class="pt-3 pb-3 border-top">
                                                                     <div class="section-title">Trạng thái đơn hàng</div>
-                                                                    @if (!in_array(false, $checkArr, true))
-                                                                        <select name="order_status" id="order_status"
-                                                                            data-id="{{ $order->id }}"
-                                                                            class="form-control mb-5 order-product-status">
-                                                                            @foreach (config('order_status.order_status_admin') as $key => $orderStatus)
-                                                                                <option
-                                                                                    {{ $order->order_status == $key ? 'selected' : '' }}
-                                                                                    value="{{ $key }}">
-                                                                                    {{ $orderStatus['status'] }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    @else
-                                                                        @if ($order->order_status == 'cancelled')
-                                                                            <input id="order_status_text"
-                                                                                class="form-control mb-5"
-                                                                                value="Đơn hàng đã huỷ" readonly>
-                                                                        @else
-                                                                            <input id="order_status_text"
-                                                                                class="form-control mb-5" value="Đang xử lý"
-                                                                                readonly>
-                                                                        @endif
+                                                                    @if ($order->order_status == 'cancelled')
+                                                                        <div class="form-group">
+                                                                            <label for="">Trạng thái</label>
+                                                                            <input class="form-control" type="text"
+                                                                                value="{{ $order->order_status == 'cancelled' ? 'Đơn hàng đã huỷ' : '' }}"
+                                                                                disabled>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="">Lý do huỷ đơn hàng</label>
+                                                                            <input class="form-control" type="text"
+                                                                                value="{{ $order->cancel_reason }}"
+                                                                                disabled>
+                                                                        </div>
                                                                     @endif
+
+                                                                </div>
+                                                                <div class="pt-3 border-top">
+                                                                    <div class="section-title">Trạng thái hoàn tiền</div>
+                                                                    @if ($order->order_status == 'cancelled')
+                                                                        <form
+                                                                            action="{{ route('admin.order.cancel-orders-change-refund-status') }}"
+                                                                            method="POST">
+                                                                            @csrf
+
+                                                                            <div class="form-group">
+                                                                                <label for="">Trạng thái</label>
+                                                                                <select class="form-control"
+                                                                                    name="refund_status" id="">
+                                                                                    <option
+                                                                                        {{ $order->refund_status == 'Chưa hoàn tiền' ? 'selected' : '' }}
+                                                                                        value="Chưa hoàn tiền">Chưa hoàn
+                                                                                        tiền</option>
+                                                                                    <option
+                                                                                        {{ $order->refund_status == 'Đã hoàn tiền' ? 'selected' : '' }}
+                                                                                        value="Đã hoàn tiền">Đã hoàn
+                                                                                        tiền
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <input type="hidden" name="order_id"
+                                                                                value="{{ $order->id }}">
+                                                                            <button class="btn btn-primary">Xác
+                                                                                nhận</button>
+                                                                        </form>
+                                                                    @endif
+
                                                                 </div>
                                                                 @if ($order->payment_method == 'COD')
                                                                     <div>

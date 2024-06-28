@@ -78,8 +78,12 @@ Route::group(["middleware" => ["auth", "verified", "role:user,vendor"], "prefix"
 
   Route::get("cod/payment", [PaymentController::class, "payWithCOD"])->name("cod.payment");
 
+  Route::post("vnpay_payment", [PaymentController::class, "payWithVNPay"])->name("vnpay.payment");
+  Route::get("vnpay_success", [PaymentController::class, "vnpaySuccess"])->name("vnpay.success");
+
   Route::get("orders", [UserOrderController::class, "index"])->name("orders.index");
   Route::get("orders/show/{id}", [UserOrderController::class, "show"])->name("orders.show");
+  Route::post("orders/cancel-order", [UserOrderController::class, "cancelOrder"])->name("orders.cancel");
 
   Route::post("review", [ReviewController::class, "createReview"])->name("review.create");
   Route::get("reviews", [ReviewController::class, "index"])->name("review.index");

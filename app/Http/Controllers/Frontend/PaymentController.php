@@ -35,11 +35,11 @@ class PaymentController extends Controller
     return view('frontend.pages.payment-success');
   }
 
-  public function storeOrder($paymentMethod, $paymentStatus, $transactionId, $paidAmount, $paidCurrencyName)
+  public function storeOrder($paymentMethod, $paymentStatus, $transactionId, $paidAmount, $paidCurrencyName, $orderId = null)
   {
     $order = new Order();
 
-    $order->invoice_id = Str::random(15);
+    $order->invoice_id = $orderId ?? Str::random(15);
     $order->user_id = Auth::user()->id;
     $order->sub_total = getCartTotal();
     $order->amount = getPayableAmount();
@@ -245,5 +245,95 @@ class PaymentController extends Controller
     $this->clearSession();
 
     return redirect()->route("user.payment.success");
+  }
+
+  public function payWithVNPay(Request $request)
+  {
+    $total = getPayableAmount();
+    $invoiceId = Str::random(15);
+
+    $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    $vnp_Returnurl = route("user.vnpay.success");
+    $vnp_TmnCode = "ZU0Y1PWU"; //Mã website tại VNPAY 
+    $vnp_HashSecret = "E0FBM0S3TMML1RWF8N7SKDB6UCU1WNC0"; //Chuỗi bí mật
+
+    $vnp_TxnRef = $invoiceId; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+    $vnp_OrderInfo = "Thanh toán đơn hàng " . $invoiceId . " với số tiền " . number_format($total) . "đ";
+    $vnp_OrderType = "Đơn hàng MegaMart";
+    $vnp_Amount = $total * 100;
+    $vnp_Locale = "vn";
+    $vnp_BankCode = "NCB";
+    $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+
+    $inputData = array(
+      "vnp_Version" => "2.1.0",
+      "vnp_TmnCode" => $vnp_TmnCode,
+      "vnp_Amount" => $vnp_Amount,
+      "vnp_Command" => "pay",
+      "vnp_CreateDate" => date('YmdHis'),
+      "vnp_CurrCode" => "VND",
+      "vnp_IpAddr" => $vnp_IpAddr,
+      "vnp_Locale" => $vnp_Locale,
+      "vnp_OrderInfo" => $vnp_OrderInfo,
+      "vnp_OrderType" => $vnp_OrderType,
+      "vnp_ReturnUrl" => $vnp_Returnurl,
+      "vnp_TxnRef" => $vnp_TxnRef,
+    );
+
+    if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+      $inputData['vnp_BankCode'] = $vnp_BankCode;
+    }
+    if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+      $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+    }
+
+    //var_dump($inputData);
+    ksort($inputData);
+    $query = "";
+    $i = 0;
+    $hashdata = "";
+    foreach ($inputData as $key => $value) {
+      if ($i == 1) {
+        $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+      } else {
+        $hashdata .= urlencode($key) . "=" . urlencode($value);
+        $i = 1;
+      }
+      $query .= urlencode($key) . "=" . urlencode($value) . '&';
+    }
+
+    $vnp_Url = $vnp_Url . "?" . $query;
+    if (isset($vnp_HashSecret)) {
+      $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+      $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+    }
+    $returnData = array(
+      'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+    );
+    if (isset($_POST['redirect'])) {
+      header('Location: ' . $vnp_Url);
+      die();
+    } else {
+      echo json_encode($returnData);
+    }
+    // vui lòng tham khảo thêm tại code demo
+
+  }
+
+  public function vnpaySuccess(Request $request)
+  {
+    if ($request->vnp_ResponseCode == "00") {
+      $total = getPayableAmount();
+
+      $this->storeOrder("VNPay", 1, $request->vnp_TransactionNo, $total, "VND", $request->vnp_TxnRef);
+
+      $this->clearSession();
+
+      return redirect()->route("user.payment.success");
+    }
+
+    Toastr::error("Thanh toán không thành công! Vui lòng kiểm tra lại thông tin và thử lại sau.", "Không thành công");
+
+    return redirect()->route("user.payment");
   }
 }

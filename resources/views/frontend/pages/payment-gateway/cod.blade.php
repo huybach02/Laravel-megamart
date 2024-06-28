@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-xl-12 m-auto">
             <div class="wsus__payment_area">
-                <a href="{{ route('user.cod.payment') }}" class="nav-link bg-primary text-light rounded text-center">Thanh
-                    toán với
+                <a href="{{ route('user.cod.payment') }}" class="nav-link bg-dark text-light rounded text-center">Thanh
+                    toán
                     khi đơn hàng được giao đến!</a>
             </div>
         </div>

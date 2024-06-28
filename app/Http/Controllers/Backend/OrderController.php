@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -121,5 +122,44 @@ class OrderController extends Controller
       "message" => "Cập nhật trạng thái thanh toán thành công",
       "status" => "success"
     ]);
+  }
+
+  public function cancelOrders(Request $request)
+  {
+    $orders = null;
+
+    switch ($request->order_filter) {
+      case 'not-refund':
+        $orders = Order::where("refund_status", "Chưa hoàn tiền")->latest()->get();
+        break;
+
+      case 'refunded':
+        $orders = Order::where("refund_status", "Đã hoàn tiền")->latest()->get();
+        break;
+
+      default:
+        $orders = Order::where("order_status", "cancelled")->latest()->get();
+        break;
+    }
+
+    return view("admin.order.cancel-order", compact("orders"));
+  }
+
+  public function cancelOrdersShow($id)
+  {
+    $order = Order::findOrFail($id);
+    return view("admin.order.cancel-order-show", compact("order"));
+  }
+
+  public function changeRefundStatus(Request $request)
+  {
+
+    $order = Order::findOrFail($request->order_id);
+    $order->refund_status = $request->refund_status;
+    $order->save();
+
+    Toastr::success("Cập nhật trạng thái hoàn tiền thành công", "Thành công");
+
+    return redirect()->back();
   }
 }

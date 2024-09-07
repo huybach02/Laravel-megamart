@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="mb-2 fw-bold">Giới thiệu chi tiết về sản phẩm</label>
-                                        <textarea class="summernote" name="long_description">{!! $product->long_description !!}</textarea>
+                                        <textarea class="editor" name="long_description">{!! $product->long_description !!}</textarea>
                                         @if ($errors->has('long_description'))
                                             <p class="text-danger">{{ $errors->first('long_description') }}</p>
                                         @endif

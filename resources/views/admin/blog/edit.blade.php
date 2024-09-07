@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nội dung bài viết</label>
-                                            <textarea name="description" class="form-control summernote">{{ $blog->description }}</textarea>
+                                            <textarea name="description" class="form-control editor">{{ $blog->description }}</textarea>
                                             @if ($errors->has('description'))
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>
                                             @endif

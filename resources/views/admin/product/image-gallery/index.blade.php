@@ -65,14 +65,16 @@
                                         <table id="example" class="display" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th style="text-align: left">STT</th>
                                                     <th style="text-align: left">Id</th>
                                                     <th style="text-align: left">Hình ảnh</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($images as $image)
+                                                @foreach ($images as $key => $image)
                                                     <tr>
+                                                        <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                         <td style="text-align: left">{{ $image->id }}</td>
                                                         <td style="text-align: left">
                                                             <img src=" {{ asset($image->image) }}" width="120px">
@@ -125,13 +127,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

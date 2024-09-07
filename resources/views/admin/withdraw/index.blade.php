@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Mã giao dịch</th>
                                             <th>Tên gian hàng</th>
@@ -45,19 +46,20 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($withdraws as $withdraw)
+                                        @foreach ($withdraws as $key => $withdraw)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $withdraw->id }}</td>
                                                 <td style="text-align: left">{{ $withdraw->request_id }}</td>
                                                 <td style="text-align: left">{{ $withdraw->vendor->name }}</td>
                                                 <td style="text-align: left">{{ $withdraw->method }}</td>
-                                                <td style="text-align: left">{{ number_format($withdraw->total_amount) }}đ
+                                                <td style="text-align: left">{{ formatMoney($withdraw->total_amount) }}
                                                 </td>
                                                 <td style="text-align: left">
-                                                    {{ number_format($withdraw->withdraw_amount) }}đ
+                                                    {{ formatMoney($withdraw->withdraw_amount) }}
                                                 </td>
                                                 <td style="text-align: left">
-                                                    {{ number_format($withdraw->withdraw_charge) }}đ
+                                                    {{ formatMoney($withdraw->withdraw_charge) }}
                                                 </td>
                                                 <td>{{ $withdraw->status == 'pending' ? 'Đang xử lý' : ($withdraw->status == 'paid' ? 'Đã thanh toán' : 'Bị huỷ') }}
                                                 </td>
@@ -81,15 +83,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

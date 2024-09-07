@@ -34,11 +34,11 @@
             <a class="wsus__pro_name"
                 href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
             @if (checkDiscount($product))
-                <p class="wsus__price mt-2">{{ number_format($product->offer_price) }} đ
-                    <del>{{ number_format($product->price) }} đ</del>
+                <p class="wsus__price mt-2">{{ formatMoney($product->offer_price) }}
+                    <del>{{ formatMoney($product->price) }}</del>
                 </p>
             @else
-                <p class="wsus__price mt-2">{{ number_format($product->price) }} đ</p>
+                <p class="wsus__price mt-2">{{ formatMoney($product->price) }}</p>
             @endif
             <form class="shopping-cart-form">
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -50,7 +50,7 @@
                                     <option value="{{ $item->id }}"
                                         {{ $item->is_default == 1 ? 'selected' : '' }}>
                                         {{ $item->name }}
-                                        {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                        {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ')' : '' }}
                                     </option>
                                 @endif
                             @endforeach

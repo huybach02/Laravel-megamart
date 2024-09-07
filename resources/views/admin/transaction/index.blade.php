@@ -29,26 +29,33 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Mã đơn hàng</th>
                                             <th>Mã thanh toán</th>
                                             <th style="text-align: center">Phương thức thanh toán</th>
-                                            <th style="text-align: center">Tổng tiền đơn hàng (VND)</th>
-                                            <th style="text-align: center">Tổng tiền đã thanh toán (USD)</th>
+                                            <th style="text-align: center">Tổng tiền đơn hàng</th>
+                                            <th style="text-align: center">Tổng tiền đã thanh toán</th>
                                             <th style="text-align: center">Trạng thái</th>
                                             <th style="text-align: center">Thời gian</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($transactions as $transaction)
+                                        @foreach ($transactions as $key => $transaction)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $transaction->id }}</td>
                                                 <td>{{ $transaction->order->invoice_id }}</td>
                                                 <td>{{ $transaction->transaction_id }}</td>
                                                 <td style="text-align: center">{{ $transaction->payment_method }}</td>
-                                                <td style="text-align: center">{{ number_format($transaction->amount) }}đ
+                                                <td style="text-align: center">{{ formatMoney($transaction->amount) }}
                                                 </td>
-                                                <td style="text-align: center">${{ $transaction->amount_real_currency }}
+                                                <td style="text-align: center">
+                                                    @if ($transaction->payment_method == 'COD' || $transaction->payment_method == 'VNPay')
+                                                        {{ formatMoney($transaction->amount_real_currency) }}
+                                                    @else
+                                                        ${{ $transaction->amount_real_currency }}
+                                                    @endif
                                                 </td>
                                                 <td style="text-align: center">
                                                     {{ $transaction->order->payment_status == 1 ? 'Thành công' : 'Không thành công' }}
@@ -66,13 +73,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

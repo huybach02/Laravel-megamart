@@ -131,6 +131,7 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script src="{{ asset('backend/assets/modules/summernote/summernote-bs4.js') }}"></script>
+    <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
 
 
     <!--main/custom js-->
@@ -202,6 +203,95 @@
             })
 
         })
+    </script>
+
+    <script>
+        new DataTable('#example', {
+            "order": [
+                [1, "desc"]
+            ],
+            columnDefs: [{
+                    targets: 1,
+                    visible: false
+                } // Ẩn cột id
+            ],
+            language: {
+                "search": "Tìm kiếm",
+                "lengthMenu": "_MENU_ Dữ liệu/Trang ",
+                "info": "Hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ mục",
+                "infoEmpty": "Hiển thị 0 đến 0 trong tổng số 0 mục",
+                "infoFiltered": "(được lọc từ _MAX_ mục)",
+                "zeroRecords": "Không tìm thấy kết quả phù hợp"
+            }
+        });
+    </script>
+
+    <script>
+        tinymce.init({
+            selector: '.editor',
+            min_width: 500,
+            height: 500,
+            plugins: [
+                'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'prewiew', 'anchor', 'pagebreak',
+                'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+                'table', 'emoticons', 'template', 'codesample'
+            ],
+            toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                'forecolor backcolor emoticons',
+            menu: {
+                favs: {
+                    title: 'Menu',
+                    items: 'code visualaid | searchreplace | emoticons'
+                }
+            },
+            menubar: 'favs file edit view insert format tools table',
+            content_style: 'body{font-family:Helvetica,Arial,sans-serif; font-size:16px}',
+            images_upload_url: "{{ route('upload') }}",
+            images_upload_credentials: true,
+            images_reuse_filename: true,
+            images_upload_handler: function(blobInfo, progress) {
+                return new Promise((resolve, reject) => {
+                    var xhr, formData;
+                    xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    xhr.open('POST', '{{ route('upload') }}');
+
+                    xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+
+                    xhr.upload.onprogress = function(e) {
+                        progress(e.loaded / e.total * 100);
+                    };
+
+                    xhr.onload = function() {
+                        var json;
+                        if (xhr.status !== 200) {
+                            reject('HTTP Error: ' + xhr.status);
+                            return;
+                        }
+                        json = JSON.parse(xhr.responseText);
+                        if (!json || typeof json.location != 'string') {
+                            reject('Invalid JSON: ' + xhr.responseText);
+                            return;
+                        }
+                        resolve(json.location);
+                    };
+
+                    xhr.onerror = function() {
+                        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr
+                            .status);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    xhr.send(formData);
+                });
+            },
+            // Add these options to prevent URL rewriting
+            remove_script_host: false,
+            convert_urls: false
+        });
     </script>
 
     @stack('scripts')

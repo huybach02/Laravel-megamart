@@ -65,7 +65,10 @@
                             <div class="table-responsive my-5">
                                 <table class="table table-striped table-hover table-md">
                                     <tr>
-                                        <th data-width="40">#</th>
+                                        {{-- <td class="text-center font-bold">STT</td> --}}
+                                        <th>
+                                            Ảnh sản phẩm
+                                        </th>
                                         <th>Tên sản phẩm</th>
                                         <th>Gian hàng</th>
                                         <th class="text-center">Đơn giá</th>
@@ -75,7 +78,7 @@
                                         <th class="text-right">Thành tiền</th>
                                     </tr>
 
-                                    @foreach ($order->orderProducts as $index => $product)
+                                    @foreach ($order->orderProducts as $key => $product)
                                         @if ($product->vendor_id == Auth::user()->id)
                                             @php
                                                 $variants = json_decode($product->variants);
@@ -84,30 +87,32 @@
                                                     $product->quantity;
                                             @endphp
                                             <tr>
-                                                <td>{{ $index + 1 }}</td>
+                                                {{-- <td class="text-center">{{ $key + 1 }}</td> --}}
+                                                <td><img src="{{ asset($product->product->thumb_image) }}" width="80px">
+                                                </td>
                                                 <td>
                                                     <a target="blank"
                                                         href="{{ route('product-detail', $product->product->slug) }}">{{ $product->product_name }}</a>
                                                 </td>
                                                 <td>{{ $product->vendor->name }}</td>
                                                 <td class="text-center">
-                                                    {{ number_format($product->unit_price) }}đ</td>
+                                                    {{ formatMoney($product->unit_price) }}</td>
                                                 <td class="text-center">{{ $product->quantity }}
                                                 </td>
                                                 <td>
                                                     @foreach ($variants as $key => $variant)
                                                         <span>{{ $key }}:
                                                             {{ $variant->name }}
-                                                            {{ $variant->price > 0 ? '(+' . number_format($variant->price) . 'đ)' : '' }}
+                                                            {{ $variant->price > 0 ? '(+' . formatMoney($variant->price) . ')' : '' }}
                                                         </span>
                                                         <br>
                                                     @endforeach
                                                 </td>
                                                 <td class="text-center">
-                                                    + {{ number_format($product->variant_total) }}đ
+                                                    + {{ formatMoney($product->variant_total) }}
                                                 </td>
                                                 <td class="text-right">
-                                                    {{ number_format(($product->unit_price + $product->variant_total) * $product->quantity) }}đ
+                                                    {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
                                                 </td>
                                             </tr>
                                         @endif
@@ -118,7 +123,7 @@
                         </div>
                         <div class="d-flex justify-content-end">
                             <h5 class="mb-3 "><strong>Tổng tiền đơn hàng:</strong>
-                                {{ number_format($total) }}đ </h5>
+                                {{ formatMoney($total) }} </h5>
                         </div>
 
                         <div class="row pt-5 border-top">

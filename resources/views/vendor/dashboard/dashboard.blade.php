@@ -49,14 +49,14 @@
                             <a class="wsus__dashboard_item orange" href="dsahboard_profile.html">
                                 <i class="far fa-money-bill"></i>
                                 <p>Doanh Thu</p>
-                                <h4 style="color: #fff">{{ number_format($totalEarnings) }}đ</h4>
+                                <h4 style="color: #fff">{{ formatMoney($totalEarnings) }}</h4>
                             </a>
                         </div>
                         <div class="col-xl-4 col-6 col-md-4">
                             <a class="wsus__dashboard_item orange" href="dsahboard_profile.html">
                                 <i class="far fa-money-bill"></i>
                                 <p>Doanh Thu Hôm Nay</p>
-                                <h4 style="color: #fff">{{ number_format($todayEarnings) }}đ</h4>
+                                <h4 style="color: #fff">{{ formatMoney($todayEarnings) }}</h4>
                             </a>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <h6>Rating trung bình: {{ number_format($item['average_rating'], 2) }}</h6>
+                                                <h6>Rating trung bình: {{ formatMoney($item['average_rating'], 2) }}</h6>
                                             </div>
                                         </div>
                                     </div>

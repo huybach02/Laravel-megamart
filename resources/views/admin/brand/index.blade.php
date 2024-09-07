@@ -32,6 +32,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Hình ảnh</th>
                                             <th>Tên thương hiệu</th>
@@ -42,8 +43,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($brands as $brand)
+                                        @foreach ($brands as $key => $brand)
                                             <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $brand->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src=" {{ asset($brand->logo) }}" width="100px">
@@ -124,13 +126,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

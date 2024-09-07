@@ -41,6 +41,7 @@
                                         <table id="example" class="display" style="width:100%">
                                             <thead>
                                                 <tr>
+                                                    <th style="text-align: left">STT</th>
                                                     <th style="text-align: left">Id</th>
                                                     <th style="text-align: left">Tên biến thể</th>
                                                     <th>Trạng thái</th>
@@ -48,8 +49,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($variants as $variant)
+                                                @foreach ($variants as $key => $variant)
                                                     <tr>
+                                                        <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                         <td style="text-align: left">{{ $variant->id }}</td>
                                                         <td style="text-align: left">
                                                             {{ $variant->name }}
@@ -129,13 +131,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

@@ -29,6 +29,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="text-align: left">STT</th>
                                             <th style="text-align: left">Id</th>
                                             <th>Tên vận chuyển</th>
                                             <th>Loại vận chuyển</th>
@@ -39,14 +40,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($shippings as $shipping)
+                                        @foreach ($shippings as $key => $shipping)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $shipping->id }}</td>
                                                 <td>{{ $shipping->name }}</td>
                                                 <td>{{ $shipping->type == 'flat_cost' ? 'Giá cố định' : 'Theo giá trị tối thiểu của đơn hàng' }}
                                                 </td>
-                                                <td>{{ number_format($shipping->min_cost) }}đ</td>
-                                                <td>{{ number_format($shipping->cost) }}đ</td>
+                                                <td>{{ formatMoney($shipping->min_cost) }}</td>
+                                                <td>{{ formatMoney($shipping->cost) }}</td>
                                                 <td>
                                                     @if ($shipping->status == 1)
                                                         <label class='custom-switch mt-2'>
@@ -114,13 +116,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

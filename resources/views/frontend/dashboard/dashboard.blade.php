@@ -48,7 +48,7 @@
                             <a class="wsus__dashboard_item green" href="dsahboard_profile.html">
                                 <i class="far fa-money-bill"></i>
                                 <p>Số Tiền Mua Hàng</p>
-                                <h4 style="color: #fff">{{ number_format($totalAmount) }}đ</h4>
+                                <h4 style="color: #fff">{{ formatMoney($totalAmount) }}</h4>
                             </a>
                         </div>
 

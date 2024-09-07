@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Tên danh mục</th>
                                             <th>Slug</th>
@@ -42,8 +43,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($subCategories as $subCategory)
+                                        @foreach ($subCategories as $key => $subCategory)
                                             <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $subCategory->id }}</td>
                                                 <td>{{ $subCategory->name }}</td>
                                                 <td>{{ $subCategory->slug }}</td>
@@ -115,13 +117,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

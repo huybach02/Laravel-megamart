@@ -19,21 +19,21 @@
                                 <div class="wsus__dashboard_item blue" href="dsahboard_profile.html">
                                     <i class="far fa-money-bill"></i>
                                     <p>Số tiền có thể rút</p>
-                                    <h4 style="color: #fff">{{ number_format($withdrawBalance) }}đ</h4>
+                                    <h4 style="color: #fff">{{ formatMoney($withdrawBalance) }}</h4>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-6 col-md-4">
                                 <div class="wsus__dashboard_item orange" href="dsahboard_profile.html">
                                     <i class="far fa-money-bill"></i>
                                     <p>Số tiền đang xử lý</p>
-                                    <h4 style="color: #fff">{{ number_format($pendingAmount) }}đ</h4>
+                                    <h4 style="color: #fff">{{ formatMoney($pendingAmount) }}</h4>
                                 </div>
                             </div>
                             <div class="col-xl-4 col-6 col-md-4">
                                 <div class="wsus__dashboard_item green" href="dsahboard_profile.html">
                                     <i class="far fa-money-bill"></i>
                                     <p>Số tiền rút thành công</p>
-                                    <h4 style="color: #fff">{{ number_format($paidAmount) }}đ</h4>
+                                    <h4 style="color: #fff">{{ formatMoney($paidAmount) }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -106,6 +106,7 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <td class="text-center font-bold">STT</td>
                                         <th style="text-align: left">Id</th>
                                         <th style="text-align: left">Mã giao dịch</th>
                                         <th style="text-align: left">Phương thức rút tiền</th>
@@ -117,15 +118,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($withdraws as $withdraw)
+                                    @foreach ($withdraws as $key => $withdraw)
                                         <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
                                             <td style="text-align: left">{{ $withdraw->id }}</td>
                                             <td style="text-align: left">{{ $withdraw->request_id }}</td>
                                             <td style="text-align: left">{{ $withdraw->method }}</td>
-                                            <td style="text-align: left">{{ number_format($withdraw->total_amount) }}đ</td>
-                                            <td style="text-align: left">{{ number_format($withdraw->withdraw_amount) }}đ
+                                            <td style="text-align: left">{{ formatMoney($withdraw->total_amount) }}</td>
+                                            <td style="text-align: left">{{ formatMoney($withdraw->withdraw_amount) }}
                                             </td>
-                                            <td style="text-align: left">{{ number_format($withdraw->withdraw_charge) }}đ
+                                            <td style="text-align: left">{{ formatMoney($withdraw->withdraw_charge) }}
                                             </td>
                                             <td>{{ $withdraw->status == 'pending' ? 'Đang xử lý' : ($withdraw->status == 'paid' ? 'Đã thanh toán' : 'Bị huỷ') }}
                                             </td>
@@ -149,14 +151,3 @@
         </div>
     </div>
 @endsection
-
-
-@push('scripts')
-    <script>
-        $('#example').DataTable({
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

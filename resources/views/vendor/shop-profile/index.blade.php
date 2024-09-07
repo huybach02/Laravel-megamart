@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label class="mb-2 fw-bold">Mô tả</label>
-                                        <textarea class="summernote" name="description">
+                                        <textarea class="editor" name="description">
                                         {{ $profile ? $profile->description : '' }}
                                       </textarea>
                                         @if ($errors->has('description'))

@@ -60,6 +60,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Email</th>
                                             <th>Trạng thái xác thực</th>
@@ -67,8 +68,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($subscribers as $subscriber)
+                                        @foreach ($subscribers as $subscriberKey => $subscriber)
                                             <tr>
+                                                <td class="text-center">{{ $subscriberKey + 1 }}</td>
                                                 <td style="text-align: left">{{ $subscriber->id }}</td>
                                                 <td>{{ $subscriber->email }}</td>
                                                 <td>{{ $subscriber->is_verified == 1 ? 'Đã xác thực' : 'Chưa xác thực' }}
@@ -86,13 +88,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

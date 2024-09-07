@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: center">Hiển thị ở cột</th>
                                             <th>Tiêu đề hiển thị</th>
@@ -42,8 +43,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($footerContents as $content)
+                                        @foreach ($footerContents as $key => $content)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $content->id }}</td>
                                                 <td style="text-align: center">{{ $content->column }}</td>
                                                 <td>{{ $content->name }}</td>
@@ -115,13 +117,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="text-align: left">STT</th>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Tên phương thức</th>
                                             <th style="text-align: left">Số tiền tối thiểu</th>
@@ -42,14 +43,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($withdrawMethods as $withdrawMethod)
+                                        @foreach ($withdrawMethods as $key => $withdrawMethod)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $withdrawMethod->id }}</td>
                                                 <td style="text-align: left">{{ $withdrawMethod->name }}</td>
                                                 <td style="text-align: left">
-                                                    {{ number_format($withdrawMethod->minimum_amount) }}đ</td>
+                                                    {{ formatMoney($withdrawMethod->minimum_amount) }}</td>
                                                 <td style="text-align: left">
-                                                    {{ number_format($withdrawMethod->maximum_amount) }}đ</td>
+                                                    {{ formatMoney($withdrawMethod->maximum_amount) }}</td>
                                                 <td style="text-align: left">{{ $withdrawMethod->withdraw_charge }}%</td>
                                                 <td>
                                                     <div class="d-flex justify-content-start">
@@ -75,13 +77,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

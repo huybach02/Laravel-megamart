@@ -31,6 +31,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Hình ảnh</th>
                                             <th>Thể loại</th>
@@ -43,15 +44,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($sliders as $slider)
+                                        @foreach ($sliders as $key => $slider)
                                             <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $slider->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src=" {{ asset($slider->banner) }}" width="150px">
                                                 </td>
                                                 <td>{{ $slider->type }}</td>
                                                 <td>{{ $slider->title }}</td>
-                                                <td>{{ number_format($slider->starting_price) . 'đ' }}</td>
+                                                <td>{{ formatMoney($slider->starting_price) }}</td>
                                                 <td>{{ $slider->btn_url }}</td>
                                                 <td style="text-align: left">{{ $slider->serial }}</td>
                                                 <td>
@@ -121,13 +123,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

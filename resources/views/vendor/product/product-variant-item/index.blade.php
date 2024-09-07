@@ -28,6 +28,7 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <td class="text-center font-bold">STT</td>
                                         <th style="text-align: left">Id</th>
                                         <th style="text-align: left">Tên thành phần</th>
                                         <th style="text-align: left">Thuộc biến thể</th>
@@ -38,8 +39,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($variantItems as $item)
+                                    @foreach ($variantItems as $key => $item)
                                         <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
                                             <td style="text-align: left">{{ $item->id }}</td>
                                             <td style="text-align: left">
                                                 {{ $item->name }}
@@ -48,7 +50,7 @@
                                                 {{ $item->productVariant->name }}
                                             </td>
                                             <td style="text-align: left">
-                                                {{ number_format($item->price) . 'đ' }}
+                                                {{ formatMoney($item->price) }}
                                             </td>
                                             <td style="text-align: left">
                                                 {{ $item->is_default == 1 ? 'Có' : 'Không' }}
@@ -118,13 +120,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        $('#example').DataTable({
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

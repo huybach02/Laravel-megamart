@@ -66,13 +66,13 @@
 
                                                 @foreach ($item->options->variants as $key => $variant)
                                                     <span>{{ $key }}: {{ $variant['name'] }}
-                                                        {{ $variant['price'] > 0 ? '(+' . number_format($variant['price']) . 'đ)' : '' }}</span>
+                                                        {{ $variant['price'] > 0 ? '(+' . formatMoney($variant['price']) . ')' : '' }}</span>
                                                 @endforeach
 
                                             </td>
 
                                             <td class="wsus__pro_status">
-                                                <p>{{ number_format($item->price + $item->options->variants_total) }}đ</p>
+                                                <p>{{ formatMoney($item->price + $item->options->variants_total) }}</p>
                                             </td>
 
                                             <td class="wsus__pro_select">
@@ -92,7 +92,7 @@
 
                                             <td class="wsus__pro_tk">
                                                 <h6 id="{{ $item->rowId }}">
-                                                    {{ number_format(($item->price + $item->options->variants_total) * $item->qty) }}đ
+                                                    {{ formatMoney(($item->price + $item->options->variants_total) * $item->qty) }}
                                                 </h6>
                                             </td>
 
@@ -119,11 +119,11 @@
                 <div class="col-xl-3">
                     <div class="wsus__cart_list_footer_button" id="sticky_sidebar">
                         <h6>Thông tin thanh toán</h6>
-                        <p>Tiền đơn hàng: <span id="sub-total">{{ number_format(getCartTotal()) }}đ</span></p>
+                        <p>Tiền đơn hàng: <span id="sub-total">{{ formatMoney(getCartTotal()) }}</span></p>
                         {{-- <p>Phí vận chuyển: <span>$00.00</span></p> --}}
-                        <p>Giảm giá: <span id="discount">- {{ number_format(getCartDiscount()) }}đ</span></p>
+                        <p>Giảm giá: <span id="discount">- {{ formatMoney(getCartDiscount()) }}</span></p>
                         <p class="total"><span>Tổng tiền:</span> <span
-                                id="cart-total">{{ number_format(getMainCartTotal()) }}đ</span>
+                                id="cart-total">{{ formatMoney(getMainCartTotal()) }}</span>
                         </p>
 
                         <form id="coupon-form">
@@ -287,7 +287,7 @@
                     method: "GET",
                     url: "{{ route('cart.cart-total') }}",
                     success: function(data) {
-                        $("#sub-total").html(customFormatNumber(data) + "đ")
+                        $("#sub-total").html(customFormatNumber(data) + " ₫")
                     },
                     error: function(data) {
 
@@ -323,8 +323,8 @@
                     url: "{{ route('coupon-calculation') }}",
                     success: function(data) {
                         if (data.status == "success") {
-                            $("#discount").text("- " + customFormatNumber(data.discount) + "đ")
-                            $("#cart-total").text(customFormatNumber(data.cart_total) + "đ")
+                            $("#discount").text("- " + customFormatNumber(data.discount) + " ₫")
+                            $("#cart-total").text(customFormatNumber(data.cart_total) + " ₫")
                         }
                         if (data.status == "error") {
                             toastr.error(data.message)

@@ -72,13 +72,13 @@
                                             <td class="wsus__pro_tk">
                                                 @if (checkDiscount($item->product))
                                                     <p class="wsus__tk text-primary fw-bold"><del
-                                                            class="text-danger">{{ number_format($item->product->price) }}
-                                                            đ</del>
-                                                        {{ number_format($item->product->offer_price) }} đ
+                                                            class="text-danger">{{ formatMoney($item->product->price) }}
+                                                        </del>
+                                                        {{ formatMoney($item->product->offer_price) }}
                                                     </p>
                                                 @else
                                                     <p class="wsus__tk text-primary fw-bold">
-                                                        {{ number_format($item->product->price) }} đ</p>
+                                                        {{ formatMoney($item->product->price) }} </p>
                                                 @endif
                                             </td>
 

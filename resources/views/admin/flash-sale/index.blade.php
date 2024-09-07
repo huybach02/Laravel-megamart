@@ -120,19 +120,26 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th style="text-align: left">STT</th>
                                             <th style="text-align: left">Id</th>
-                                            <th style="text-align: left">ProductId</th>
-                                            <th>Tên Sản Phẩm</th>
+                                            {{-- <th style="text-align: left">ProductId</th> --}}
+                                            <th style="text-align: left">Ảnh sản phẩm</th>
+                                            <th>Tên sản phẩm</th>
                                             <th>Hiển thị tại trang chủ</th>
                                             <th>Trạng thái</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($flashSaleItems as $item)
+                                        @foreach ($flashSaleItems as $key => $item)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $item->id }}</td>
-                                                <td style="text-align: left">{{ $item->product->id }}</td>
+                                                {{-- <td style="text-align: left">{{ $item->product->id }}</td> --}}
+                                                <td style="text-align: left">
+                                                    <img src="{{ asset($item->product->thumb_image) }}" alt=""
+                                                        width="80" height="80">
+                                                </td>
                                                 <td>{{ $item->product->name }}</td>
                                                 <td>
                                                     @if ($item->show_at_home == 1)
@@ -234,14 +241,6 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 
     <script>

@@ -63,7 +63,10 @@ class FlashSaleController extends Controller
     $flashSaleItem->show_at_home = $request->status == "true" ? 1 : 0;
     $flashSaleItem->save();
 
-    Toastr::success("Cập nhật trạng thái hiển thị thành công", "Thành công");
+    // Toastr::success("Cập nhật trạng thái hiển thị thành công", "Thành công");
+    return response([
+      "message" => "Cập nhật trạng thái thành công",
+    ]);
   }
 
   public function changeStatus(Request $request)
@@ -73,7 +76,10 @@ class FlashSaleController extends Controller
     $flashSaleItem->status = $request->status == "true" ? 1 : 0;
     $flashSaleItem->save();
 
-    Toastr::success("Cập nhật trạng thái sản phẩm thành công", "Thành công");
+    // Toastr::success("Cập nhật trạng thái sản phẩm thành công", "Thành công");
+    return response([
+      "message" => "Cập nhật trạng thái thành công",
+    ]);
   }
 
   public function destroy(string $id)

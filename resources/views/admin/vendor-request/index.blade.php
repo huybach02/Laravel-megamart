@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Tên người dùng</th>
                                             <th>Tên gian hàng</th>
@@ -44,8 +45,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($vendors as $vendor)
+                                        @foreach ($vendors as $key => $vendor)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $vendor->id }}</td>
                                                 <td>{{ $vendor->user->name }}</td>
                                                 <td>{{ $vendor->name }}</td>
@@ -75,15 +77,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

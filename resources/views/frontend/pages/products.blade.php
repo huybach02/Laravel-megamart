@@ -236,11 +236,11 @@
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price mt-2">
-                                                            {{ number_format($product->offer_price) }} đ
-                                                            <del>{{ number_format($product->price) }} đ</del>
+                                                            {{ formatMoney($product->offer_price) }}
+                                                            <del>{{ formatMoney($product->price) }} </del>
                                                         </p>
                                                     @else
-                                                        <p class="wsus__price mt-2">{{ number_format($product->price) }} đ
+                                                        <p class="wsus__price mt-2">{{ formatMoney($product->price) }}
                                                         </p>
                                                     @endif
                                                     <p style="width: 90%; word-wrap: break-word; margin: 15px 0">
@@ -261,7 +261,7 @@
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                                     {{ $item->name }}
-                                                                                    {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                                    {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ')' : '' }}
                                                                                 </option>
                                                                             @endif
                                                                         @endforeach

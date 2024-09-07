@@ -36,7 +36,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>Số tiền yêu cầu rút:</b></td>
-                                                        <td>{{ number_format($request->total_amount) }}đ</td>
+                                                        <td>{{ formatMoney($request->total_amount) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Hoa hồng của hệ thống:</b></td>
@@ -45,11 +45,11 @@
                                                     </tr>
                                                     <tr>
                                                         <td><b>Hoa hồng của hệ thống thành tiền:</b></td>
-                                                        <td>{{ number_format($request->withdraw_charge) }}đ</td>
+                                                        <td>{{ formatMoney($request->withdraw_charge) }}</td>
                                                     </tr>
                                                     <tr style="background-color: #dcdada">
                                                         <td><b>Số tiền thực nhận:</b></td>
-                                                        <td>{{ number_format($request->withdraw_amount) }}đ</td>
+                                                        <td>{{ formatMoney($request->withdraw_amount) }}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><b>Tên ngân hàng thanh toán:</b></td>

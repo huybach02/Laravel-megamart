@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Nội dung bài viết</label>
-                                            <textarea name="description" class="form-control summernote"></textarea>
+                                            <textarea name="description" class="w-100 editor">{{ old('description') }}</textarea>
                                             @if ($errors->has('description'))
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>
                                             @endif

@@ -165,12 +165,12 @@
                     <div class="col-xl-4 col-lg-4">
                         <div class="wsus__pay_booking_summary" id="sticky_sidebar2">
                             <h5>Thông tin thanh toán</h5>
-                            <p>Tiền đơn hàng: <span id="sub-total">{{ number_format(getCartTotal()) }}đ</span></p>
-                            <p>Phí vận chuyển: <span id="shipping-fee">+ {{ number_format(getShippingFee()) }}đ</span></p>
-                            <p>Giảm giá: <span id="discount">- {{ number_format(getCartDiscount()) }}đ</span></p>
+                            <p>Tiền đơn hàng: <span id="sub-total">{{ formatMoney(getCartTotal()) }}</span></p>
+                            <p>Phí vận chuyển: <span id="shipping-fee">+ {{ formatMoney(getShippingFee()) }}</span></p>
+                            <p>Giảm giá: <span id="discount">- {{ formatMoney(getCartDiscount()) }}</span></p>
                             <p class="total"><span><strong>Tổng tiền:</strong></span> <span id="cart-total"><strong
                                         id="total-amount"
-                                        data-id="{{ getMainCartTotal() }}">{{ number_format(getPayableAmount()) }}đ</strong></span>
+                                        data-id="{{ getMainCartTotal() }}">{{ formatMoney(getPayableAmount()) }}</strong></span>
                             </p>
                         </div>
                     </div>

@@ -20,6 +20,7 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <td class="text-center font-bold">STT</td>
                                         <th>Id</th>
                                         <th style="text-align: left">Mã đơn hàng</th>
                                         <th style="text-align: center">Khách hàng</th>
@@ -33,8 +34,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $order)
+                                    @foreach ($orders as $key => $order)
                                         <tr>
+                                            <td class="text-center">{{ $key + 1 }}</td>
                                             <td>{{ $order->id }}</td>
                                             <td style="text-align: left">{{ $order->invoice_id }}</td>
                                             <td style="text-align: center">{{ $order->user->name }}</td>
@@ -53,7 +55,7 @@
                                                         @endphp
                                                     @endif
                                                 @endforeach
-                                                {{ number_format($total) }}đ
+                                                {{ formatMoney($total) }}
                                             </td>
                                             <td style="text-align: center">{{ $order->payment_method }} </td>
                                             <td style="text-align: center">
@@ -98,14 +100,3 @@
         </div>
     </div>
 @endsection
-
-
-@push('scripts')
-    <script>
-        $('#example').DataTable({
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

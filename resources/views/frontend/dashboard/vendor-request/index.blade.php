@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label class="mb-2 fw-bold">Giới thiệu chi tiết về gian hàng</label>
-                                <textarea class="summernote" name="shop_description">{{ old('shop_description', @$vendor->description) }}</textarea>
+                                <textarea class="editor" name="shop_description">{{ old('shop_description', @$vendor->description) }}</textarea>
                                 @if ($errors->has('shop_description'))
                                     <p class="text-danger">{{ $errors->first('shop_description') }}</p>
                                 @endif

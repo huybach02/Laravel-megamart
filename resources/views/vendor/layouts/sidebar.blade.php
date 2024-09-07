@@ -14,8 +14,8 @@
         </li>
         <li><a class="{{ setActive(['vendor.dashboard']) }}" href="{{ route('vendor.dashboard') }}"><i
                     class="fas fa-tachometer"></i>Thống Kê</a></li>
-        <li><a class="{{ setActive(['vendor.products.*']) }}" href="{{ route('vendor.products.index') }}"><i
-                    class="far fa-layer-group"></i>
+        <li><a class="{{ setActive(['vendor.products.*', 'vendor.product-variant.*', 'vendor.product-variant-item.*']) }}"
+                href="{{ route('vendor.products.index') }}"><i class="far fa-layer-group"></i>
                 Quản lý sản phẩm</a>
         </li>
         <li><a class="{{ setActive(['vendor.orders.*']) }}" href="{{ route('vendor.orders.index') }}"><i

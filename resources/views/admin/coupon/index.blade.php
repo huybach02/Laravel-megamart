@@ -29,6 +29,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th>Tên mã giảm</th>
                                             <th>Mã giảm giá</th>
@@ -43,8 +44,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($coupons as $coupon)
+                                        @foreach ($coupons as $key => $coupon)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $coupon->id }}</td>
                                                 <td>{{ $coupon->name }}</td>
                                                 <td>{{ $coupon->code }}</td>
@@ -56,7 +58,7 @@
                                                     {{ $coupon->discount_type == 'percent' ? 'Phần trăm' : 'Theo số tiền' }}
                                                 </td>
                                                 <td style="text-align: center">
-                                                    {{ $coupon->discount_type == 'percent' ? number_format($coupon->discount) . '%' : number_format($coupon->discount) . 'đ' }}
+                                                    {{ $coupon->discount_type == 'percent' ? number_format($coupon->discount) . '%' : formatMoney($coupon->discount) }}
                                                 </td>
                                                 <td>
                                                     @if ($coupon->status == 1)
@@ -125,13 +127,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

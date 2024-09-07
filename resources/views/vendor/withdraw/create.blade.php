@@ -90,11 +90,11 @@
                         <div class="wsus__dash_pro_area col-md-4 account-info">
                             <h4 class="d-flex gap-2">
                                 <div class="text-primary fw-bold">Số tiền tối thiểu có thể rút:</div>
-                                {{ number_format($withdrawMethod->minimum_amount) }}đ
+                                {{ formatMoney($withdrawMethod->minimum_amount) }}
                             </h4>
                             <h4 class="d-flex gap-2">
                                 <div class="text-primary fw-bold">Số tiền tối đa có thể rút:</div>
-                                {{ $withdrawBalance <= $withdrawMethod->maximum_amount ? number_format($withdrawBalance) : number_format($withdrawMethod->maximum_amount) }}đ
+                                {{ $withdrawBalance <= $withdrawMethod->maximum_amount ? formatMoney($withdrawBalance) : formatMoney($withdrawMethod->maximum_amount) }}
                             </h4>
                             <h4 class="d-flex gap-2 pb-3 border-bottom">
                                 <div class="text-primary fw-bold">Phí rút tiền:</div>

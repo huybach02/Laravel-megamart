@@ -99,23 +99,23 @@
                                             </td>
                                             <td>{{ $product->vendor->name }}</td>
                                             <td class="text-center">
-                                                {{ number_format($product->unit_price) }}đ</td>
+                                                {{ formatMoney($product->unit_price) }}</td>
                                             <td class="text-center">{{ $product->quantity }}
                                             </td>
                                             <td>
                                                 @foreach ($variants as $key => $variant)
                                                     <span>{{ $key }}:
                                                         {{ $variant->name }}
-                                                        {{ $variant->price > 0 ? '(+' . number_format($variant->price) . 'đ)' : '' }}
+                                                        {{ $variant->price > 0 ? '(+' . formatMoney($variant->price) . ')' : '' }}
                                                     </span>
                                                     <br>
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
-                                                + {{ number_format($product->variant_total) }}đ
+                                                + {{ formatMoney($product->variant_total) }}
                                             </td>
                                             <td class="text-right">
-                                                {{ number_format(($product->unit_price + $product->variant_total) * $product->quantity) }}đ
+                                                {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -126,22 +126,22 @@
                         <div class="d-flex justify-content-end">
                             <div class="d-flex flex-column">
                                 <h6 class="mb-3 "><strong>Tổng tiền sản phẩm:</strong>
-                                    {{ number_format($order->sub_total) }}đ </h6>
+                                    {{ formatMoney($order->sub_total) }} </h6>
                                 <h6 class="mb-3 "><strong>Phí vận chuyển:</strong>
-                                    + {{ number_format($shipping->cost) }}đ </h6>
+                                    + {{ formatMoney($shipping->cost) }} </h6>
                                 <h6 class="mb-3 "><strong>Giảm giá:</strong>
                                     @if ($coupon && $coupon->discount_type == 'amount')
-                                        - {{ number_format($coupon->discount) }}đ
+                                        - {{ formatMoney($coupon->discount) }}
                                     @elseif ($coupon && $coupon->discount_type == 'percent')
                                         -
-                                        {{ number_format(($order->sub_total * $coupon->discount) / 100) }}đ
+                                        {{ formatMoney(($order->sub_total * $coupon->discount) / 100) }}đ
                                         ({{ $coupon->discount }}%)
                                     @else
-                                        - 0đ
+                                        - {{ formatMoney(0) }}
                                     @endif
                                 </h6>
                                 <h5 class="mb-3 pt-3 border-top"><strong>Tổng tiền đơn hàng:</strong>
-                                    {{ number_format($order->amount) }}đ </h5>
+                                    {{ formatMoney($order->amount) }} </h5>
                             </div>
                         </div>
 

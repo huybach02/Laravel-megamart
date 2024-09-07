@@ -28,6 +28,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Tên sản phẩm</th>
                                             <th style="text-align: left">Số sao đánh giá</th>
@@ -37,8 +38,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($reviews as $review)
+                                        @foreach ($reviews as $key => $review)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $review->id }}</td>
                                                 <td><a target="blank"
                                                         href="{{ route('product-detail', $review->product->slug) }}">{{ $review->product->name }}</a>
@@ -114,13 +116,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

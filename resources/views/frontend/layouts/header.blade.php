@@ -19,10 +19,11 @@
             <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block mt-lg-3">
                 <div class="wsus__search">
                     <form action="{{ route('product.index') }}">
-                        <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..."
+                        <input type="text" name="search" id="product-search" placeholder="Tìm kiếm sản phẩm..."
                             value="{{ request()->search }}">
                         <button type="submit"><i class="far fa-search"></i></button>
                     </form>
+                    <div id="suggestions" class="suggestions-list d-none"></div> <!-- Div để hiển thị gợi ý -->
                 </div>
             </div>
             <div class="col-xl-5 col-3 col-md-3 col-lg-6 mt-lg-3">
@@ -68,7 +69,7 @@
                             <small>{{ $key }}: {{ $variant['name'] }}</small><br>
                         @endforeach
                         <small>Số lượng: {{ $product->qty }}</small>
-                        <p>{{ number_format($product->price + $product->options->variants_total) }}đ</p>
+                        <p>{{ formatMoney($product->price + $product->options->variants_total) }}</p>
                     </div>
                 </li>
             @endforeach
@@ -82,7 +83,7 @@
         </ul>
 
         <div class="mini-cart-action {{ Cart::content()->count() === 0 ? 'd-none' : '' }}">
-            <h5>Tổng tiền <span id="mini-cart-subtotal">{{ number_format(getCartTotal()) }}đ</span></h5>
+            <h5>Tổng tiền <span id="mini-cart-subtotal">{{ formatMoney(getCartTotal()) }}</span></h5>
             <div class="wsus__minicart_btn_area mt-3">
                 <a class="" href="check_out.html"></a>
                 <a class="common_btn" href="{{ route('cart-details') }}">Xem giỏ hàng</a>
@@ -95,3 +96,76 @@
 <!--============================
   HEADER END
 ==============================-->
+
+@push('scripts')
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
+        const fetchSuggestions = debounce(query => {
+            $.ajax({
+                url: "{{ route('product.suggestions') }}",
+                type: "GET",
+                data: {
+                    query: query
+                },
+                success: function(response) {
+                    let suggestionsList = '';
+                    let suggestions = response.suggestions;
+
+                    if (suggestions.length > 0) {
+                        suggestions.forEach(function(product) {
+                            let priceDisplay = product.offer_price ?
+                                `<span class="discounted-price">${formatCurrency(product.offer_price)}</span> <span class="original-price"><del>${formatCurrency(product.price)}</del></span>` :
+                                `<span class="original-price">${formatCurrency(product.price)}</span>`;
+
+                            suggestionsList += `
+                          <a href="/product-detail/${product.slug}" class="suggestion-item d-flex align-items-center">
+                              <img src="${product.thumb_image}" alt="${product.name}" class="suggestion-image">
+                              <div class="suggestion-details">
+                                  <p class="suggestion-name">${product.name}</p>
+                                  <p class="suggestion-price">${priceDisplay}</p>
+                              </div>
+                          </a>`;
+                        });
+
+                        // Thêm mục "Xem thêm" nếu có nhiều hơn 5 sản phẩm
+                        if (response.hasMore) {
+                            suggestionsList += `
+                          <a href="/products?search=${query}" class="see-more">Xem thêm...</a>`;
+                        }
+
+                        $('#suggestions').html(suggestionsList).removeClass('d-none'); // Hiển thị gợi ý
+                    } else {
+                        $('#suggestions').html(
+                                '<div class="suggestion-item">Không có kết quả phù hợp</div>')
+                            .removeClass('d-none');
+                    }
+                }
+            });
+        }, 300); // Sử dụng debounce để giới hạn số lần gọi API
+
+        $(document).ready(function() {
+            $('#product-search').on('keyup', function() {
+                let query = $(this).val();
+
+                if (query.length >= 1) { // Bắt đầu tìm kiếm khi người dùng nhập hơn 1 ký tự
+                    fetchSuggestions(query);
+                } else {
+                    $('#suggestions').addClass('d-none'); // Ẩn khung gợi ý khi input trống
+                }
+            });
+
+            // Ẩn khung gợi ý khi người dùng click ra ngoài
+            $(document).click(function(e) {
+                if (!$(e.target).closest('#product-search, #suggestions').length) {
+                    $('#suggestions').addClass('d-none');
+                }
+            });
+        });
+    </script>
+@endpush

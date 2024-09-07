@@ -33,6 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Ảnh đại diện</th>
                                             <th>Tên chủ gian hàng</th>
@@ -44,8 +45,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($vendors as $vendor)
+                                        @foreach ($vendors as $key => $vendor)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $vendor->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src="{{ $vendor->vendor->banner ? asset($vendor->vendor->banner) : 'https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png' }}"
@@ -111,13 +113,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

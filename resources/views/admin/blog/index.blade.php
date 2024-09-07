@@ -31,6 +31,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Hình ảnh</th>
                                             <th>Tiêu đề</th>
@@ -41,8 +42,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($blogs as $blog)
+                                        @foreach ($blogs as $key => $blog)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $blog->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src=" {{ asset($blog->image) }}" width="100px">
@@ -119,13 +121,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

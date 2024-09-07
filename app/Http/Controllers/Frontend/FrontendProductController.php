@@ -9,6 +9,7 @@ use App\Models\ChildCategory;
 use App\Models\Product;
 use App\Models\ProductReview;
 use App\Models\SubCategory;
+use App\Models\Suggestion;
 use Illuminate\Http\Request;
 
 class FrontendProductController extends Controller
@@ -22,6 +23,19 @@ class FrontendProductController extends Controller
     $reviewCount = ProductReview::where(["product_id" => $product->id, "status" => 1])->count();
 
     $relatedProducts = Product::where("category_id", $product->category_id)->latest()->limit(12)->get();
+
+    if (!$product) {
+      abort(404);
+    }
+
+    $checkHasSuggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();
+
+    if (!$checkHasSuggestion) {
+      $suggestion = new Suggestion();
+      $suggestion->user_id = auth()->user()->id;
+      $suggestion->category_id = $product->category_id;
+      $suggestion->save();
+    }
 
     return view("frontend.pages.product-detail", compact("product", "reviews", "reviewCount", "relatedProducts"));
   }
@@ -179,5 +193,29 @@ class FrontendProductController extends Controller
   public function changeListView(Request $request)
   {
     session()->put("product_list_style", $request->style);
+  }
+
+  public function getSuggestions(Request $request)
+  {
+    $search = $request->get('query');
+
+    // Truy vấn sản phẩm liên quan dựa trên từ khóa
+    $productsQuery = Product::where('name', 'like', '%' . $search . '%')
+      ->orderBy('created_at', 'desc');
+
+    // Lấy tối đa 6 sản phẩm để kiểm tra nếu có nhiều hơn 5 sản phẩm
+    $products = $productsQuery->limit(6)->get(['name', 'thumb_image', 'price', 'offer_price', 'slug']);
+
+    // Phân tích dữ liệu
+    $hasMore = $products->count() > 5;
+    $suggestions = $products->take(5)->map(function ($product) {
+      $product->thumb_image = asset($product->thumb_image);
+      return $product;
+    });
+
+    return response()->json([
+      'suggestions' => $suggestions,
+      'hasMore' => $hasMore,
+    ]);
   }
 }

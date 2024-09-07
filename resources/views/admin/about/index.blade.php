@@ -28,7 +28,7 @@
 
                                         <div class="form-group">
                                             <label>Nội dung giới thiệu</label>
-                                            <textarea name="content" id="" class="summernote">{{ @$about->content }}</textarea>
+                                            <textarea name="content" id="" class="editor">{{ @$about->content }}</textarea>
                                             @if ($errors->has('content'))
                                                 <p class="text-danger">{{ $errors->first('content') }}</p>
                                             @endif

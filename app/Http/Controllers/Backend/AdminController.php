@@ -85,6 +85,8 @@ class AdminController extends Controller
       ->where("orders.payment_status", 1)
       ->sum(DB::raw('(order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity')) * 0.1;
 
+    $totalEarningsVendor = $subTotals - $totalEarningsAdminVendor;
+
     // Tính tổng doanh thu
     $finalTotalEarnings = $totalEarningsAdminVendor + $totalEarningsOtherVendors;
 
@@ -158,7 +160,8 @@ class AdminController extends Controller
       "totalEarningsAdminVendor",
       "totalEarningsOtherVendors",
       "ratings",
-      "topSellingProducts"
+      "topSellingProducts",
+      "totalEarningsVendor"
     ));
   }
 

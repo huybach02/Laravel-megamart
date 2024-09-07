@@ -68,7 +68,7 @@
                                                                     @if ($order->payment_method == 'Stripe' || $order->payment_method == 'Paypal')
                                                                         ${{ $order->transaction->amount_real_currency }}
                                                                     @else
-                                                                        {{ number_format($order->transaction->amount_real_currency) }}đ
+                                                                        {{ formatMoney($order->transaction->amount_real_currency) }}
                                                                     @endif
                                                                     <br>
                                                                     Trạng thái thanh toán:
@@ -115,23 +115,23 @@
                                                                         </td>
                                                                         <td>{{ $product->vendor->name }}</td>
                                                                         <td class="text-center">
-                                                                            {{ number_format($product->unit_price) }}đ</td>
+                                                                            {{ formatMoney($product->unit_price) }}</td>
                                                                         <td class="text-center">{{ $product->quantity }}
                                                                         </td>
                                                                         <td>
                                                                             @foreach ($variants as $key => $variant)
                                                                                 <span>{{ $key }}:
                                                                                     {{ $variant->name }}
-                                                                                    {{ $variant->price > 0 ? '(+' . number_format($variant->price) . 'đ)' : '' }}
+                                                                                    {{ $variant->price > 0 ? '(+' . formatMoney($variant->price) . ')' : '' }}
                                                                                 </span>
                                                                                 <br>
                                                                             @endforeach
                                                                         </td>
                                                                         <td class="text-center">
-                                                                            {{ number_format($product->variant_total) }}đ
+                                                                            {{ formatMoney($product->variant_total) }}
                                                                         </td>
                                                                         <td class="text-right">
-                                                                            {{ number_format(($product->unit_price + $product->variant_total) * $product->quantity) }}đ
+                                                                            {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -243,24 +243,24 @@
                                                                     <div class="invoice-detail-name">Tổng tiền sản phẩm
                                                                     </div>
                                                                     <div class="invoice-detail-value">
-                                                                        {{ number_format($order->sub_total) }}đ</div>
+                                                                        {{ formatMoney($order->sub_total) }}</div>
                                                                 </div>
                                                                 <div class="invoice-detail-item">
                                                                     <div class="invoice-detail-name">Phí vận chuyển</div>
                                                                     <div class="invoice-detail-value">
-                                                                        + {{ number_format($shipping->cost) }}đ</div>
+                                                                        + {{ formatMoney($shipping->cost) }}</div>
                                                                 </div>
                                                                 <div class="invoice-detail-item">
                                                                     <div class="invoice-detail-name">Giảm giá</div>
                                                                     <div class="invoice-detail-value">
                                                                         @if ($coupon && $coupon->discount_type == 'amount')
-                                                                            - {{ number_format($coupon->discount) }}đ
+                                                                            - {{ formatMoney($coupon->discount) }}
                                                                         @elseif ($coupon && $coupon->discount_type == 'percent')
                                                                             -
-                                                                            {{ number_format(($order->sub_total * $coupon->discount) / 100) }}đ
+                                                                            {{ formatMoney(($order->sub_total * $coupon->discount) / 100) }}
                                                                             ({{ $coupon->discount }}%)
                                                                         @else
-                                                                            - 0đ
+                                                                            - {{ formatMoney(0) }}
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -270,7 +270,7 @@
                                                                     </div>
                                                                     <div
                                                                         class="invoice-detail-value invoice-detail-value-lg">
-                                                                        {{ number_format($order->amount) }}đ</div>
+                                                                        {{ formatMoney($order->amount) }}</div>
                                                                 </div>
                                                             </div>
                                                         </div>

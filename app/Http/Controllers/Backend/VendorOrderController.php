@@ -15,7 +15,7 @@ class VendorOrderController extends Controller
   {
     $orders = Order::whereHas("orderProducts", function ($query) {
       $query->where("vendor_id", Auth::user()->vendor->id);
-    })->get();
+    })->orderBy("id", "desc")->get();
 
     return view('vendor.order.index', compact("orders"));
   }

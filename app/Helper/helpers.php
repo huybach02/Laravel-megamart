@@ -18,6 +18,11 @@ function setActive(array $route)
   }
 }
 
+function formatMoney($number)
+{
+  return number_format($number, 0, ',', '.') . ' ₫';
+}
+
 function checkDisCount($product)
 {
   $currentDate = date("Y-m-d");

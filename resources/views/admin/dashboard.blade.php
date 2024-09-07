@@ -18,10 +18,10 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Doanh thu đơn hàng đã giao</h4>
+                                <h4>Tổng doanh thu từ tất cả đơn hàng đã giao</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($subTotals) }}đ
+                                {{ formatMoney($subTotals) }}
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,38 @@
                                 <h4>Tổng tiền khuyến mãi khi dùng mã giảm giá</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($amountSale) }}đ
+                                {{ formatMoney($amountSale) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12"></div>
+                {{-- <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-info">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Doanh thu đơn hàng đã giao sau khi trừ khuyến mãi</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ formatMoney($amount) }}
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                    <div class="card card-statistic-1">
+                        <div class="card-icon bg-info">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="card-wrap">
+                            <div class="card-header">
+                                <h4>Tổng doanh thu từ các sản phẩm của MegaMart</h4>
+                            </div>
+                            <div class="card-body">
+                                {{ formatMoney($totalEarningsAdminVendor) }}
                             </div>
                         </div>
                     </div>
@@ -48,32 +79,17 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Doanh thu đơn hàng đã giao sau khi trừ khuyến mãi</h4>
+                                <h4>Tổng doanh thu của các gian hàng</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($amount) }}đ
+                                {{ formatMoney($totalEarningsVendor) }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Tổng doanh thu từ các sản phẩm của MegaMart</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ number_format($totalEarningsAdminVendor) }}đ
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
+                        <div class="card-icon bg-info">
                             <i class="fas fa-money-bill-wave"></i>
                         </div>
                         <div class="card-wrap">
@@ -81,7 +97,7 @@
                                 <h4>Tổng doanh thu từ hoa hồng của các gian hàng</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($totalEarningsOtherVendors) }}đ
+                                {{ formatMoney($totalEarningsOtherVendors) }}
                             </div>
                         </div>
                     </div>
@@ -96,7 +112,7 @@
                                 <h4>Tổng doanh thu MegaMart nhận được</h4>
                             </div>
                             <div class="card-body">
-                                {{ number_format($finalTotalEarnings) }}đ
+                                {{ formatMoney($finalTotalEarnings - $amountSale) }}
                             </div>
                         </div>
                     </div>
@@ -324,7 +340,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Đơn hàng sẵn sàng được vận chuyển</h4>
+                                <h4>Đơn hàng sẵn sàng ược vận chuyển</h4>
                             </div>
                             <div class="card-body">
                                 {{ $processed_and_ready_to_ship_orders }}
@@ -354,7 +370,7 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Đơn hàng đã được vận chuyển đi</h4>
+                                <h4>Đơn hàng đã được vận chuyển i</h4>
                             </div>
                             <div class="card-body">
                                 {{ $shipped_orders }}
@@ -554,14 +570,14 @@
                 <button class="btn btn-primary ml-2" type="submit">Xem</button>
             </form>
             <div class="row">
-                <!-- Biểu đồ doanh thu -->
+                <!-- Biểu ồ doanh thu -->
                 <div class="col-xl-6">
                     <div class="wsus__dashboard_item">
                         <canvas id="monthlyRevenueChart" width="400" height="200"></canvas>
                     </div>
                 </div>
 
-                <!-- Biểu đồ số đơn hàng -->
+                <!-- Biểu ồ số ơn hàng -->
                 <div class="col-xl-6">
                     <div class="wsus__dashboard_item">
                         <canvas id="monthlyOrdersChart" width="400" height="200"></canvas>
@@ -590,7 +606,7 @@
                                     </div>
                                     <div class="card-body d-flex justify-content-between p-0 pr-3">
                                         <h6>{{ $item['vendor_name'] }}</h6>
-                                        <h6>Đã bán: {{ $item['total_sales'] }}</h6>
+                                        <h6>ã bán: {{ $item['total_sales'] }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -1173,7 +1189,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Biểu đồ doanh thu
+            // Biểu ồ doanh thu
             var ctxRevenue = document.getElementById('monthlyRevenueChart').getContext('2d');
             var chartRevenue = new Chart(ctxRevenue, {
                 type: 'bar',
@@ -1199,7 +1215,7 @@
                             ticks: {
                                 beginAtZero: true,
                                 callback: function(value) {
-                                    return value.toLocaleString('en-US') + 'đ';
+                                    return value.toLocaleString('en-US') + '';
                                 }
                             }
                         }]
@@ -1213,7 +1229,7 @@
                 }
             });
 
-            // Biểu đồ số đơn hàng
+            // Biểu ồ số ơn hàng
             var ctxOrders = document.getElementById('monthlyOrdersChart').getContext('2d');
             var chartOrders = new Chart(ctxOrders, {
                 type: 'bar',
@@ -1222,7 +1238,7 @@
                         'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
                     ],
                     datasets: [{
-                        label: 'Số đơn hàng',
+                        label: 'Số ơn hàng',
                         backgroundColor: 'rgba(255, 159, 64, 0.5)',
                         borderColor: 'rgba(255, 159, 64, 1)',
                         borderWidth: 1,

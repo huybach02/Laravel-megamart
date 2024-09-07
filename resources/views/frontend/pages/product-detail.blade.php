@@ -77,10 +77,10 @@
                             </p>
 
                             @if (checkDiscount($product))
-                                <h4>{{ number_format($product->offer_price) }} đ<del>{{ number_format($product->price) }}
-                                        đ</del></h4>
+                                <h4>{{ formatMoney($product->offer_price) }} <del>{{ formatMoney($product->price) }}
+                                    </del></h4>
                             @else
-                                <h4>{{ number_format($product->price) }} đ</h4>
+                                <h4>{{ formatMoney($product->price) }} </h4>
                             @endif
 
                             <p class="review">
@@ -135,7 +135,7 @@
                                                                 <option value="{{ $item->id }}"
                                                                     {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                     {{ $item->name }}
-                                                                    {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                    {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ' )' : '' }}
                                                                 </option>
                                                             @endif
                                                         @endforeach
@@ -258,19 +258,20 @@
                                             <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
                                                 <div class="wsus__pro_det_vendor_text">
                                                     <h4>{{ $product->vendor->name }}</h4>
-                                                    <p class="rating">
+                                                    {{-- <p class="rating">
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <i class="fas fa-star"></i>
                                                         <span>(41 đánh giá)</span>
-                                                    </p>
+                                                    </p> --}}
                                                     <p><span>Tên gian hàng:</span> {{ $product->vendor->name }}</p>
                                                     <p><span>Địa chỉ:</span> {{ $product->vendor->address }}</p>
                                                     <p><span>Điện thoại:</span> {{ $product->vendor->phone }}</p>
                                                     <p><span>Email:</span> {{ $product->vendor->email }}</p>
-                                                    <a href="vendor_details.html" class="see_btn">visit store</a>
+                                                    <a href="{{ route('vendor.show', $product->vendor->id) }}"
+                                                        class="see_btn">Xem gian hàng</a>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
@@ -657,11 +658,11 @@
                                     <a class="wsus__pro_name"
                                         href="{{ route('product-detail', $relatedProduct->slug) }}">{{ limitText($relatedProduct->name, 30) }}</a>
                                     @if (checkDiscount($relatedProduct))
-                                        <p class="wsus__price mt-2">{{ number_format($relatedProduct->offer_price) }} đ
-                                            <del>{{ number_format($relatedProduct->price) }} đ</del>
+                                        <p class="wsus__price mt-2">{{ formatMoney($relatedProduct->offer_price) }}
+                                            <del>{{ formatMoney($relatedProduct->price) }} </del>
                                         </p>
                                     @else
-                                        <p class="wsus__price mt-2">{{ number_format($relatedProduct->price) }} đ</p>
+                                        <p class="wsus__price mt-2">{{ formatMoney($relatedProduct->price) }} </p>
                                     @endif
                                     <form class="shopping-cart-form">
                                         <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
@@ -674,7 +675,7 @@
                                                             <option value="{{ $item->id }}"
                                                                 {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                 {{ $item->name }}
-                                                                {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ' )' : '' }}
                                                             </option>
                                                         @endif
                                                     @endforeach

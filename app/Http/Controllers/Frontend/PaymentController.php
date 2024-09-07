@@ -8,6 +8,7 @@ use App\Models\OrderProduct;
 use App\Models\PaypalSetting;
 use App\Models\Product;
 use App\Models\StripeSetting;
+use App\Models\Suggestion;
 use App\Models\Transaction;
 use Brian2694\Toastr\Facades\Toastr;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -74,6 +75,9 @@ class PaymentController extends Controller
       $updateQuantity = $product->quantity - $item->qty;
       $product->quantity = $updateQuantity;
       $product->save();
+
+      $suggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();
+      $suggestion->delete();
     }
 
 
@@ -308,7 +312,9 @@ class PaymentController extends Controller
       $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
     }
     $returnData = array(
-      'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+      'code' => '00',
+      'message' => 'success',
+      'data' => $vnp_Url
     );
     if (isset($_POST['redirect'])) {
       header('Location: ' . $vnp_Url);

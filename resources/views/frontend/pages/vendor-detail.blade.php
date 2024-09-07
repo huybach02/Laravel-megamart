@@ -180,11 +180,11 @@
                                                         href="{{ route('product-detail', $product->slug) }}">{{ limitText($product->name, 30) }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price mt-2">
-                                                            {{ number_format($product->offer_price) }} đ
-                                                            <del>{{ number_format($product->price) }} đ</del>
+                                                            {{ formatMoney($product->offer_price) }}
+                                                            <del>{{ formatMoney($product->price) }} </del>
                                                         </p>
                                                     @else
-                                                        <p class="wsus__price mt-2">{{ number_format($product->price) }} đ
+                                                        <p class="wsus__price mt-2">{{ formatMoney($product->price) }}
                                                         </p>
                                                     @endif
 
@@ -201,7 +201,7 @@
                                                                             <option value="{{ $item->id }}"
                                                                                 {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                                 {{ $item->name }}
-                                                                                {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                                {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ')' : '' }}
                                                                             </option>
                                                                         @endif
                                                                     @endforeach
@@ -300,11 +300,11 @@
                                                         href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
                                                     @if (checkDiscount($product))
                                                         <p class="wsus__price mt-2">
-                                                            {{ number_format($product->offer_price) }} đ
-                                                            <del>{{ number_format($product->price) }} đ</del>
+                                                            {{ formatMoney($product->offer_price) }}
+                                                            <del>{{ formatMoney($product->price) }} </del>
                                                         </p>
                                                     @else
-                                                        <p class="wsus__price mt-2">{{ number_format($product->price) }} đ
+                                                        <p class="wsus__price mt-2">{{ formatMoney($product->price) }}
                                                         </p>
                                                     @endif
                                                     <p class="list_description">{{ $product->short_description }}</p>
@@ -323,7 +323,7 @@
                                                                                 <option value="{{ $item->id }}"
                                                                                     {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                                     {{ $item->name }}
-                                                                                    {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                                    {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ' )' : '' }}
                                                                                 </option>
                                                                             @endif
                                                                         @endforeach
@@ -423,11 +423,12 @@
                                             ({{ $product->quantity }} sản phẩm)
                                         </p>
                                         @if (checkDiscount($product))
-                                            <h4>{{ number_format($product->offer_price) }}
-                                                đ<del>{{ number_format($product->price) }}
-                                                    đ</del></h4>
+                                            <h4>{{ formatMoney($product->offer_price) }}
+                                                <del>{{ formatMoney($product->price) }}
+                                                </del>
+                                            </h4>
                                         @else
-                                            <h4>{{ number_format($product->price) }} đ</h4>
+                                            <h4>{{ formatMoney($product->price) }} </h4>
                                         @endif
                                         <p class="review">
                                             @php
@@ -482,7 +483,7 @@
                                                                             <option value="{{ $item->id }}"
                                                                                 {{ $item->is_default == 1 ? 'selected' : '' }}>
                                                                                 {{ $item->name }}
-                                                                                {{ $item->price > 0 ? '(+' . number_format($item->price) . ' đ)' : '' }}
+                                                                                {{ $item->price > 0 ? '(+' . formatMoney($item->price) . ' )' : '' }}
                                                                             </option>
                                                                         @endif
                                                                     @endforeach

@@ -105,13 +105,13 @@
 
                                                         @foreach ($item->options->variants as $key => $variant)
                                                             <span>{{ $key }}: {{ $variant['name'] }}
-                                                                {{ $variant['price'] > 0 ? '(+' . number_format($variant['price']) . 'đ)' : '' }}</span>
+                                                                {{ $variant['price'] > 0 ? '(+' . formatMoney($variant['price']) . ')' : '' }}</span>
                                                         @endforeach
 
                                                     </td>
 
                                                     <td class="wsus__pro_status">
-                                                        <p>{{ number_format($item->price + $item->options->variants_total) }}đ
+                                                        <p>{{ formatMoney($item->price + $item->options->variants_total) }}
                                                         </p>
                                                     </td>
 
@@ -127,7 +127,7 @@
 
                                                     <td class="wsus__pro_tk">
                                                         <h6 id="{{ $item->rowId }}">
-                                                            {{ number_format(($item->price + $item->options->variants_total) * $item->qty) }}đ
+                                                            {{ formatMoney(($item->price + $item->options->variants_total) * $item->qty) }}
                                                         </h6>
                                                     </td>
 
@@ -153,7 +153,7 @@
                                             id="exampleRadios1" data-id="{{ $method->cost }}" value="{{ $method->id }}">
                                         <label class="form-check-label" for="exampleRadios1">
                                             {{ $method->name }}
-                                            <span>(Phí vận chuyển: {{ number_format($method->cost) }}đ, từ 3-5 ngày)</span>
+                                            <span>(Phí vận chuyển: {{ formatMoney($method->cost) }}, từ 3-5 ngày)</span>
                                         </label>
                                     </div>
                                 @elseif ($method->type == 'flat_cost')
@@ -162,19 +162,19 @@
                                             id="exampleRadios1" data-id="{{ $method->cost }}" value="{{ $method->id }}">
                                         <label class="form-check-label" for="exampleRadios1">
                                             {{ $method->name }}
-                                            <span>(Phí vận chuyển: {{ number_format($method->cost) }}đ, từ 3-5 ngày)</span>
+                                            <span>(Phí vận chuyển: {{ formatMoney($method->cost) }}, từ 3-5 ngày)</span>
                                         </label>
                                     </div>
                                 @endif
                             @endforeach
 
                             <div class="wsus__order_details_summery">
-                                <p>Tiền đơn hàng: <span id="sub-total">{{ number_format(getCartTotal()) }}đ</span></p>
-                                <p>Phí vận chuyển: <span id="shipping-fee">+ 0đ</span></p>
-                                <p>Giảm giá: <span id="discount">- {{ number_format(getCartDiscount()) }}đ</span></p>
+                                <p>Tiền đơn hàng: <span id="sub-total">{{ formatMoney(getCartTotal()) }}</span></p>
+                                <p>Phí vận chuyển: <span id="shipping-fee">+ 0 ₫</span></p>
+                                <p>Giảm giá: <span id="discount">- {{ formatMoney(getCartDiscount()) }}</span></p>
                                 <p class="total"><span><strong>Tổng tiền:</strong></span> <span id="cart-total"><strong
                                             id="total-amount"
-                                            data-id="{{ getMainCartTotal() }}">{{ number_format(getMainCartTotal()) }}đ</strong></span>
+                                            data-id="{{ getMainCartTotal() }}">{{ formatMoney(getMainCartTotal()) }}</strong></span>
                                 </p>
                             </div>
                             <div class="terms_area">
@@ -405,9 +405,9 @@
 
             $(".shipping-method").on("click", function() {
                 $("#shipping_method_id").val($(this).val())
-                $("#shipping-fee").text("+ " + customFormatNumber($(this).data("id")) + "đ")
+                $("#shipping-fee").text("+ " + customFormatNumber($(this).data("id")) + " ₫")
                 let toralAmount = $("#total-amount").data("id")
-                $("#total-amount").text(customFormatNumber(toralAmount + $(this).data("id")) + "đ")
+                $("#total-amount").text(customFormatNumber(toralAmount + $(this).data("id")) + " ₫")
             })
 
             $(".shipping-address").on("click", function() {

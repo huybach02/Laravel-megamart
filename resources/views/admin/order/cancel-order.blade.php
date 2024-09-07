@@ -48,6 +48,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th>Id</th>
                                             <th style="text-align: left">Mã đơn hàng</th>
                                             <th style="text-align: center">Khách hàng</th>
@@ -63,15 +64,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orders as $order)
+                                        @foreach ($orders as $key => $order)
                                             <tr>
+                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
                                                 <td>{{ $order->id }}</td>
                                                 <td style="text-align: left">{{ $order->invoice_id }}</td>
                                                 <td style="text-align: center">{{ $order->user->name }}</td>
                                                 <td style="text-align: center">{{ $order->created_at }}</td>
                                                 <td style="text-align: center">{{ $order->product_quantity }}</td>
-                                                <td style="text-align: center">{{ number_format($order->sub_total) }}đ</td>
-                                                <td style="text-align: center">{{ number_format($order->amount) }}đ</td>
+                                                <td style="text-align: center">{{ formatMoney($order->sub_total) }}</td>
+                                                <td style="text-align: center">{{ formatMoney($order->amount) }}</td>
                                                 <td style="text-align: center">{{ $order->payment_method }} </td>
                                                 <td style="text-align: center">
                                                     {{ $order->payment_status == 1 ? 'Thành công' : 'Chưa thanh toán' }}
@@ -113,13 +115,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

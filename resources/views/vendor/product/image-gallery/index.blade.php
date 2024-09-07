@@ -53,18 +53,18 @@
                             <table id="example" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th style="text-align: center">Hình ảnh</th>
                                         <th style="text-align: left">Id</th>
-                                        <th style="text-align: left">Hình ảnh</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($images as $image)
                                         <tr>
-                                            <td style="text-align: left">{{ $image->id }}</td>
-                                            <td style="text-align: left">
-                                                <img src=" {{ asset($image->image) }}" width="120px">
+                                            <td style="text-align: center">
+                                                <img src=" {{ asset($image->image) }}" width="150px">
                                             </td>
+                                            <td style="text-align: left">{{ $image->id }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-start">
                                                     <a href="{{ route('vendor.product-image-gallery.destroy', $image->id) }}"
@@ -85,13 +85,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        $('#example').DataTable({
-            "order": [
-                [0, "desc"]
-            ]
-        });
-    </script>
-@endpush

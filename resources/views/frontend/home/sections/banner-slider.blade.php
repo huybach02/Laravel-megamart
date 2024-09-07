@@ -12,7 +12,7 @@
                                     <div class="wsus__single_slider_text">
                                         <h3>{{ $slider->type }}</h3>
                                         <h1>{{ $slider->title }}</h1>
-                                        <h6>Giá chỉ từ {{ number_format($slider->starting_price) }}đ</h6>
+                                        <h6>Giá chỉ từ {{ formatMoney($slider->starting_price) }}</h6>
                                         <a class="common_btn" href="#">shop now</a>
                                     </div>
                                 </div>

@@ -23,6 +23,8 @@ use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +59,7 @@ Route::get("flash-sale", [FlashSaleController::class, "index"])->name("flash-sal
 Route::get("products", [FrontendProductController::class, "productIndex"])->name("product.index");
 Route::get("product-detail/{slug}", [FrontendProductController::class, "showProduct"])->name("product-detail");
 Route::get("change-product-list-view", [FrontendProductController::class, "changeListView"])->name("change-product-list-view");
+Route::get('product-suggestions', [FrontendProductController::class, 'getSuggestions'])->name('product.suggestions');
 
 Route::group(["middleware" => ["auth", "verified", "role:user,vendor"], "prefix" => "user", "as" => "user."], function () {
   Route::get("dashboard", [UserDashboardController::class, "index"])->name("dashboard");
@@ -138,6 +141,20 @@ Route::get('/fetch-tinhthanh/{type}/{id}', function ($type, $id) {
   $response = Http::get("https://esgoo.net/api-tinhthanh/{$type}/{$id}.htm");
   return $response->body();
 });
+
+// Upload File Tinymce
+Route::post('/upload', function (Request $request) {
+  if ($request->hasFile("file")) {
+    $image = $request->file('file');
+    $ext = $image->getClientOriginalExtension();
+    $imageName = "image_" . uniqid() . "." . $ext;
+    $image->move(public_path("uploads/tinymce_images"), $imageName);
+
+    $imageUrl = url("uploads/tinymce_images/" . $imageName);
+
+    return response()->json(['location' => $imageUrl]);
+  }
+})->name("upload");
 
 Route::fallback(function () {
   return redirect()->route("home");

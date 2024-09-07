@@ -28,6 +28,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <td class="text-center font-bold">STT</td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Hình ảnh</th>
                                             <th>Tên sản phẩm</th>
@@ -41,15 +42,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($products as $product)
+                                        @foreach ($products as $key => $product)
                                             <tr>
+                                                <td class="text-center">{{ $key + 1 }}</td>
                                                 <td style="text-align: left">{{ $product->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src=" {{ asset($product->thumb_image) }}" width="70px">
                                                 </td>
                                                 <td>{{ $product->name }}</td>
-                                                <td>{{ number_format($product->price) . 'đ' }}</td>
-                                                <td>{{ number_format($product->offer_price) . 'đ' }}</td>
+                                                <td>{{ formatMoney($product->price) }}</td>
+                                                <td>{{ formatMoney($product->offer_price) }}</td>
                                                 <td style="text-align: left">
                                                     {{ $product->offer_start_date !== $product->offer_end_date ? $product->offer_start_date : '' }}
                                                 </td>
@@ -154,13 +156,5 @@
                 })
             })
         })
-    </script>
-
-    <script>
-        new DataTable('#example', {
-            "order": [
-                [0, "desc"]
-            ]
-        });
     </script>
 @endpush

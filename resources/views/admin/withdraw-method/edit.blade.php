@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Mô tả</label>
-                                            <textarea name="description" class="summernote">{{ $method->description }}</textarea>
+                                            <textarea name="description" class="editor">{{ $method->description }}</textarea>
                                             @if ($errors->has('description'))
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>
                                             @endif

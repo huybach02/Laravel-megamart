@@ -24,7 +24,7 @@
                                 <h4 style="color: #fff">{{ $totalOrders }}</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item green" href="dsahboard_download.html">
                                 <i class="fal fa-calendar-week"></i>
                                 <p>Đơn Hàng Hôm Nay</p>

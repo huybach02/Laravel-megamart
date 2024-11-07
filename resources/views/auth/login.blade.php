@@ -6,8 +6,8 @@
 
 @section('content')
     <!--============================
-                                                                                                                                 BREADCRUMB START
-                                                                                                                            ==============================-->
+                                                                                                                                             BREADCRUMB START
+                                                                                                                                        ==============================-->
     <section id="wsus__breadcrumb">
         <div class="breadcrumb_overlay"></div>
         <div class="wsus_breadcrumb_overlay">
@@ -25,13 +25,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                              BREADCRUMB END
-                                                                                                                            ==============================-->
+                                                                                                                                          BREADCRUMB END
+                                                                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                                                             LOGIN/REGISTER PAGE START
-                                                                                                                            ==============================-->
+                                                                                                                                         LOGIN/REGISTER PAGE START
+                                                                                                                                        ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -45,6 +45,8 @@
                                 <a class="nav-link text-center" href="{{ route('register') }}">ĐĂNG KÝ</a>
                             </li>
                         </ul>
+                        <p class="text-center">Đăng nhập ngay để tiến hành mua sắm và tận hưởng
+                            những quyền lợi của MegaMart dành cho bạn!</p>
                         <div class="wsus__login">
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -79,11 +81,11 @@
                                 @endif
 
                                 <button class="common_btn" type="submit">Đăng nhập</button>
-                                <p class="social_text">Hoặc qua tài khoản mạng xã hội</p>
+                                {{-- <p class="social_text">Hoặc qua tài khoản mạng xã hội</p>
                                 <ul class="wsus__login_link">
                                     <li><a href="#"><i class="fab fa-google"></i></a></li>
                                     <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                </ul>
+                                </ul> --}}
                             </form>
                         </div>
                     </div>

@@ -87,19 +87,20 @@
                             </div>
 
                         </div>
-                        <div class="wsus__dash_pro_area col-md-4 account-info">
-                            <h4 class="d-flex gap-2">
+                        <div class="wsus__dash_pro_area col-md-4 account-info d-flex flex-column gap-3">
+                            <h5 class="">
                                 <div class="text-primary fw-bold">Số tiền tối thiểu có thể rút:</div>
-                                {{ formatMoney($withdrawMethod->minimum_amount) }}
-                            </h4>
-                            <h4 class="d-flex gap-2">
+                                <span class="fw-bold">{{ formatMoney($withdrawMethod->minimum_amount) }}</span>
+                            </h5>
+                            <h5 class="">
                                 <div class="text-primary fw-bold">Số tiền tối đa có thể rút:</div>
-                                {{ $withdrawBalance <= $withdrawMethod->maximum_amount ? formatMoney($withdrawBalance) : formatMoney($withdrawMethod->maximum_amount) }}
-                            </h4>
-                            <h4 class="d-flex gap-2 pb-3 border-bottom">
+                                <span
+                                    class="fw-bold">{{ $withdrawBalance <= $withdrawMethod->maximum_amount ? formatMoney($withdrawBalance) : formatMoney($withdrawMethod->maximum_amount) }}</span>
+                            </h5>
+                            <h5 class="d-flex gap-2 pb-3 border-bottom">
                                 <div class="text-primary fw-bold">Phí rút tiền:</div>
-                                {{ $withdrawMethod->withdraw_charge }}%
-                            </h4>
+                                <span class="fw-bold">{{ $withdrawMethod->withdraw_charge }}%</span>
+                            </h5>
                             <div class="pt-3">{!! $withdrawMethod->description !!}</div>
                         </div>
                     </div>

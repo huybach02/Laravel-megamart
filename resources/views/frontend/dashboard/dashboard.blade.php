@@ -10,7 +10,7 @@
             <div class="dashboard_content">
                 <div class="wsus__dashboard">
                     <div class="row">
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item green" href="dsahboard_order.html">
                                 <i class="far fa-scroll"></i>
                                 <p>Tổng Đơn Hàng</p>
@@ -23,21 +23,21 @@
                                 <p>download</p>
                             </a>
                         </div> --}}
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item orange" href="dsahboard_order.html">
                                 <i class="far fa-truck"></i>
                                 <p>Đơn Hàng Đang Giao</p>
                                 <h4 style="color: #fff">{{ $totalPendingOrder }}</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item green" href="dsahboard_order.html">
                                 <i class="far fa-check"></i>
                                 <p>Đơn Hàng Thành Công</p>
                                 <h4 style="color: #fff">{{ $totalDeliveredOrder }}</h4>
                             </a>
                         </div>
-                        <div class="col-xl-2 col-6 col-md-4">
+                        <div class="col-xl-3 col-6 col-md-4">
                             <a class="wsus__dashboard_item red" href="dsahboard_order.html">
                                 <i class="far fa-times"></i>
                                 <p>Đơn Hàng Đã Huỷ</p>
@@ -51,10 +51,6 @@
                                 <h4 style="color: #fff">{{ formatMoney($totalAmount) }}</h4>
                             </a>
                         </div>
-
-                    </div>
-
-                    <div class="row">
                         <div class="col-xl-2 col-6 col-md-4">
                             <a class="wsus__dashboard_item blue" href="dsahboard_wishlist.html">
                                 <i class="far fa-heart"></i>
@@ -76,6 +72,10 @@
                                 <h4 style="color: #fff">{{ $totalAddress }}</h4>
                             </a>
                         </div>
+                    </div>
+
+                    <div class="row">
+
                     </div>
 
                 </div>

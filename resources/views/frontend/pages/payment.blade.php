@@ -33,19 +33,26 @@
                                 {{-- <button class="nav-link common_btn active" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab"
                                     aria-controls="v-pills-home" aria-selected="true">card payment</button> --}}
-                                <button class="nav-link border-0 bg-primary active" id="v-pills-paypal-tab"
+                                <button class="nav-link border-0 bg-transparent active " id="v-pills-paypal-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-paypal" type="button" role="tab"
-                                    aria-controls="v-pills-paypal" aria-selected="true">Thanh toán qua Paypal</button>
-                                <button class="nav-link border-0 bg-info" id="v-pills-stripe-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-stripe" type="button" role="tab"
-                                    aria-controls="v-pills-stripe" aria-selected="false">Thanh toán qua Stripe</button>
-                                <button class="nav-link border-0 bg-success" id="v-pills-stripe-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-vnpay" type="button" role="tab"
-                                    aria-controls="v-pills-vnpay" aria-selected="false">Thanh toán qua VNPay</button>
-                                <button class="nav-link border-0 bg-dark text-light" id="v-pills-stripe-tab"
+                                    aria-controls="v-pills-paypal" aria-selected="true">
+                                    <img src="{{ asset('paypal.webp') }}" alt="" width="100px">
+                                </button>
+                                <button class="nav-link border-0 bg-transparent" id="v-pills-stripe-tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-stripe" type="button" role="tab"
+                                    aria-controls="v-pills-stripe" aria-selected="false">
+                                    <img src="{{ asset('stripe.png') }}" alt="" width="100px">
+                                </button>
+                                <button class="nav-link border-0 bg-transparent" id="v-pills-stripe-tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-vnpay" type="button" role="tab"
+                                    aria-controls="v-pills-vnpay" aria-selected="false">
+                                    <img src="{{ asset('vnpay.png') }}" alt="" width="120px">
+                                </button>
+                                <button class="nav-link border-0 bg-transparent" id="v-pills-stripe-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-cod" type="button" role="tab"
-                                    aria-controls="v-pills-cod" aria-selected="false">Thanh toán khi nhận hàng
-                                    (COD)</button>
+                                    aria-controls="v-pills-cod" aria-selected="false">
+                                    <img src="{{ asset('cod.png') }}" alt="" width="130px">
+                                </button>
 
                             </div>
                         </div>

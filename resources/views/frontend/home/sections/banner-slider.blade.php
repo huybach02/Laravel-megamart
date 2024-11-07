@@ -13,7 +13,7 @@
                                         <h3>{{ $slider->type }}</h3>
                                         <h1>{{ $slider->title }}</h1>
                                         <h6>Giá chỉ từ {{ formatMoney($slider->starting_price) }}</h6>
-                                        <a class="common_btn" href="#">shop now</a>
+                                        <a class="common_btn" href="#">Xem ngay</a>
                                     </div>
                                 </div>
                             </div>

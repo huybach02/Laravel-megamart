@@ -6,8 +6,8 @@
 
 @section('content')
     <!--============================
-                                                                                                                                                                                 BREADCRUMB START
-                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                         BREADCRUMB START
+                                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__breadcrumb">
         <div class="breadcrumb_overlay"></div>
         <div class="wsus_breadcrumb_overlay">
@@ -25,13 +25,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                                                                                              BREADCRUMB END
-                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                      BREADCRUMB END
+                                                                                                                                                                                                                                                                                    ==============================-->
 
 
     <!--============================
-                                                                                                                                                                             LOGIN/REGISTER PAGE START
-                                                                                                                                                                            ==============================-->
+                                                                                                                                                                                                                                                                                     LOGIN/REGISTER PAGE START
+                                                                                                                                                                                                                                                                                    ==============================-->
     <section id="wsus__login_register">
         <div class="container">
             <div class="row">
@@ -45,6 +45,11 @@
                                 <button class="nav-link active">ĐĂNG KÝ</button>
                             </li>
                         </ul>
+                        <div>
+                            <p class="text-center">Đăng ký tài khoản ngay để có thể tiến hành mua sắm và tận hưởng tất cả
+                                những quyền lợi của
+                                MegaMart nhé!</p>
+                        </div>
                         <div class="wsus__login">
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
@@ -97,6 +102,22 @@
                                             {{ $errors->first('password_confirmation') }}
                                         </p>
                                     @endif
+                                </div>
+
+                                <div>
+                                    <div class="wsus__login_input d-flex align-items-center">
+                                        <input class="form-check-input mr-3" id="password_confirmation" type="checkbox"
+                                            style="width: 20px; height: 20px;" checked required>
+                                        <p style="margin-left: 20px; font-size: 14px">Bằng việc đăng kí, bạn đã đồng ý với
+                                            MegaMart về <a href="#" style="text-decoration: underline"
+                                                class="text-primary">
+                                                Điều
+                                                khoản dịch
+                                                vụ
+                                            </a> & <a href="#" style="text-decoration: underline"
+                                                class="text-primary">Chính sách bảo
+                                                mật</a> </p>
+                                    </div>
                                 </div>
 
                                 <button class="common_btn mt-4" type="submit">Đăng ký</button>

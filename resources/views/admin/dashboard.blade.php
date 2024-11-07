@@ -606,7 +606,7 @@
                                     </div>
                                     <div class="card-body d-flex justify-content-between p-0 pr-3">
                                         <h6>{{ $item['vendor_name'] }}</h6>
-                                        <h6>ã bán: {{ $item['total_sales'] }}</h6>
+                                        <h6>Đã bán: {{ $item['total_sales'] }}</h6>
                                     </div>
                                 </div>
                             </div>

@@ -178,6 +178,12 @@
                         class="fas fa-newspaper"></i><span>Quản Lý Bài Viết</span></a>
             </li>
 
+            <li class="{{ setActive(['admin.reports.*']) }}">
+                <a href="{{ route('admin.reports.index') }}" class="nav-link"><i
+                        class="fas fa-chart-line"></i><span>Báo
+                        cáo</span></a>
+            </li>
+
             <li class="{{ setActive(['admin.setting.*']) }}">
                 <a href="{{ route('admin.setting.index') }}" class="nav-link"><i class="fas fa-cog"></i><span>Cài
                         đặt</span></a>

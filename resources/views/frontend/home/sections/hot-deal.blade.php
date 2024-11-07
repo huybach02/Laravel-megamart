@@ -38,8 +38,8 @@
                                 <div class="wsus__single_banner_text">
                                     {{-- <h6>sell on <span>35% off</span></h6>
                               <h3>smart watch</h3> --}}
-                                    <a class="shop_btn" href="{{ $homePageBannerThree->banner_one->banner_url }}">shop
-                                        now</a>
+                                    <a class="shop_btn" href="{{ $homePageBannerThree->banner_one->banner_url }}">Xem
+                                        ngay</a>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                             {{-- <h6>New Collection</h6>
                                       <h3>kid's fashion</h3> --}}
                                             <a class="shop_btn"
-                                                href="{{ $homePageBannerThree->banner_two->banner_url }}">shop now</a>
+                                                href="{{ $homePageBannerThree->banner_two->banner_url }}">Xem ngay</a>
                                         </div>
                                     </div>
                                 </div>
@@ -73,8 +73,7 @@
                                             {{-- <h6>sell on <span>42% off</span></h6>
                                       <h3>winter collection</h3> --}}
                                             <a class="shop_btn"
-                                                href="{{ $homePageBannerThree->banner_three->banner_url }}">shop
-                                                now</a>
+                                                href="{{ $homePageBannerThree->banner_three->banner_url }}">Xem ngay</a>
                                         </div>
                                     </div>
                                 </div>

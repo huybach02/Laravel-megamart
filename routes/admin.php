@@ -26,6 +26,7 @@ use App\Http\Controllers\Backend\ProductImageGalleryController;
 use App\Http\Controllers\Backend\ProductVariantController;
 use App\Http\Controllers\Backend\ProductVariantItemController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\SellerProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ShippingRuleController;
@@ -206,6 +207,9 @@ Route::put("withdraw/{id}", [WithdrawController::class, "update"])->name("withdr
 Route::get("messages", [AdminMessageController::class, "index"])->name("messages.index");
 Route::post("send-message", [AdminMessageController::class, "sendMessage"])->name("send-message");
 Route::get("get-messages", [AdminMessageController::class, "getMessages"])->name("get-messages");
+
+// Report
+Route::get("reports", [ReportController::class, "index"])->name("reports.index");
 
 Route::fallback(function () {
   return redirect()->route("admin.dashboard");

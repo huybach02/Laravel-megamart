@@ -77,7 +77,10 @@ class PaymentController extends Controller
       $product->save();
 
       $suggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();
-      $suggestion->delete();
+
+      if ($suggestion) {
+        $suggestion->delete();
+      }
     }
 
 
@@ -188,7 +191,7 @@ class PaymentController extends Controller
       $total = getPayableAmount();
       $payableAmount = round($total / $paypalSetting->currency_rate, 2);
 
-      $this->storeOrder("Paypal", 1, $response["id"], $payableAmount, "USD");
+      $this->storeOrder("Paypal", 1, $response["purchase_units"][0]["payments"]["captures"][0]["id"], $payableAmount, "USD");
 
       $this->clearSession();
 

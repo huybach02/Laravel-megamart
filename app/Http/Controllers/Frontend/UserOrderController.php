@@ -13,9 +13,35 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class UserOrderController extends Controller
 {
-  public function index()
+  public function index(Request $request)
   {
-    $orders = Order::where("user_id", Auth::user()->id)->latest()->get();
+    $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "pending")->latest()->get();
+
+    switch ($request->status) {
+      case "pending":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "pending")->latest()->get();
+        break;
+      case "processed_and_ready_to_ship":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "processed_and_ready_to_ship")->latest()->get();
+        break;
+      case "dropped_off":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "dropped_off")->latest()->get();
+        break;
+      case "shipped":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "shipped")->latest()->get();
+        break;
+      case "out_for_delivery":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "out_for_delivery")->latest()->get();
+        break;
+      case "delivered":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "delivered")->latest()->get();
+        break;
+      case "cancelled":
+        $orders = Order::where("user_id", Auth::user()->id)->where("order_status", "cancelled")->latest()->get();
+        break;
+      case "all":
+        $orders = Order::where("user_id", Auth::user()->id)->latest()->get();
+    }
 
     return view("frontend.dashboard.order.index", compact("orders"));
   }

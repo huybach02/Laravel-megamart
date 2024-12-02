@@ -716,7 +716,7 @@
                         <div class="form-group">
                             <label for="" class="mb-2 fw-bold">Tin nhắn</label>
                             <textarea name="message" class="form-control message-box" placeholder="Nhập tin nhắn của bạn" cols="30"
-                                rows="10"></textarea>
+                                rows="10">Tôi cần tư vấn sản phẩm {{ $product->name }}. </textarea>
                             <input type="hidden" name="receiver_id" value="{{ $product->vendor->user_id }}">
                         </div>
                     </div>
@@ -796,5 +796,29 @@
                 })
             })
         })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('.message-box');
+            const fixedText = 'Tôi cần tư vấn sản phẩm {{ $product->name }}. ';
+
+            // Khóa đoạn văn bản mặc định và thêm chức năng kiểm soát
+            textarea.value = fixedText;
+
+            textarea.addEventListener('input', function(e) {
+                if (!textarea.value.startsWith(fixedText)) {
+                    textarea.value = fixedText; // Reset nếu người dùng thay đổi đoạn văn bản cố định
+                }
+            });
+
+            textarea.addEventListener('keydown', function(e) {
+                const cursorPos = textarea.selectionStart;
+                // Ngăn người dùng xóa phần văn bản cố định
+                if (cursorPos < fixedText.length && (e.key === 'Backspace' || e.key === 'Delete')) {
+                    e.preventDefault();
+                }
+            });
+        });
     </script>
 @endpush

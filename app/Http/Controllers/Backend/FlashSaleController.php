@@ -8,6 +8,7 @@ use App\Models\FlashSaleItem;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FlashSaleController extends Controller
 {
@@ -15,7 +16,11 @@ class FlashSaleController extends Controller
   {
     $flashSale = FlashSale::first();
 
-    $products = Product::where("status", 1)->where("is_approved", 1)->get();
+    $products = Product::where("status", 1)
+      ->where("is_approved", 1)
+      ->whereDate("offer_start_date", "<=", Carbon::now())
+      ->whereDate("offer_end_date", ">=", Carbon::now())
+      ->get();
 
     $flashSaleItems = FlashSaleItem::all();
 

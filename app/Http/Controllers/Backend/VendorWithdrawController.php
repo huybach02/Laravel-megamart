@@ -32,6 +32,10 @@ class VendorWithdrawController extends Controller
 
     $paidAmount = WithdrawRequest::where(["vendor_id" => Auth::user()->vendor->id, "status" => "paid"])->sum("total_amount");
 
+    if ($pendingAmount > 0) {
+      $currentBalances = $currentBalances - $pendingAmount;
+    }
+
     $withdrawBalance = $currentBalances - $paidAmount;
 
     $withdrawInfo = WithdrawInfo::where("vendor_id", Auth::user()->vendor->id)->first();
@@ -55,6 +59,12 @@ class VendorWithdrawController extends Controller
       ->where('orders.order_status', 'delivered')
       ->where("orders.payment_status", 1)
       ->sum(DB::raw('(order_products.unit_price + COALESCE(order_products.variant_total, 0)) * order_products.quantity'));
+
+    $pendingAmount = WithdrawRequest::where(["vendor_id" => Auth::user()->vendor->id, "status" => "pending"])->sum("total_amount");
+
+    if ($pendingAmount > 0) {
+      $currentBalances = $currentBalances - $pendingAmount;
+    }
 
     $paidAmount = WithdrawRequest::where(["vendor_id" => Auth::user()->vendor->id, "status" => "paid"])->sum("total_amount");
 

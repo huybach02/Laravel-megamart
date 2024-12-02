@@ -7,7 +7,7 @@
         $products = \App\Models\Product::withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->with(['variants', 'category', 'productImageGalleries'])
-            ->where('status', 1)
+            ->where(['status' => 1, 'is_approved' => 1])
             ->whereIn('category_id', $categories)
             ->inRandomOrder()
             ->limit(20)
@@ -16,7 +16,7 @@
         $products = \App\Models\Product::withAvg('reviews', 'rating')
             ->withCount('reviews')
             ->with(['variants', 'category', 'productImageGalleries'])
-            ->where('status', 1)
+            ->where(['status' => 1, 'is_approved' => 1])
             ->inRandomOrder()
             ->limit(20)
             ->get();

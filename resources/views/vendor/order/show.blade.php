@@ -109,7 +109,7 @@
                                                     @endforeach
                                                 </td>
                                                 <td class="text-center">
-                                                    + {{ formatMoney($product->variant_total) }}
+                                                    + {{ formatMoney($product->variant_total * $product->quantity) }}
                                                 </td>
                                                 <td class="text-right">
                                                     {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
@@ -157,9 +157,9 @@
                                     <button type="submit" class="btn btn-primary mt-3">Xác nhận</button>
                                 </form>
                             @endif
-                            <div class="col-md-8 h-25 d-flex justify-content-end">
+                            {{-- <div class="col-md-8 h-25 d-flex justify-content-end">
                                 <button class="btn btn-warning print-invoice">Print</button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

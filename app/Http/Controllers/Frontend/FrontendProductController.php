@@ -11,6 +11,7 @@ use App\Models\ProductReview;
 use App\Models\SubCategory;
 use App\Models\Suggestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendProductController extends Controller
 {
@@ -28,13 +29,15 @@ class FrontendProductController extends Controller
       abort(404);
     }
 
-    $checkHasSuggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();
+    if (Auth::check()) {
+      $checkHasSuggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();
 
-    if (!$checkHasSuggestion) {
-      $suggestion = new Suggestion();
-      $suggestion->user_id = auth()->user()->id;
-      $suggestion->category_id = $product->category_id;
-      $suggestion->save();
+      if (!$checkHasSuggestion) {
+        $suggestion = new Suggestion();
+        $suggestion->user_id = auth()->user()->id;
+        $suggestion->category_id = $product->category_id;
+        $suggestion->save();
+      }
     }
 
     return view("frontend.pages.product-detail", compact("product", "reviews", "reviewCount", "relatedProducts"));
@@ -144,7 +147,7 @@ class FrontendProductController extends Controller
           $to = $price[1];
 
           return $query->where("price", ">=", $from)->where("price", "<=", $to);
-        })->latest()->paginate(12);
+        })->where(["status" => 1, "is_approved" => 1])->latest()->paginate(12);
     }
     if ($request->has("sort")) {
       $querySort = Product::withAvg('reviews', 'rating')
@@ -201,10 +204,11 @@ class FrontendProductController extends Controller
 
     // Truy vấn sản phẩm liên quan dựa trên từ khóa
     $productsQuery = Product::where('name', 'like', '%' . $search . '%')
+      ->where(["status" => 1, "is_approved" => 1])
       ->orderBy('created_at', 'desc');
 
     // Lấy tối đa 6 sản phẩm để kiểm tra nếu có nhiều hơn 5 sản phẩm
-    $products = $productsQuery->limit(6)->get(['name', 'thumb_image', 'price', 'offer_price', 'slug']);
+    $products = $productsQuery->limit(6)->get(['name', 'thumb_image', 'price', 'offer_price', 'slug', "offer_start_date", "offer_end_date"]);
 
     // Phân tích dữ liệu
     $hasMore = $products->count() > 5;

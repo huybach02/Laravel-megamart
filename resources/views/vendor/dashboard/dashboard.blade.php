@@ -101,7 +101,7 @@
                                                 <img src="{{ asset($item['product']->thumb_image) }}" alt=""
                                                     style="width: 80px; height: 80px;">
                                             </div>
-                                            <div class="col-9 d-flex justify-content-between">
+                                            <div class="col-9 d-flex flex-column">
                                                 <div>
                                                     <a href="{{ route('product-detail', $item['product']->slug) }}">
                                                         <h6 class="text-primary fw-bold">{{ $item['product']->name }}</h6>
@@ -124,19 +124,19 @@
 
                             @foreach ($topRatedProducts as $item)
                                 <div class="col-12 mb-1">
-                                    <div class="col-12 p-3 d-flex align-items-center bg-white shadow">
+                                    <div class="row p-3 d-flex align-items-center bg-white shadow">
                                         <div class="col-3">
                                             <img src="{{ asset($item['product']->thumb_image) }}" alt=""
                                                 style="width: 80px; height: 80px;">
                                         </div>
-                                        <div class="col-9 d-flex justify-content-between">
+                                        <div class="col-9 d-flex flex-column">
                                             <div>
                                                 <a href="{{ route('product-detail', $item['product']->slug) }}">
                                                     <h6 class="text-primary fw-bold">{{ $item['product']->name }}</h6>
                                                 </a>
                                             </div>
                                             <div>
-                                                <h6>Rating trung bình: {{ formatMoney($item['average_rating'], 2) }}</h6>
+                                                <h6>Rating trung bình: {{ number_format($item['average_rating'], 1) }}</h6>
                                             </div>
                                         </div>
                                     </div>

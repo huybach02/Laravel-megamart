@@ -144,7 +144,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-5">
                         <div class="wsus__order_details" id="sticky_sidebar">
-                            <p class="wsus__product">shipping Methods</p>
+                            <p class="wsus__product">Phương thức vận chuyển</p>
 
                             @foreach ($shippingMethods as $method)
                                 @if ($method->type == 'min_cost' && getCartTotal() >= $method->min_cost)

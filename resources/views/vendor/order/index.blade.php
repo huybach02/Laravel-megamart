@@ -77,6 +77,9 @@
                                                             : ($orderItem->status == 'cancelled'
                                                                 ? 'Đơn hàng đã huỷ'
                                                                 : 'Đang xử lý');
+                                                    if ($order->order_status == 'delivered') {
+                                                        $statusText = 'Đơn hàng thành công';
+                                                    }
                                                 @endphp
                                                 {{ $statusText }}
                                             </td>

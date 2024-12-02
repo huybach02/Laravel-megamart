@@ -35,9 +35,9 @@
                                     <div class="wsus__address_btn">
                                         <a href="{{ route('user.address.edit', $address->id) }}" class="edit"><i
                                                 class="fal fa-edit"></i>
-                                            edit</a>
+                                            Chỉnh sửa</a>
                                         <a href="{{ route('user.address.destroy', $address->id) }}"
-                                            class="bg-danger delete-item"><i class="fal fa-trash-alt"></i> delete</a>
+                                            class="bg-danger delete-item"><i class="fal fa-trash-alt"></i> Xoá</a>
                                     </div>
                                 </div>
                             </div>

@@ -119,9 +119,16 @@
 
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(product) {
+                            if (!product.offer_start_date || !product.offer_end_date) {
+                                product.offer_price = null
+                            }
+                            if (product.offer_start_date > new Date() || product
+                                .offer_end_date < new Date()) {
+                                product.offer_price = null
+                            }
                             let priceDisplay = product.offer_price ?
                                 `<span class="discounted-price">${formatCurrency(product.offer_price)}</span> <span class="original-price"><del>${formatCurrency(product.price)}</del></span>` :
-                                `<span class="original-price">${formatCurrency(product.price)}</span>`;
+                                `<span class="">${formatCurrency(product.price)}</span>`;
 
                             suggestionsList += `
                           <a href="/product-detail/${product.slug}" class="suggestion-item d-flex align-items-center">

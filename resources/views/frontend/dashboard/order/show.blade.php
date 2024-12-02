@@ -50,7 +50,7 @@
                                     <div class="col-xl-3 col-md-3">
                                         <div class="wsus__invoice_single text-md-start">
                                             <h5>Thông tin đơn hàng</h5>
-                                            Thanh toán qua: {{ $order->payment_method }}<br>
+                                            Đã thanh toán qua: {{ $order->payment_method }}<br>
                                             Mã thanh toán:
                                             {{ $order->transaction->transaction_id }}<br><br>
                                         </div>
@@ -74,6 +74,50 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xl-12">
+                                <ul class="progtrckr" data-progtrckr-steps="4">
+
+                                    <li class="progtrckr_done icon_one check_mark" style="width: 200px">Đang xử lý</li>
+
+                                    @if (@$order->order_status == 'cancelled')
+                                        <li class="icon_four red_mark" style="width: 200px">Đơn hàng đã bị huỷ</li>
+                                    @else
+                                        <li class="progtrckr_done icon_two
+                                @if (
+                                    @$order->order_status == 'processed_and_ready_to_ship' ||
+                                        @$order->order_status == 'dropped_off' ||
+                                        @$order->order_status == 'shipped' ||
+                                        @$order->order_status == 'out_for_delivery' ||
+                                        @$order->order_status == 'delivered') check_mark @endif"
+                                            style="width: 200px">
+                                            Đã chuẩn bị xong</li>
+                                        <li class="icon_three
+                                @if (
+                                    @$order->order_status == 'out_for_delivery' ||
+                                        @$order->order_status == 'shipped' ||
+                                        @$order->order_status == 'delivered') check_mark @endif
+                                "
+                                            style="width: 200px">
+                                            Đang vận chuyển</li>
+                                        <li class="icon_three
+                                @if (
+                                    @$order->order_status == 'out_for_delivery' ||
+                                        @$order->order_status == 'shipped' ||
+                                        @$order->order_status == 'delivered') check_mark @endif
+                                "
+                                            style="width: 200px">
+                                            Đang giao đến bạn</li>
+                                        <li class="icon_four
+                                @if (@$order->order_status == 'delivered') check_mark @endif
+                                "
+                                            style="width: 200px">
+                                            Đã giao thành công</li>
+                                    @endif
+
+                                </ul>
+                            </div>
+
                             <div class="table-responsive my-5">
                                 <table class="table table-striped table-hover table-md">
                                     <tr>
@@ -112,7 +156,7 @@
                                                 @endforeach
                                             </td>
                                             <td class="text-center">
-                                                + {{ formatMoney($product->variant_total) }}
+                                                + {{ formatMoney($product->variant_total * $product->quantity) }}
                                             </td>
                                             <td class="text-right">
                                                 {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
@@ -146,9 +190,9 @@
                         </div>
 
                         <div class="row pt-5">
-                            <div class="">
+                            {{-- <div class="">
                                 <button class="btn btn-warning print-invoice">Print</button>
-                            </div>
+                            </div> --}}
                             @if ($order->order_status == 'pending')
                                 <div class="row pb-5">
                                     <h5 class="mt-5 mb-3 text-danger fw-bold">Huỷ đơn hàng</h5>

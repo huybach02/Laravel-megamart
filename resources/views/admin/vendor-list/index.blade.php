@@ -33,7 +33,7 @@
                                 <table id="example" class="display" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <td class="text-center font-bold">STT</td>
+                                            <td class="text-center font-bold"></td>
                                             <th style="text-align: left">Id</th>
                                             <th style="text-align: left">Ảnh đại diện</th>
                                             <th>Tên chủ gian hàng</th>
@@ -47,7 +47,7 @@
                                     <tbody>
                                         @foreach ($vendors as $key => $vendor)
                                             <tr>
-                                                <td class="text-center font-bold">{{ $key + 1 }}</td>
+                                                <td class="text-center font-bold"></td>
                                                 <td style="text-align: left">{{ $vendor->id }}</td>
                                                 <td style="text-align: left">
                                                     <img src="{{ $vendor->vendor->banner ? asset($vendor->vendor->banner) : 'https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png' }}"
@@ -59,20 +59,22 @@
                                                 <td style="text-align: left">{{ $vendor->vendor->phone }}</td>
                                                 <td style="text-align: left">{{ $vendor->vendor->address }}</td>
                                                 <td>
-                                                    @if ($vendor->status == 'active')
-                                                        <label class='custom-switch mt-2'>
-                                                            <input type='checkbox' checked name='custom-switch-checkbox'
-                                                                data-id='{{ $vendor->id }}'
-                                                                class='custom-switch-input change-status'>
-                                                            <span class='custom-switch-indicator'></span>
-                                                        </label>
-                                                    @else
-                                                        <label class='custom-switch mt-2'>
-                                                            <input type='checkbox' name='custom-switch-checkbox'
-                                                                data-id='{{ $vendor->id }}'
-                                                                class='custom-switch-input change-status'>
-                                                            <span class='custom-switch-indicator'></span>
-                                                        </label>
+                                                    @if ($vendor->role != 'admin')
+                                                        @if ($vendor->status == 'active')
+                                                            <label class='custom-switch mt-2'>
+                                                                <input type='checkbox' checked name='custom-switch-checkbox'
+                                                                    data-id='{{ $vendor->id }}'
+                                                                    class='custom-switch-input change-status'>
+                                                                <span class='custom-switch-indicator'></span>
+                                                            </label>
+                                                        @else
+                                                            <label class='custom-switch mt-2'>
+                                                                <input type='checkbox' name='custom-switch-checkbox'
+                                                                    data-id='{{ $vendor->id }}'
+                                                                    class='custom-switch-input change-status'>
+                                                                <span class='custom-switch-indicator'></span>
+                                                            </label>
+                                                        @endif
                                                     @endif
                                                 </td>
 

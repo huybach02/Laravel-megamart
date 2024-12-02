@@ -131,7 +131,7 @@
                                 value="{{ session()->has('coupon') ? session()->get('coupon')['coupon_code'] : '' }}">
                             <button type="submit" class="common_btn">Nhập</button>
                         </form>
-                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Thanh toán</a>
+                        <a class="common_btn mt-4 w-100 text-center" href="{{ route('user.checkout') }}">Đặt hàng</a>
                         <a class="common_btn mt-1 w-100 text-center" href="{{ route('home') }}"><i
                                 class="fab fa-shopify"></i> Tiếp tục mua sắm</a>
                     </div>

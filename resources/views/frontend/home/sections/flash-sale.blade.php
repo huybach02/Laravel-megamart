@@ -4,7 +4,7 @@
             <div class="col-xl-12">
                 <div class="offer_time" style="background: url({{ asset('flashsale.png') }})">
                     <div class="wsus__flash_coundown">
-                        <span class="end_text">flash sell</span>
+                        <span class="end_text">flash sale</span>
                         <div class="simply-countdown simply-countdown-example"></div>
                         <a class="common_btn" href="{{ route('flash-sale') }}">Xem thêm <i
                                 class="fas fa-caret-right"></i></a>

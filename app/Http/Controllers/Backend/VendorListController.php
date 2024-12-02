@@ -10,7 +10,7 @@ class VendorListController extends Controller
 {
   public function index()
   {
-    $vendors = User::where("role", "vendor")->latest()->get();
+    $vendors = User::whereIn('role', ['vendor', 'admin'])->latest()->get();
 
     return view("admin.vendor-list.index", compact("vendors"));
   }

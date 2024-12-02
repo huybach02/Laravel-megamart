@@ -12,6 +12,10 @@ class WishlistController extends Controller
 {
   public function index()
   {
+    if (!Auth::user()) {
+      return redirect()->route("login");
+    }
+
     $wishlistProducts = Wishlist::with("product")->where("user_id", Auth::user()->id)->latest()->get();
 
     return view('frontend.pages.wishlist', compact("wishlistProducts"));

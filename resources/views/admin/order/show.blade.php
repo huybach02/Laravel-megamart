@@ -128,7 +128,7 @@
                                                                             @endforeach
                                                                         </td>
                                                                         <td class="text-center">
-                                                                            {{ formatMoney($product->variant_total) }}
+                                                                            {{ formatMoney($product->variant_total * $product->quantity) }}
                                                                         </td>
                                                                         <td class="text-right">
                                                                             {{ formatMoney(($product->unit_price + $product->variant_total) * $product->quantity) }}
@@ -191,7 +191,7 @@
                                                                         @endif
                                                                     @endforeach
                                                                 </div>
-                                                                <div class="pt-3 border-top">
+                                                                {{-- <div class="pt-3 border-top">
                                                                     <div class="section-title">Trạng thái đơn hàng</div>
                                                                     @if (!in_array(false, $checkArr, true))
                                                                         <select name="order_status" id="order_status"
@@ -216,7 +216,148 @@
                                                                                 readonly>
                                                                         @endif
                                                                     @endif
+                                                                </div> --}}
+
+                                                                <div>
+                                                                    <div class="section-title">Trạng thái đơn hàng</div>
+
+                                                                    <input type="hidden" id="order_id"
+                                                                        value="{{ $order->id }}">
+
+                                                                    @if (!in_array(false, $checkArr, true))
+                                                                        <div class="d-flex flex-column">
+                                                                            <div class="mb-3">
+                                                                                <button class="btn btn-secondary"
+                                                                                    disabled>Quá
+                                                                                    trình
+                                                                                    xử
+                                                                                    lý</button>
+                                                                            </div>
+                                                                            @if ($order->order_status == 'cancelled')
+                                                                                <div class="mb-3 d-flex align-items-center">
+                                                                                    <div>
+                                                                                        <button class="btn btn-danger"
+                                                                                            disabled>Đơn hàng
+                                                                                            đã bị huỷ</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+                                                                            @if ($order->order_status == 'pending')
+                                                                                <div class="mb-3 d-flex align-items-center">
+                                                                                    <div class="mr-3">
+                                                                                        <button
+                                                                                            class="btn btn-primary btn-status"
+                                                                                            data-status="dropped_off">Đã đến
+                                                                                            kho
+                                                                                            vận chuyển</button>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <button
+                                                                                            class="btn btn-danger btn-cancel"
+                                                                                            data-status="cancelled">Đơn hàng
+                                                                                            bị
+                                                                                            huỷ</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            @endif
+                                                                            @if ($order->order_status == 'dropped_off')
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        đến kho
+                                                                                        vận chuyển</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button
+                                                                                        class="btn btn-primary btn-status"
+                                                                                        data-status="shipped">Đã
+                                                                                        được vận
+                                                                                        chuyển đi</button>
+                                                                                </div>
+                                                                            @endif
+                                                                            @if ($order->order_status == 'shipped')
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        đến kho
+                                                                                        vận chuyển</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        được vận
+                                                                                        chuyển đi</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button
+                                                                                        class="btn btn-primary btn-status"
+                                                                                        data-status="out_for_delivery">Đang
+                                                                                        giao
+                                                                                        đến khách hàng</button>
+                                                                                </div>
+                                                                            @endif
+                                                                            @if ($order->order_status == 'out_for_delivery')
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        đến kho
+                                                                                        vận chuyển</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        được vận
+                                                                                        chuyển đi</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đang giao
+                                                                                        đến khách hàng</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button
+                                                                                        class="btn btn-primary btn-status"
+                                                                                        data-status="delivered">Đã
+                                                                                        được giao cho khách hàng</button>
+                                                                                </div>
+                                                                            @endif
+                                                                            @if ($order->order_status == 'delivered')
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        đến kho
+                                                                                        vận chuyển</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        được vận
+                                                                                        chuyển đi</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đang giao
+                                                                                        đến khách hàng</button>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <button class="btn btn-secondary"
+                                                                                        disabled>Đã
+                                                                                        được giao cho khách hàng</button>
+                                                                                </div>
+                                                                            @endif
+
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="mb-3">
+                                                                            <button class="btn btn-secondary" disabled>Quá
+                                                                                trình
+                                                                                xử
+                                                                                lý</button>
+                                                                        </div>
+                                                                    @endif
                                                                 </div>
+
+
                                                                 @if ($order->payment_method == 'COD')
                                                                     <div>
                                                                         <div class="section-title">Trạng thái thanh toán
@@ -303,9 +444,9 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            $("body").on('change', "#order_status", function() {
-                let order_status = $(this).val()
-                let order_id = $(this).data("id")
+            $("body").on('click', ".btn-status", function() {
+                let order_status = $(this).data("status")
+                let order_id = $("#order_id").val()
                 $.ajax({
                     url: "{{ route('admin.order.status') }}",
                     method: "PUT",
@@ -316,6 +457,7 @@
                     success: function(data) {
                         if (data.status == "success") {
                             toastr.success(data.message)
+                            location.reload()
                         }
                     },
                     error: function(data) {
@@ -352,6 +494,59 @@
                 $("body").html(printBody.html())
                 window.print()
                 $("body").html(originalContents)
+            })
+
+            $('body').on('click', '.btn-cancel', function(event) {
+                event.preventDefault();
+
+                let order_status = $(this).data("status")
+                let order_id = $("#order_id").val()
+
+                Swal.fire({
+                    title: 'Bạn có chắc chắn muốn huỷ đơn hàng này?',
+                    text: "Dữ liệu không thể khôi phục sau khi thực hiện",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Đồng ý',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: 'PUT',
+                            url: "{{ route('admin.order.status') }}",
+                            data: {
+                                order_status: order_status,
+                                order_id: order_id,
+                            },
+                            success: function(data) {
+
+                                if (data.status == 'success') {
+                                    Swal.fire({
+                                        title: 'Thành công!',
+                                        text: data.message,
+                                        icon: 'success',
+                                        willClose: () => {
+                                            location
+                                                .reload(); // Load lại trang sau khi đóng thông báo
+                                        }
+                                    });
+                                } else if (data.status == 'error') {
+                                    Swal.fire(
+                                        'Không thành công',
+                                        data.message,
+                                        'error'
+                                    )
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            }
+                        })
+                    }
+                })
             })
         })
     </script>

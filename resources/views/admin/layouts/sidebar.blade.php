@@ -71,7 +71,7 @@
                     <span>Quản Lý Bán Hàng</span></a>
                 <ul class="dropdown-menu">
                     <li class="{{ setActive(['admin.vendor-profile.*']) }}"><a class="nav-link"
-                            href="{{ route('admin.vendor-profile.index') }}">Thông tin gian hàng</a></li>
+                            href="{{ route('admin.vendor-profile.index') }}">Thông tin MegaMart</a></li>
                     <li class="{{ setActive(['admin.shipping-rule.*']) }}"><a class="nav-link"
                             href="{{ route('admin.shipping-rule.index') }}">Thông tin vận chuyển</a></li>
                     <li class="{{ setActive(['admin.payment-settings.*']) }}"><a class="nav-link"
@@ -104,7 +104,7 @@
                 </ul>
             </li>
 
-            <li class="dropdown {{ setActive(['admin.footer-info.*', 'admin.footer-grid-two.*']) }}">
+            {{-- <li class="dropdown {{ setActive(['admin.footer-info.*', 'admin.footer-grid-two.*']) }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-link"></i>
                     <span>Quản Lý Chân Trang</span></a>
                 <ul class="dropdown-menu">
@@ -114,7 +114,7 @@
                             href="{{ route('admin.footer-grid-two.index') }}">Nội dung chân trang</a></li>
 
                 </ul>
-            </li>
+            </li> --}}
 
             <li
                 class="dropdown {{ setActive(['admin.vendor-requests.*', 'admin.customers.*', 'admin.vendor-list.*', 'admin.manage-user.*']) }}">
@@ -151,16 +151,16 @@
                         class="fas fa-comments"></i><span>Tin Nhắn</span></a>
             </li>
 
-            <li class="{{ setActive(['admin.transactions.*']) }}">
+            {{-- <li class="{{ setActive(['admin.transactions.*']) }}">
                 <a href="{{ route('admin.transactions.index') }}" class="nav-link"><i
                         class="fas fa-money-check"></i><span>Lịch
                         Sử Thanh Toán</span></a>
-            </li>
+            </li> --}}
 
-            <li class="{{ setActive(['admin.subscribers.*']) }}">
+            {{-- <li class="{{ setActive(['admin.subscribers.*']) }}">
                 <a href="{{ route('admin.subscribers.index') }}" class="nav-link"><i
                         class="fas fa-paper-plane"></i><span>Người Đăng Ký Nhận Tin</span></a>
-            </li>
+            </li> --}}
 
             <li class="{{ setActive(['admin.reviews.*']) }}">
                 <a href="{{ route('admin.reviews.index') }}" class="nav-link"><i class="fas fa-star"></i><span>Quản
@@ -184,10 +184,10 @@
                         cáo</span></a>
             </li>
 
-            <li class="{{ setActive(['admin.setting.*']) }}">
+            {{-- <li class="{{ setActive(['admin.setting.*']) }}">
                 <a href="{{ route('admin.setting.index') }}" class="nav-link"><i class="fas fa-cog"></i><span>Cài
                         đặt</span></a>
-            </li>
+            </li> --}}
 
         </ul>
 

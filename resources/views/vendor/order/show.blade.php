@@ -139,22 +139,25 @@
                                     @csrf
                                     @method('PUT')
 
+                                    @php
+                                        $orderItem = \App\Models\OrderProduct::where('order_id', $order->id)
+                                            ->where('vendor_id', Auth::user()->id)
+                                            ->first();
+                                    @endphp
                                     <input type="hidden" name="vendor_id" value="{{ Auth::user()->id }}">
                                     <label for="" class="mb-2 fw-bold">Trạng thái đơn hàng</label>
-                                    <select name="status" id="" class="form-control">
+                                    <select name="status" id="" class="form-control"
+                                        {{ $orderItem->status !== 'processed_and_ready_to_ship' ? '' : 'disabled' }}>
                                         @foreach (config('order_status.order_status_vendor') as $key => $option)
-                                            @php
-                                                $orderItem = \App\Models\OrderProduct::where('order_id', $order->id)
-                                                    ->where('vendor_id', Auth::user()->id)
-                                                    ->first();
-                                            @endphp
                                             <option value="{{ $key }}"
                                                 {{ $orderItem && $orderItem->status == $key ? 'selected' : '' }}>
                                                 {{ $option['status'] }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    <button type="submit" class="btn btn-primary mt-3">Xác nhận</button>
+                                    <button type="submit"
+                                        class="btn btn-primary mt-3 {{ $orderItem->status !== 'processed_and_ready_to_ship' ? '' : 'd-none' }}">Xác
+                                        nhận</button>
                                 </form>
                             @endif
                             {{-- <div class="col-md-8 h-25 d-flex justify-content-end">

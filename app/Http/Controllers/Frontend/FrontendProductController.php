@@ -19,15 +19,15 @@ class FrontendProductController extends Controller
   {
     $product = Product::with(["vendor", "category", "productImageGalleries", "variants", "brand"])->where("slug", $slug)->where("status", 1)->first();
 
+    if (!$product) {
+      abort(404);
+    }
+
     $reviews = ProductReview::where(["product_id" => $product->id, "status" => 1])->latest()->paginate(5);
 
     $reviewCount = ProductReview::where(["product_id" => $product->id, "status" => 1])->count();
 
     $relatedProducts = Product::where("category_id", $product->category_id)->latest()->limit(12)->get();
-
-    if (!$product) {
-      abort(404);
-    }
 
     if (Auth::check()) {
       $checkHasSuggestion = Suggestion::where(["user_id" => auth()->user()->id, "category_id" => $product->category_id])->first();

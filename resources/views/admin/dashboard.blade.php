@@ -1238,7 +1238,7 @@
                         'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
                     ],
                     datasets: [{
-                        label: 'Số ơn hàng',
+                        label: 'Số đơn hàng',
                         backgroundColor: 'rgba(255, 159, 64, 0.5)',
                         borderColor: 'rgba(255, 159, 64, 1)',
                         borderWidth: 1,
